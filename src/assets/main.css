@@ -1,4 +1,6 @@
 @import './base.css';
+@import './style/NavigationHeader.css';
+@import './style/Calendar.css';
 
 #app {
   max-width: 1280px;
@@ -32,4 +34,8 @@ a,
     grid-template-columns: 1fr 1fr;
     padding: 0 2rem;
   }
+}
+
+button {
+  font-weight: bold;
 }
