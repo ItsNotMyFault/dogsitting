@@ -51,3 +51,16 @@ h2 {
     max-width: 1100px;
     margin: 0 auto;
   }
+
+  .calendar{
+    color: black;
+  }
+
+  .fc-daygrid-day-frame:has(.available) {
+    background-color: rgb(128, 227, 158);
+  }
+
+  .fc-day-past {
+    background-color: rgb(237, 241, 240);
+}
+
