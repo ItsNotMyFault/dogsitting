@@ -1,7 +1,8 @@
 class Event {
-  constructor(title) {
+  constructor(data) {
+    this.data = data
     this.className = ''
-    this.title = title
+    this.title = data.title
     this.allDay = false
     this.extendedProps = {}
     this.start = null

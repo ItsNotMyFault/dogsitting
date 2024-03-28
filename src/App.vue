@@ -4,20 +4,23 @@
   </header>
   <HelloWorld msg="You did it!" />
   <RouterView />
+  <footer style="color: blue">
+    <MyFooter></MyFooter>
+  </footer>
 </template>
 
 
 <script>
-import { defineComponent } from 'vue'
 import HelloWorld from './components/HelloWorld.vue'
 import NavigationHeader from './components/NavigationHeader.vue'
-export default defineComponent({
-  components: { HelloWorld, NavigationHeader },
-
-  setup(props) {
-
-  }
-})
+import MyFooter from './components/MyFooter.vue'
+export default {
+  components: {
+    HelloWorld,
+    NavigationHeader,
+    MyFooter
+  },
+}
 
 
 </script>

@@ -21,7 +21,7 @@
             This is a new modal footer.
         </template>
     </Modal>
-    <button @click="isModalVisible = true">modal open {{ isModalVisible }}</button>
+    <button @click="isModalVisible = true">modal open => {{ isModalVisible }}</button>
 </template>
 <script>
 import Modal from '../modals/Modal.vue'
@@ -29,13 +29,13 @@ import Datepicker from '@vuepic/vue-datepicker';
 import Event from '../../model/event'
 import '@vuepic/vue-datepicker/dist/main.css';
 export default {
-    name: 'TheReserveModal',
+    name: 'ReserveModal',
 
     components: { Modal, Datepicker },
 
     data() {
         return {
-            isModalVisible: true,
+            isModalVisible: false,
             event: new Event(),
         }
     },
