@@ -1,12 +1,19 @@
 <template>
   <div class="demo-app">
     <div class="demo-app-main calendar">
-      <FullCalendar :options="calendarOptions"></FullCalendar>
+      <FullCalendar :options="calendarOptions">
+        <template v-slot:eventContent="arg">
+          {{ logstuff(arg.event) }}
+          {{ arg.event.title }}
+        </template>
+      </FullCalendar>
+
     </div>
   </div>
 </template>
 
 <script>
+
 
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -18,12 +25,15 @@ import { onMounted, ref, watch, computed } from 'vue'
 
 export default {
   components: {
-    FullCalendar
+    FullCalendar,
   },
   methods: {
     handleDateClick(arg) {
       console.log('date click! ' + arg.dateStr, arg)
     },
+    logstuff(arg) {
+      console.log(arg.title, arg)
+    }
   },
   data() {
     return {
