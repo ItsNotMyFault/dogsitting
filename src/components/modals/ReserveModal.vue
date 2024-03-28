@@ -6,13 +6,14 @@
 
         <template v-slot:body>
             <label>date start</label>
-            <input />
+            <Datepicker v-model="event.start" />
             <label>date end</label>
-            <input />
+            <Datepicker v-model="event.end" />
             <label>Nom du proprio</label>
             <input />
             <label>Nom du pensionnaire</label>
             <input />
+
             This is a new modal body.
         </template>
 
@@ -24,14 +25,18 @@
 </template>
 <script>
 import Modal from '../modals/Modal.vue'
+import Datepicker from '@vuepic/vue-datepicker';
+import Event from '../../model/event'
+import '@vuepic/vue-datepicker/dist/main.css';
 export default {
     name: 'TheReserveModal',
 
-    components: { Modal },
+    components: { Modal, Datepicker },
 
     data() {
         return {
-            isModalVisible: true
+            isModalVisible: true,
+            event: new Event(),
         }
     },
 }

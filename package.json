@@ -19,6 +19,7 @@
     "@fullcalendar/multimonth": "^6.1.11",
     "@fullcalendar/timegrid": "^6.1.10",
     "@fullcalendar/vue3": "^6.1.11",
+    "@vuepic/vue-datepicker": "^8.3.1",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
