@@ -24,6 +24,8 @@ import listPlugin from '@fullcalendar/list';
 import { onMounted, ref, watch, computed } from 'vue'
 
 export default {
+  name: 'TheReserveCalendar',
+
   components: {
     FullCalendar,
   },

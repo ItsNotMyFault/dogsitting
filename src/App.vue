@@ -7,9 +7,17 @@
 </template>
 
 
-<script setup>
+<script>
+import { defineComponent } from 'vue'
 import HelloWorld from './components/HelloWorld.vue'
 import NavigationHeader from './components/NavigationHeader.vue'
-import { defineAsyncComponent } from 'vue'
+export default defineComponent({
+  components: { HelloWorld, NavigationHeader },
+
+  setup(props) {
+
+  }
+})
+
 
 </script>

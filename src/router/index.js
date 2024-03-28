@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import TeamView from '../views/TeamView.vue'
+import AboutView from '../views/AboutView.vue'
+import ReserveView from '../views/ReserveView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,7 +18,8 @@ const router = createRouter({
     {
       path: '/about',
       name: 'about',
-      component: () => import('../views/AboutView.vue'),
+      // component: () => import('../views/AboutView.vue'),
+      component: AboutView,
       meta: {
         title: 'Home'
       }
@@ -23,7 +27,8 @@ const router = createRouter({
     {
       path: '/team',
       name: 'team',
-      component: () => import('../views/TeamView.vue'),
+      // component: () => import('../views/TeamView.vue'),
+      component: TeamView,
       meta: {
         title: 'Home'
       }
@@ -31,7 +36,8 @@ const router = createRouter({
     {
       path: '/reserve',
       name: 'reserve',
-      component: () => import('../views/ReserveView.vue'),
+      component: ReserveView,
+      // component: () => import('../views/ReserveView.vue'),
       meta: {
         title: 'Réserver'
       }

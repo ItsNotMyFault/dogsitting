@@ -84,9 +84,6 @@
       us by
       <a href="https://vuejs.org/sponsor/" target="_blank" rel="noopener">becoming a sponsor</a>.
     </WelcomeItem>
-    <div id="fireworks">
-      test
-    </div>
   </div>
 </template>
 
@@ -101,14 +98,14 @@ import SupportIcon from './icons/IconSupport.vue';
 export default {
   name: 'TheWelcome',
 
-  components: [
+  components: {
     WelcomeItem,
     DocumentationIcon,
     ToolingIcon,
     EcosystemIcon,
     CommunityIcon,
     SupportIcon
-  ],
+  },
 
   created() {
     console.log('hi');
