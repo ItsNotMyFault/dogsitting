@@ -19,6 +19,22 @@
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+
+
+  --theme-lightblue: rgb(11, 131, 217);
+  --theme-purple: rgb(158, 91, 217);
+  --theme-pink: rgb(217, 65, 130);
+  --theme-orange: rgb(227, 106, 0);
+  --theme-lightbrown: rgb(191, 112, 0);
+  --theme-green: rgb(45, 166, 8);
+  --theme-turquoise: rgb(6, 168, 147);
+  --theme-lightbrown: rgb(201, 128, 107);
+  --theme-blue: rgb(70, 91, 179);
+  --theme-darkpurple: rgb(153, 0, 153);
+  --theme-yellow: rgb(199, 175, 20);
+  --theme-darkgreen: rgb(86, 102, 20);
+  --theme-red: rgb(217, 43, 43);
+  --theme-grey: rgb(82, 82, 102);
 }
 
 /* semantic color variables for this project */

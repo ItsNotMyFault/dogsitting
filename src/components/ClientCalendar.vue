@@ -1,10 +1,10 @@
 <template>
   <div class="demo-app">
     <div class="demo-app-main calendar">
-      <FullCalendar :options="calendarOptions">
+      <FullCalendar ref="fullcalendar" :options="calendarOptions">
         <template v-slot:eventContent="arg">
           {{ logstuff(arg.event) }}
-          {{ arg.event.title }}
+          {{ arg.event?.title }}
         </template>
       </FullCalendar>
 
@@ -21,7 +21,7 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import multiMonthPlugin from '@fullcalendar/multimonth'
 import interactionPlugin from '@fullcalendar/interaction'
 import listPlugin from '@fullcalendar/list';
-import { onMounted, ref, watch, computed } from 'vue'
+import { availableEvents, busyEvents } from '../data/events'
 
 export default {
   name: 'ClientCalendar',
@@ -30,12 +30,9 @@ export default {
     FullCalendar,
   },
   methods: {
-    handleDateClick(arg) {
-      console.log('date click! ' + arg.dateStr, arg)
-    },
     logstuff(arg) {
-      console.log(arg.title, arg)
-    }
+      // console.log(arg.title, arg)
+    },
   },
   data() {
     return {
@@ -55,53 +52,7 @@ export default {
           listMonth: { buttonText: 'List' },
         },
         weekends: true,
-        events: [
-          {
-            title: 'All Day Event',
-            start: '2024-03-25',
-            className: 'available'
-          },
-          {
-            id: 123123,
-            title: "Unknown Title",
-            start: '2024-04-01',
-            end: '2024-04-05',
-            allDay: false,
-            className: "umbt-success",
-            extendedProps: {
-              // occupiedMoment: occupiedMoment,
-              quarter1: 'test',
-              // quarter2: quarter2,
-              // quarter3: quarter3,
-              // quarter4: quarter4,
-            },
-          },
-          { title: 'event 1', date: '2024-04-01', className: 'classNameEvent1' },
-          { title: 'event 2', date: '2024-04-02' },
-          {
-            title: 'Meeting',
-            start: '2024-03-12T14:30:00',
-            end: '2024-04-12T18:30:00',
-            className: 'classNameMetting',
-            extendedProps: {
-              status: 'done'
-            }
-          },
-          {
-            title: 'Meeting',
-            start: '2019-08-12T14:30:00',
-            start: '2019-08-12T14:30:00',
-            extendedProps: {
-              status: 'done'
-            }
-          },
-          {
-            title: 'Birthday Party',
-            start: '2024-04-05T07:00:00',
-            backgroundColor: 'green',
-            borderColor: 'green'
-          }
-        ],
+        events: [...availableEvents.map(event => event.data), ...busyEvents.map(event => event.data)],
         headerToolbar: {
           left: 'prev,next,today',
           center: 'title',
@@ -110,8 +61,8 @@ export default {
         footerToolbar: {
           center: 'title',
         },
-        slotMinTime: "07:00:00",
-        slotMaxTime: "19:00:00",
+        // slotMinTime: "07:00:00",
+        // slotMaxTime: "19:00:00",
       }
     }
   },

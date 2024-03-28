@@ -11,9 +11,9 @@
 
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-import NavigationHeader from './components/NavigationHeader.vue'
-import MyFooter from './components/MyFooter.vue'
+import HelloWorld from '@components/HelloWorld.vue'
+import NavigationHeader from '@components/NavigationHeader.vue'
+import MyFooter from '@components/MyFooter.vue'
 export default {
   components: {
     HelloWorld,

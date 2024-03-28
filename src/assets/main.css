@@ -1,9 +1,10 @@
 @import './base.css';
-@import './style/NavigationHeader.css';
-@import './style/Calendar.css';
-@import './style/Modal.css';
-@import './style/MyFooter.css';
-@import './style/Team.css';
+@import '@style/NavigationHeader.css';
+@import '@style/Calendar.css';
+@import '@style/Modal.css';
+@import '@style/MyFooter.css';
+@import '@style/Team.css';
+@import '@style/ColorPicker.css';
 
 #app {
   max-width: 1280px;

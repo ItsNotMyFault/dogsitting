@@ -13,7 +13,9 @@
             <input />
             <label>Nom du pensionnaire</label>
             <input />
-
+            <br>
+            color => {{ color }} <br>
+            <ColorPicker v-model="color"></ColorPicker>
             This is a new modal body.
         </template>
 
@@ -24,19 +26,22 @@
     <button @click="isModalVisible = true">modal open => {{ isModalVisible }}</button>
 </template>
 <script>
-import Modal from '../modals/Modal.vue'
+import Modal from '@components/modals/Modal.vue'
+import ColorPicker from '@components/ColorPicker.vue'
+import Event from '@model/event'
 import Datepicker from '@vuepic/vue-datepicker';
-import Event from '../../model/event'
 import '@vuepic/vue-datepicker/dist/main.css';
+
 export default {
     name: 'ReserveModal',
 
-    components: { Modal, Datepicker },
+    components: { Modal, Datepicker, ColorPicker },
 
     data() {
         return {
-            isModalVisible: false,
+            isModalVisible: true,
             event: new Event(),
+            color: 'var(--theme-red)'
         }
     },
 }
