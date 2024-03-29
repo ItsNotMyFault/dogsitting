@@ -38,7 +38,7 @@
         </div>
 
 
-        <ActivityCard img="20230814_183252">
+        <ActivityDetailItem img="20230814_183252">
             <template #title>
                 TITLE
             </template>
@@ -59,8 +59,8 @@
                 exercitationem
                 sequi ea dicta? Optio ipsa pariatur ratione ea a molestias vero repudiandae eos delectus.
             </template>
-        </ActivityCard>
-        <ActivityCard reverse>
+        </ActivityDetailItem>
+        <ActivityDetailItem reverse>
             <template #title>
                 TITLE
             </template>
@@ -81,8 +81,8 @@
                 exercitationem
                 sequi ea dicta? Optio ipsa pariatur ratione ea a molestias vero repudiandae eos delectus.
             </template>
-        </ActivityCard>
-        <ActivityCard>
+        </ActivityDetailItem>
+        <ActivityDetailItem>
             <template #title>
                 TITLE
             </template>
@@ -103,8 +103,8 @@
                 exercitationem
                 sequi ea dicta? Optio ipsa pariatur ratione ea a molestias vero repudiandae eos delectus.
             </template>
-        </ActivityCard>
-        <ActivityCard reverse>
+        </ActivityDetailItem>
+        <ActivityDetailItem reverse>
             <template #title>
                 TITLE
             </template>
@@ -125,17 +125,17 @@
                 exercitationem
                 sequi ea dicta? Optio ipsa pariatur ratione ea a molestias vero repudiandae eos delectus.
             </template>
-        </ActivityCard>
+        </ActivityDetailItem>
     </div>
 </template>
 
 <script>
-import ActivityCard from '@components/ActivityCard.vue'
+import ActivityDetailItem from '@components/ActivityDetailItem.vue'
 export default {
-    name: 'ActivitiesView',
+    name: 'ActivityDetail',
 
     components: {
-        ActivityCard
+        ActivityDetailItem
     }
 }
 </script>

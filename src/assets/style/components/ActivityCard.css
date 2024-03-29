@@ -41,14 +41,18 @@
 }
 
 .test img {
-    width: 100%;
-    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    object-fit: cover; /* Image fills the container while maintaining aspect ratio */
+    width: 100%; /* Ensures the image fills the container horizontally */
+    height: 100%; /* Ensures the image fills the container vertically */
 }
 
 .test .title {
     color: var(--theme-main-color);
     position: absolute;
-    /* margin: auto; */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -59,6 +63,7 @@
     background-color: var(--vt-c-black);
     border-radius: 25px;
     padding: 10px;
+    z-index: 1;
 }
 
 .test .title:hover {
@@ -68,5 +73,6 @@
 }
 
 .innertest{
+    position: relative;
     overflow: hidden;
 }
