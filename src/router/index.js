@@ -34,6 +34,22 @@ const router = createRouter({
       meta: {
         title: 'Réserver'
       }
+    },
+    {
+      path: '/activites',
+      name: 'activites',
+      component: () => import('@views/ActivitiesView.vue'),
+      meta: {
+        title: 'Activitées'
+      }
+    },
+    {
+      path: '/location',
+      name: 'location',
+      component: () => import('@views/LocationView.vue'),
+      meta: {
+        title: 'Lieu'
+      }
     }
   ]
 })

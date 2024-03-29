@@ -1,0 +1,14 @@
+main {
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    margin: 50px;
+    align-items: center;
+    min-height: 65vh;
+}
+
+.sectionTitle{
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--theme-main-color);
+}

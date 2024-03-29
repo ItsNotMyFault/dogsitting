@@ -35,6 +35,8 @@
   --theme-darkgreen: rgb(86, 102, 20);
   --theme-red: rgb(217, 43, 43);
   --theme-grey: rgb(82, 82, 102);
+
+  --theme-main-color: hsla(160, 100%, 37%, 1)
 }
 
 /* semantic color variables for this project */
@@ -72,6 +74,11 @@
   box-sizing: border-box;
   margin: 0;
   font-weight: normal;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
 }
 
 body {

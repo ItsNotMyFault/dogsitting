@@ -2,11 +2,10 @@
   <header>
     <NavigationHeader></NavigationHeader>
   </header>
-  <HelloWorld msg="You did it!" />
-  <RouterView />
-  <footer style="color: blue">
-    <MyFooter></MyFooter>
-  </footer>
+  <main>
+    <RouterView />
+  </main>
+  <MyFooter></MyFooter>
 </template>
 
 
