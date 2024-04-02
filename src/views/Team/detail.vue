@@ -1,7 +1,10 @@
 <template>
-    <div style="width: 100%;">
-        <div class="sectionTitle">Activitees</div>
-        <ActivityDetailItem img="20230814_183252">
+    <div>
+        <div class="sectionTitle">
+            {{ title }}
+        </div>
+        <br>
+        <ActivityCard img="20230814_183252">
             <template #title>
                 TITLE
             </template>
@@ -22,8 +25,8 @@
                 exercitationem
                 sequi ea dicta? Optio ipsa pariatur ratione ea a molestias vero repudiandae eos delectus.
             </template>
-        </ActivityDetailItem>
-        <ActivityDetailItem reverse>
+        </ActivityCard>
+        <ActivityCard reverse>
             <template #title>
                 TITLE
             </template>
@@ -44,8 +47,8 @@
                 exercitationem
                 sequi ea dicta? Optio ipsa pariatur ratione ea a molestias vero repudiandae eos delectus.
             </template>
-        </ActivityDetailItem>
-        <ActivityDetailItem>
+        </ActivityCard>
+        <ActivityCard>
             <template #title>
                 TITLE
             </template>
@@ -66,8 +69,8 @@
                 exercitationem
                 sequi ea dicta? Optio ipsa pariatur ratione ea a molestias vero repudiandae eos delectus.
             </template>
-        </ActivityDetailItem>
-        <ActivityDetailItem reverse>
+        </ActivityCard>
+        <ActivityCard reverse>
             <template #title>
                 TITLE
             </template>
@@ -88,17 +91,21 @@
                 exercitationem
                 sequi ea dicta? Optio ipsa pariatur ratione ea a molestias vero repudiandae eos delectus.
             </template>
-        </ActivityDetailItem>
+        </ActivityCard>
     </div>
 </template>
-
 <script>
-import ActivityDetailItem from '@components/ActivityDetailItem.vue'
+import DetailInit from '@/model/mixins/DetailInit'
+import ActivityCard from '@components/ActivityCard.vue'
 export default {
-    name: 'ActivityDetail',
+    name: 'TeamDetail',
 
     components: {
-        ActivityDetailItem
-    }
+        ActivityCard
+    },
+
+    mixins: [
+        DetailInit
+    ]
 }
 </script>

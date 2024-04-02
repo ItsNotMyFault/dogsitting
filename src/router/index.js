@@ -16,15 +16,31 @@ const router = createRouter({
       name: 'about',
       component: () => import('@views/AboutView.vue'),
       meta: {
-        title: 'Home'
+        title: 'À propos'
       }
     },
     {
-      path: '/team',
-      name: 'team',
-      component: () => import('@views/TeamView.vue'),
+      path: '/pricing',
+      name: 'pricing',
+      component: () => import('@views/Pricing/detail.vue'),
       meta: {
-        title: 'Home'
+        title: 'Pricing'
+      }
+    },
+    {
+      path: '/teams',
+      name: 'team',
+      component: () => import('@views/Team/index.vue'),
+      meta: {
+        title: 'Équipes'
+      }
+    },
+    {
+      path: '/teams/:name',
+      name: 'team-detail',
+      component: () => import('@views/Team/detail.vue'),
+      meta: {
+        title: 'Équipe détail'
       }
     },
     {
@@ -52,6 +68,10 @@ const router = createRouter({
       }
     }
   ]
+})
+
+router.afterEach((to, from) => {
+  document.title = to.meta.title
 })
 
 export default router

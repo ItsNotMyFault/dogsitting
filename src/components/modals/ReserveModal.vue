@@ -39,7 +39,7 @@ export default {
 
     data() {
         return {
-            isModalVisible: true,
+            isModalVisible: false,
             event: new Event(),
             color: 'var(--theme-red)'
         }
