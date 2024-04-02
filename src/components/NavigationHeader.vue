@@ -7,9 +7,10 @@
       <RouterLink to="/pricing">Prix</RouterLink>
       <RouterLink to="/reserve">Réserver</RouterLink>
       <RouterLink to="/activites">Activitées</RouterLink>
-      <RouterLink to="/location">Lieu</RouterLink>
+      <RouterLink to="/dogs">Pensionnaires</RouterLink>
     </div>
     <div class="navbar-right">
+      <div>Summary</div>
       <button>asdf</button>
 
     </div>

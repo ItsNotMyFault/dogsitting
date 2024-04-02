@@ -6,6 +6,8 @@
 @import '@style/components/Calendar.css';
 @import '@style/components/Modal.css';
 @import '@style/components/ColorPicker.css';
+@import '@style/components/TeamCard.css';
+@import '@style/components/PricingTable.css';
 
 /* #app {
   max-width: 1280px;

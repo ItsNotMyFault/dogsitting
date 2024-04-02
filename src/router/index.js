@@ -22,7 +22,7 @@ const router = createRouter({
     {
       path: '/pricing',
       name: 'pricing',
-      component: () => import('@views/Pricing/detail.vue'),
+      component: () => import('@views/Pricing/index.vue'),
       meta: {
         title: 'Pricing'
       }
@@ -57,14 +57,6 @@ const router = createRouter({
       component: () => import('@views/ActivitiesView.vue'),
       meta: {
         title: 'Activitées'
-      }
-    },
-    {
-      path: '/location',
-      name: 'location',
-      component: () => import('@views/LocationView.vue'),
-      meta: {
-        title: 'Lieu'
       }
     }
   ]

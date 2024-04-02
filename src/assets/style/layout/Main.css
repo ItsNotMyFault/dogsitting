@@ -12,3 +12,7 @@ main {
     font-weight: 600;
     color: var(--theme-main-color);
 }
+
+.sectionTitle.center{
+    text-align: center;
+}

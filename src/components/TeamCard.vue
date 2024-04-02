@@ -1,20 +1,16 @@
 <template>
-    <div class="test" @click="navigate()">
-        <div class="title">{{ team.name }}</div>
-        <div class="innertest">
+    <div class="TeamCard" @click="navigate()">
+        <div class="TeamCard-title">{{ team.name }}</div>
+        <div class="TeamCard-image">
             <img alt="img" src="@/assets/images/20230814_183252.jpg" />
         </div>
-        <div class="innertest">
+        <div class="TeamCard-image">
             <img alt="img" src="@/assets/images/20230817_191711.jpg" />
         </div>
-        <div class="innertest">
+        <div class="TeamCard-image">
             <img alt="img" src="@/assets/images/20231021_104551.jpg" />
         </div>
-        <div class="innertest">
-
-            <img alt="img" src="@/assets/images/20231021_112758.jpg" />
-        </div>
-        <div class="innertest">
+        <div class="TeamCard-image">
             <img alt="img" src="@/assets/images/20231021_112758.jpg" />
         </div>
     </div>

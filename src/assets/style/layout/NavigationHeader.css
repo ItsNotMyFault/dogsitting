@@ -47,6 +47,7 @@ header {
     justify-content: flex-start;
     flex-wrap: wrap;
     width: 100%;
+    min-width: 235px;
   }
 
   header .navbar-right{
