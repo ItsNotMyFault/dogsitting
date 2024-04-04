@@ -1,19 +1,19 @@
 <template>
     <div style="display: flex; flex-direction: row; flex-wrap: wrap;">
-        <TeamCard :team="team" v-for="team in list" :key="team" />
+        <DogCard :dog="dog" v-for="dog in list" :key="dog" />
     </div>
 </template>
 <script>
-import TeamCard from '@/components/TeamCard.vue'
+import DogCard from '@/components/DogCard.vue'
 import ListInit from '@/model/mixins/ListInit.js'
 
 export default {
-    name: 'TeamCardList',
+    name: 'DogCardList',
 
     mixins: [ListInit],
 
     components: {
-        TeamCard
+        DogCard
     },
 }
 </script>

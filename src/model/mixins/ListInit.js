@@ -1,9 +1,11 @@
 import axios from 'axios'
-import Team from '@/model/team'
 
 const listInit = {
-  created() {
-    this.hello()
+  props: {
+    model: {
+      type: Function,
+      required: true
+    }
   },
 
   data() {
@@ -14,14 +16,27 @@ const listInit = {
   },
 
   methods: {
-    hello() {
+    createEventInstance(data) {
+      console.log('this.model', this.model)
+      return new this.model(data)
+    },
+    init() {
       this.title = this.$router.currentRoute.value.fullPath
       console.log(this.$router.currentRoute.value)
       this.list = [
-        new Team({ id: 'test', name: 'test' }),
-        new Team({ id: 'test2', name: 'test2' }),
-        new Team({ id: 'test3', name: 'test3' })
+        this.createEventInstance({ id: 'test', name: 'test' }),
+        this.createEventInstance({ id: 'test2', name: 'test2' }),
+        this.createEventInstance({ id: 'test3', name: 'test3' }),
+        this.createEventInstance({ id: 'test3', name: 'test3' }),
+        this.createEventInstance({ id: 'test3', name: 'test3' }),
+        this.createEventInstance({ id: 'test3', name: 'test3' }),
+        this.createEventInstance({ id: 'test3', name: 'test3' }),
+        this.createEventInstance({ id: 'test3', name: 'test3' }),
+        this.createEventInstance({ id: 'test3', name: 'test3' }),
+        this.createEventInstance({ id: 'test3', name: 'test3' }),
+        this.createEventInstance({ id: 'test3', name: 'test3' })
       ]
+
       console.log('listInit mixin', this.title, this.list)
 
       //call axios to get list of teams with images and titles
@@ -33,6 +48,10 @@ const listInit = {
       //     })
       //     .catch()
     }
+  },
+
+  created() {
+    this.init()
   }
 }
 

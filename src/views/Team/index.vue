@@ -1,22 +1,24 @@
 <template>
-    <div style="width: 100%;">
+    <div class="section">
         <div class="sectionTitle">Teams</div>
-        <TeamCardList :teamList="list"></TeamCardList>
+        <TeamCardList :model="model"></TeamCardList>
     </div>
 </template>
 <script>
-
-import ListInit from '@/model/mixins/ListInit.js'
-import TeamCard from '@/components/TeamCard.vue'
 import TeamCardList from '@/components/TeamCardList.vue'
+import Team from '@/model/team'
+
 export default {
     name: 'TeamIndex',
 
     components: {
-        TeamCard,
         TeamCardList
     },
 
-    mixins: [ListInit],
+    data() {
+        return {
+            model: Team
+        }
+    },
 }
 </script>
