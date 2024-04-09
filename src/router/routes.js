@@ -40,6 +40,14 @@ const routes = [
     }
   },
   {
+    path: '/teams/create',
+    name: 'team-create',
+    component: () => import('@views/Team/form.vue'),
+    meta: {
+      title: 'Équipe création'
+    }
+  },
+  {
     path: '/reserve',
     name: 'reserve',
     component: () => import('@views/ReserveView.vue'),
@@ -61,6 +69,14 @@ const routes = [
     component: () => import('@views/Dog/index.vue'),
     meta: {
       title: 'Pensionnaires'
+    }
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('@views/Auth/login.vue'),
+    meta: {
+      title: 'Login'
     }
   }
 ]

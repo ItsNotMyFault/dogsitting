@@ -19,12 +19,6 @@ export default {
     NavigationHeader,
     MyFooter
   },
-
-  data() {
-    return {
-      metaTitle: null
-    }
-  },
 }
 
 

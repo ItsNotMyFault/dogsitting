@@ -1,6 +1,11 @@
 <template>
     <div class="section">
         <div class="sectionTitle">Teams</div>
+        <RouterLink to="/teams/create">
+            <button>
+                Créer une équipe
+            </button>
+        </RouterLink>
         <TeamCardList :model="model"></TeamCardList>
     </div>
 </template>

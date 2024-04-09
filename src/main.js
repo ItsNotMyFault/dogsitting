@@ -6,6 +6,7 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
+import firebaseanalytics from './firebase'
 
 const app = createApp(App)
 
@@ -22,4 +23,5 @@ Object.entries(components).forEach(([path, definition]) => {
 app.use(createPinia())
 
 app.use(router)
+app.use(firebaseanalytics)
 app.mount('#app')

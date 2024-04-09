@@ -9,6 +9,8 @@
 @import '@style/components/TeamCard.css';
 @import '@style/components/PricingTable.css';
 @import '@style/components/DogCard.css';
+@import '@style/components/Form.css';
+@import '@style/components/LoginControls.css';
 
 /* #app {
   max-width: 1280px;

@@ -1,0 +1,27 @@
+input {
+    border-radius: 25px;
+    padding: 10px;
+}
+
+label {
+    margin-bottom: 5px;
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+
+.form button {
+    background-color: var(--theme-main-color);
+    border-radius: 25px;
+    padding: 10px;
+}
+
+.form {
+ display: flex;   
+ flex-direction: column;
+ width: 100%;
+ background-color: rgb(44, 52, 59);
+ color: white;
+ padding: 15px;
+ border-radius: 25px;
+}

@@ -2,7 +2,7 @@
 header {
     line-height: 1.5;
     max-height: 100vh;
-    position: absolute;
+    /* position: absolute; */
     top: 0;
     padding: 30px;
     width: 100%;
@@ -39,19 +39,43 @@ header {
   
   header .wrapper {
     display: flex;
+    flex-direction: row;
+    /* align-items: center; */
     margin-bottom: 20px;
     width: 100%;
   }
   header .navbar-left{
     display: flex;
     justify-content: flex-start;
+    align-items: center;
     flex-wrap: wrap;
     width: 100%;
     min-width: 235px;
   }
 
+  .navbar-right button{
+    background-color: var(--theme-grey);
+    border-radius: 25px;
+    padding: 10px;
+  }
+
   header .navbar-right{
     display: flex;
     justify-content: flex-end;
-    width: 100%;
+    align-items: center;
   }
+
+.loginControls{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.loginControls .icons{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-left: 5px;
+  max-width: 30px;
+}
+  
