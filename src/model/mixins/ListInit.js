@@ -1,4 +1,4 @@
-import axios from 'axios'
+import crudServices from '@/services/crudServices'
 
 const listInit = {
   props: {
@@ -20,24 +20,16 @@ const listInit = {
       console.log('this.model', this.model)
       return new this.model(data)
     },
-    init() {
+    async init() {
       this.title = this.$router.currentRoute.value.fullPath
-      console.log(this.$router.currentRoute.value)
-      this.list = [
-        this.createEventInstance({ id: 'test', name: 'test' }),
-        this.createEventInstance({ id: 'test2', name: 'test2' }),
-        this.createEventInstance({ id: 'test3', name: 'test3' }),
-        this.createEventInstance({ id: 'test3', name: 'test3' }),
-        this.createEventInstance({ id: 'test3', name: 'test3' }),
-        this.createEventInstance({ id: 'test3', name: 'test3' }),
-        this.createEventInstance({ id: 'test3', name: 'test3' }),
-        this.createEventInstance({ id: 'test3', name: 'test3' }),
-        this.createEventInstance({ id: 'test3', name: 'test3' }),
-        this.createEventInstance({ id: 'test3', name: 'test3' }),
-        this.createEventInstance({ id: 'test3', name: 'test3' })
-      ]
 
-      console.log('listInit mixin', this.title, this.list)
+      var teams = await crudServices.getAll(this.model.name)
+
+      this.list = teams.map((team) => {
+        return this.createEventInstance(team)
+      })
+
+      console.log('listInit mixin', this.list)
 
       //call axios to get list of teams with images and titles
 

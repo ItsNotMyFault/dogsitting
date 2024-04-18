@@ -22,11 +22,11 @@ const events = [
   }),
   new Event({
     id: 123123,
-    title: 'Unknown Title',
+    title: 'Unknown Title boom',
     start: '2024-04-01',
     end: '2024-04-05',
     allDay: false,
-    className: 'umbt-success',
+    className: 'available',
     extendedProps: {
       // occupiedMoment: occupiedMoment,
       quarter1: 'test'

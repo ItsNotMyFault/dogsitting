@@ -22,6 +22,7 @@ import multiMonthPlugin from '@fullcalendar/multimonth'
 import interactionPlugin from '@fullcalendar/interaction'
 import listPlugin from '@fullcalendar/list';
 import { availableEvents, busyEvents } from '../data/events'
+import calendarServices from '@services/calendarServices'
 
 export default {
   name: 'ClientCalendar',

@@ -19,6 +19,10 @@ export default {
     NavigationHeader,
     MyFooter
   },
+
+  created() {
+    console.log('created reserve', this.$router.currentRoute.value);
+  }
 }
 
 

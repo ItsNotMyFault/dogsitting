@@ -31,5 +31,9 @@
                 sutff
             </div>
         </div>
+        <p>
+            © {{ new Date().getFullYear() }} <b>Dogsitting</b>.
+            <i class="mdi mdi-heart text-danger"></i>
+        </p>
     </div>
 </template>

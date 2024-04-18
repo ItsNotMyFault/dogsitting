@@ -22,6 +22,10 @@ export default {
     return {
       isAdmin: false
     }
+  },
+
+  created() {
+    console.log('created reserve', this.$router.currentRoute.value);
   }
 }
 
