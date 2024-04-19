@@ -2,9 +2,14 @@ class Team {
   constructor(data) {
     this.data = data
     this.name = data?.Name
-    this.phone = data?.phone
-    this.email = data?.email
-    this.id = data?.id
+    this.normalizedName = data?.NormalizedName
+    this.id = data?.Id
+    this.createdAt = data?.CreatedAt
+    this.approvedAt = data?.ApprovedAt
+  }
+
+  get normalizedIdentifier() {
+    return this.normalizedName
   }
 }
 

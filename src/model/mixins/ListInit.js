@@ -17,7 +17,6 @@ const listInit = {
 
   methods: {
     createEventInstance(data) {
-      console.log('this.model', this.model)
       return new this.model(data)
     },
     async init() {

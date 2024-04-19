@@ -26,14 +26,7 @@ const events = [
     start: '2024-04-01',
     end: '2024-04-05',
     allDay: false,
-    className: 'available',
-    extendedProps: {
-      // occupiedMoment: occupiedMoment,
-      quarter1: 'test'
-      // quarter2: quarter2,
-      // quarter3: quarter3,
-      // quarter4: quarter4,
-    }
+    className: 'available'
   }),
   new Event({
     title: 'Meeting',
@@ -102,7 +95,7 @@ const availableEvents = [
 
 const busyEvents = [
   new Event({
-    start: '2024-03-25',
+    start: '2024-04-25',
     display: 'background',
     backgroundColor: 'red',
     extendedProps: {
@@ -110,7 +103,7 @@ const busyEvents = [
     }
   }),
   new Event({
-    start: '2024-03-26',
+    start: '2024-04-26',
     display: 'background',
     backgroundColor: 'red',
     extendedProps: {

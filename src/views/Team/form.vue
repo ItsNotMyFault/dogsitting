@@ -12,13 +12,15 @@
         <label>email</label>
         <input type="text" v-model="team.email">
         double => {{ double }} <br>
-        <button type="submit" @click="submit">submit {{ count }}</button>
+        <button type="submit" @click="submit">submit count {{ count }}</button>
+        <button type="submit" @click="submitCreate">submit team</button>
     </div>
 </template>
 <script>
 import Team from '@/model/team'
 import { mapStores, mapState, mapActions } from 'pinia'
 import { useCounterStore } from '@/stores/counter'
+import teamServices from '@services/teamServices'
 
 export default {
     name: 'TeamForm',
@@ -40,7 +42,12 @@ export default {
         async submit() {
             this.increment()
             //axios create team?
+        },
+
+        async submitCreate() {
+            teamServices.create(this.team)
+            //axios create team?
         }
     }
 }
-</script>@/stores/counter
+</script>

@@ -37,7 +37,8 @@ const routes = [
     component: () => import('@views/Team/detail.vue'),
     meta: {
       title: 'Équipe détail'
-    }
+    },
+    props: true
   },
   {
     path: '/teams/create',

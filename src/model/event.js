@@ -2,12 +2,18 @@ class Event {
   constructor(data) {
     this.data = data
     this.className = ''
-    this.title = data?.title || 'missing title'
-    this.allDay = false
-    this.extendedProps = {}
+    this.id = data?.Id
     this.start = null
-    this.end = null
-    this.display = 'background'
+    this.title = data?.EventSubject || 'missing title'
+    // this.allDay = data?.IsAllDayEvent
+  }
+
+  get calendarObjectEvent() {
+    return {
+      start: this.start,
+      display: this.display,
+      backgroundColor: this.backgroundColor
+    }
   }
 }
 

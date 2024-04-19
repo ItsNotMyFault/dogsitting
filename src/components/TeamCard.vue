@@ -1,6 +1,6 @@
 <template>
     <div class="TeamCard" @click="navigate()">
-        <div class="TeamCard-title">{{ team.name }}</div>
+        <div class="TeamCard-title">{{ teamName }}</div>
         <div class="TeamCard-image">
             <img alt="img" src="@/assets/images/20230814_183252.jpg" />
         </div>
@@ -34,7 +34,7 @@ export default {
 
     methods: {
         navigate() {
-            this.$router.push({ path: `/teams/${this.team.name}` })
+            this.$router.push({ path: `/teams/${this.team.normalizedIdentifier}` })
         }
     }
 }

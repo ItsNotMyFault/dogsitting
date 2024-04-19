@@ -1,7 +1,7 @@
 <template>
   <div class="demo-app">
     <div class="demo-app-main calendar">
-      <FullCalendar ref="fullcalendar" :options="calendarOptions">
+      <FullCalendar ref="fullcalendar" :options="calendarOptions" v-if="loaded">
         <template v-slot:eventContent="arg">
           {{ logstuff(arg.event) }}
           {{ arg.event?.title }}
@@ -27,6 +27,13 @@ import calendarServices from '@services/calendarServices'
 export default {
   name: 'ClientCalendar',
 
+  props: {
+    team: {
+      type: String,
+      required: true
+    }
+  },
+
   components: {
     FullCalendar,
   },
@@ -37,6 +44,7 @@ export default {
   },
   data() {
     return {
+      loaded: false,
       calendarOptions: {
         height: 875,
         expandRows: true,
@@ -53,6 +61,14 @@ export default {
           listMonth: { buttonText: 'List' },
         },
         weekends: true,
+        // events: [
+        //   new Event({
+        //     start: '2024-04-15',
+        //     display: 'background',
+        //     backgroundColor: 'green',
+        //   }),
+        // ],
+        // events: [],
         events: [...availableEvents.map(event => event.data), ...busyEvents.map(event => event.data)],
         headerToolbar: {
           left: 'prev,next,today',
@@ -62,14 +78,23 @@ export default {
         footerToolbar: {
           center: 'title',
         },
-        // slotMinTime: "07:00:00",
-        // slotMaxTime: "19:00:00",
       }
     }
   },
-  created() {
+  async created() {
+    // this.team = "annieannick"
+    var teamName = "annieannick"
     this.calendarOptions.dateClick = this.handleDateClick
     this.calendarOptions.weekends = this.showWeekends
+
+    console.log('availableEvents, busyEvents', availableEvents, busyEvents, teamName)
+
+    var busyEventsTest = await calendarServices.getBusyEvents(teamName);
+    console.log("busyEvents", busyEventsTest);
+    this.events = busyEventsTest.map(x => x.calendarObjectEvent)
+    console.log("this.events", this.events);
+    // this.loaded = true
+
   },
 }
 </script>
