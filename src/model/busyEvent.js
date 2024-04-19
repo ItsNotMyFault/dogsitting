@@ -10,14 +10,14 @@ class BusyEvent extends Event {
   }
 
   SetBackgroundColor() {
-    if (this.data.IsBusy) {
+    if (this.data.IsBusy && !this.data.IsFull) {
       this.backgroundColor = 'yellow'
     } else if (this.data.IsFree) {
       this.backgroundColor = 'green'
     } else if (this.data.IsFull) {
       this.backgroundColor = 'red'
     } else {
-      this.backgroundColor = 'red'
+      this.backgroundColor = 'purple'
     }
   }
 }

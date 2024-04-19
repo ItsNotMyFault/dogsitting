@@ -1,7 +1,7 @@
 <template>
   <div class="demo-app">
     <div class="demo-app-main calendar">
-      <FullCalendar ref="fullcalendar" :options="calendarOptions" v-if="loaded">
+      <FullCalendar ref="fullcalendar" :options="calendarOptions">
         <template v-slot:eventContent="arg">
           {{ logstuff(arg.event) }}
           {{ arg.event?.title }}
@@ -61,14 +61,6 @@ export default {
           listMonth: { buttonText: 'List' },
         },
         weekends: true,
-        // events: [
-        //   new Event({
-        //     start: '2024-04-15',
-        //     display: 'background',
-        //     backgroundColor: 'green',
-        //   }),
-        // ],
-        // events: [],
         events: [...availableEvents.map(event => event.data), ...busyEvents.map(event => event.data)],
         headerToolbar: {
           left: 'prev,next,today',
@@ -87,13 +79,8 @@ export default {
     this.calendarOptions.dateClick = this.handleDateClick
     this.calendarOptions.weekends = this.showWeekends
 
-    console.log('availableEvents, busyEvents', availableEvents, busyEvents, teamName)
-
     var busyEventsTest = await calendarServices.getBusyEvents(teamName);
-    console.log("busyEvents", busyEventsTest);
-    this.events = busyEventsTest.map(x => x.calendarObjectEvent)
-    console.log("this.events", this.events);
-    // this.loaded = true
+    this.calendarOptions.events = busyEventsTest.map(x => x.calendarObjectEvent)
 
   },
 }
