@@ -1,3 +1,7 @@
+import { clientRoutes } from './clientRoutes.js'
+import { teamRoutes } from './teamRoutes.js'
+import { Roles } from '@utils/Roles.js'
+
 const routes = [
   {
     path: '/',
@@ -7,6 +11,8 @@ const routes = [
       title: 'Home'
     }
   },
+  ...clientRoutes,
+  ...teamRoutes,
   {
     path: '/about',
     name: 'about',
@@ -23,31 +29,7 @@ const routes = [
       title: 'Pricing'
     }
   },
-  {
-    path: '/teams',
-    name: 'team',
-    component: () => import('@views/Team/index.vue'),
-    meta: {
-      title: 'Équipes'
-    }
-  },
-  {
-    path: '/teams/:name',
-    name: 'team-detail',
-    component: () => import('@views/Team/detail.vue'),
-    meta: {
-      title: 'Équipe détail'
-    },
-    props: true
-  },
-  {
-    path: '/teams/create',
-    name: 'team-create',
-    component: () => import('@views/Team/form.vue'),
-    meta: {
-      title: 'Équipe création'
-    }
-  },
+
   {
     path: '/reserve',
     name: 'reserve',
@@ -78,6 +60,15 @@ const routes = [
     component: () => import('@views/Auth/login.vue'),
     meta: {
       title: 'Login'
+    }
+  },
+  {
+    path: '/logout',
+    name: 'logout',
+    component: () => import('@views/Auth/logout.vue'),
+    meta: {
+      title: 'Logout',
+      authorize: [Roles.Client, Roles.Admin, Roles.SuperAdmin]
     }
   }
 ]

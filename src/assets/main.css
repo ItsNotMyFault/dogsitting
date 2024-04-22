@@ -12,6 +12,8 @@
 @import '@style/components/Form.css';
 @import '@style/components/LoginControls.css';
 @import '@style/components/buttons/FacebookButton.css';
+@import '@style/components/ReservationCard.css';
+@import '@style/components/CalendarControls.css';
 
 /* #app {
   max-width: 1280px;

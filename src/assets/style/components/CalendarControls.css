@@ -1,0 +1,9 @@
+.calendarControls{
+  background-color: white;
+  height: 100%;
+  width: 100%;
+  min-height: 100px;
+  color: black;
+  margin-left: 20px;
+  border-radius: 15px;
+}

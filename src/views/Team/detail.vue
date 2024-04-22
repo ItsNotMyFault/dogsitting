@@ -7,8 +7,26 @@
             </div>
         </div>
         <br>
-        <div v-if="showCalendar">
+        <!-- this css is completely broken. -->
+        <div v-if="showCalendar" style="display: flex; flex-direction: row; height: 1000px;">
             <ClientCalendar :team="normalizedTeamName"></ClientCalendar>
+            <div class="calendarControls">
+                asdfasdf
+                should show error message if trying to add event on unavailable cases.
+                <br>
+                auto complete after clicking on calendar. enable drag event.
+                <br>
+                should auto delete previously clicked event.
+                <div class="form">
+                    <label>lastName</label>
+                    <input type="text">
+                    <label>date start</label>
+                    <Datepicker />
+                    <label>date end</label>
+                    <Datepicker />
+                </div>
+                <button>Reserve</button>
+            </div>
         </div>
         <div>
             <ActivityCard img="20230814_183252">

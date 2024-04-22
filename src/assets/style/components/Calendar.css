@@ -42,8 +42,8 @@ h2 {
     background: #5f6668;
     border-right: 1px solid #d3e2e8;
     width: 850px;
-    flex-grow: 1;
-    padding: 3em;
+    /* flex-grow: 1;
+    padding: 3em; */
   }
   
   .fc {
@@ -63,4 +63,14 @@ h2 {
   .fc-day-past {
     background-color: rgb(237, 241, 240);
 }
+
+.fc-event-today{
+  background-color: rgb(14, 161, 124);
+}
+
+.fc-bg-event {
+  opacity: 0.6!important; 
+}
+
+
 

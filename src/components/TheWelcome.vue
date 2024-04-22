@@ -106,9 +106,5 @@ export default {
     CommunityIcon,
     SupportIcon
   },
-
-  created() {
-    console.log('hi');
-  }
 }
 </script>

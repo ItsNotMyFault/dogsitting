@@ -6,7 +6,11 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
-import firebaseanalytics from './firebase'
+import { useAuthStore } from '@/stores/authStore'
+const pinia = createPinia()
+
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+pinia.use(piniaPluginPersistedstate)
 
 const app = createApp(App)
 
@@ -20,8 +24,9 @@ Object.entries(components).forEach(([path, definition]) => {
   app.component(componentName, definition.default)
 })
 
-app.use(createPinia())
+app.use(pinia)
 
 app.use(router)
-app.use(firebaseanalytics)
+const authStore = useAuthStore()
+app.use(authStore)
 app.mount('#app')

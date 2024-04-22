@@ -1,0 +1,31 @@
+.reservationCard {
+    background-color: rgba(255, 255, 255, 0.1);
+    margin-bottom: 10px;
+    position: relative;
+    border-radius: 12px;
+    /* flex: 1; */
+    line-height: 2rem;
+    padding: 10px;
+}
+
+.reservationCard-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-weight: bold;
+    color: white;
+}
+
+.reservationCard-notes{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.reservationCard-footer{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.reservation-approved{
+color: green;
+}

@@ -1,7 +1,7 @@
 import axios from 'axios'
-
+import User from '@model/user'
 axios.defaults.withCredentials = true
-let domainUrl = ''
+let domainUrl = 'https://localhost:5188'
 // let domainUrl = process.env.VUE_APP_DOMAIN_API
 
 export default {
@@ -9,14 +9,9 @@ export default {
     return axios
       .get('https://localhost:5188/login')
       .then((res) => {
-        console.log('facebook', res.request.responseURL)
-
-        window.open(res.request.responseURL, '_blank').focus()
-        // return await ConsumeExternalProviderAccessToken(tokenObj).then((res2) => {
-        //   console.info(`successfully authenticated: ${res2}`)
-        //   return res2
-        // })
-        return res
+        console.log('backend login res', res)
+        window.open(res.request.responseURL, '_self').focus()
+        return { success: true }
       })
       .catch((error) => {
         console.error(`error during authentication: ${error}`)
@@ -36,16 +31,15 @@ export default {
       })
     return result
   },
-  async GetCurrentUser() {
-    const result = await axios
-      .get(`${domainUrl}/Authentication/GetCurrentUserAsync`)
+  GetCurrentUser() {
+    return axios
+      .get(`${domainUrl}/user`)
       .then((response) => {
-        return response
+        return new User(response.data)
       })
       .catch((error) => {
         return error.response
       })
-    return result
   },
   async GetUserLoginProviders() {
     const result = await axios

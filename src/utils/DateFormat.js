@@ -1,6 +1,15 @@
 import moment from 'moment'
 
 export default {
+  GetTimeAgo(date) {
+    const now = moment()
+    const days = now.diff(date, 'days')
+    if (days < 0) {
+      return `Coming up in ${Math.abs(days)} days`
+    }
+    const weeks = now.diff(date, 'weeks')
+    return days > 14 ? `${weeks} weeks ago` : `${days} days ago`
+  },
   SetDateThisMonth() {
     var dateFrom = moment().startOf('month')
     var dateTo = moment().endOf('month')
