@@ -10,8 +10,8 @@
 
 <script>
 import ReserveModal from '@components/modals/ReserveModal.vue'
-import AdminCalendar from '@components/AdminCalendar.vue'
-import ClientCalendar from '@components/ClientCalendar.vue'
+import AdminCalendar from '@components/calendar/AdminCalendar.vue'
+import ClientCalendar from '@components/calendar/ClientCalendar.vue'
 
 export default {
   name: 'ReserveView',

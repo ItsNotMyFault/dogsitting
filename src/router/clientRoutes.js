@@ -6,5 +6,21 @@ export const clientRoutes = [
     meta: {
       title: 'My Profile'
     }
+  },
+  {
+    path: '/my-reservations',
+    name: 'myreservations',
+    component: () => import('@views/Reservation/MyReservationView.vue'),
+    meta: {
+      title: 'My Reservations'
+    }
+  },
+  {
+    path: '/team-reservations',
+    name: 'teamreservations',
+    component: () => import('@views/Reservation/TeamReservationView.vue'),
+    meta: {
+      title: 'Team Reservations'
+    }
   }
 ]

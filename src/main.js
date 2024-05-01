@@ -14,6 +14,10 @@ pinia.use(piniaPluginPersistedstate)
 
 const app = createApp(App)
 
+import VueDatePicker from '@vuepic/vue-datepicker'
+import '@vuepic/vue-datepicker/dist/main.css'
+app.component('VueDatePicker', VueDatePicker)
+
 //initialize components in @components as global
 const components = import.meta.glob(`./components/icons/*.vue`, { eager: true })
 Object.entries(components).forEach(([path, definition]) => {

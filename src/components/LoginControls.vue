@@ -13,13 +13,13 @@
             <span v-else>
                 <RouterLink class="loginControls-modalLink" to="/login">login</RouterLink>
             </span>
-            <hr>
+            <hr v-if="isLoggedIn === true">
             <span v-if="isLoggedIn === true">
                 User
                 <RouterLink class="loginControls-modalLink" to="/my-profile">my profile</RouterLink>
                 <RouterLink class="loginControls-modalLink" to="/my-reservations">reservations</RouterLink>
             </span>
-            <span>
+            <span v-if="isLoggedIn === true">
                 Team
                 <RouterLink class="loginControls-modalLink" to="/my-team">profile</RouterLink>
                 <RouterLink class="loginControls-modalLink" to="/team-reservations">team reservations</RouterLink>

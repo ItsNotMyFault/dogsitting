@@ -1,13 +1,20 @@
 <template>
     <div class="reservationCard">
         <div class="reservationCard-title">
-            <span>{{ reservation.title }} {{ reservation.lodger }}</span>
+            <!-- TODO Créer une 2e CARD pour différencier team reservations de réservations d'un client. -->
+            <span>Team: {{ reservation.team.name }}</span>
+            <span>Client: {{ reservation.client.name }}</span>
+
             <span>
                 created at: <moment-ago :date="reservation.dateFrom"></moment-ago>
             </span>
         </div>
+        <div>
+            Reservation: {{ reservation.title }} <br>
+            lodgerCount: ({{ reservation.lodgerCount }})
+        </div>
         <div class="reservationCard-period">
-            Periode {{ reservation.dateFrom }} to {{ reservation.dateTo }}
+            Periode: {{ reservation.dateFrom }} to {{ reservation.dateTo }}
         </div>
         <div class="reservationCard-notes">
             Notes <br>

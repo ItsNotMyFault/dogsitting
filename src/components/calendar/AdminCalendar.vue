@@ -21,33 +21,39 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import multiMonthPlugin from '@fullcalendar/multimonth'
 import interactionPlugin from '@fullcalendar/interaction'
 import listPlugin from '@fullcalendar/list';
-import { availableEvents, busyEvents } from '../data/events'
-import calendarServices from '@services/calendarServices'
+import { events, availableEvents, busyEvents } from '../../data/events'
 
 export default {
-  name: 'ClientCalendar',
-
-  props: {
-    team: {
-      type: String,
-      required: true
-    }
-  },
+  name: 'AdminCalendar',
 
   components: {
     FullCalendar,
   },
   methods: {
+    handleDateClick(arg) {
+      console.log('date click! ' + arg.dateStr, arg)
+      console.log(this.$refs.fullcalendar);
+      const fullCalendarApi = this.$refs.fullcalendar.getApi()
+      console.log(fullCalendarApi);
+      this.calendarOptions.events = [
+        ...this.calendarOptions.events,
+        {
+          start: arg.dateStr,
+          title: 'added event'
+        }
+      ]
+    },
     logstuff(arg) {
       // console.log(arg.title, arg)
     },
   },
   data() {
     return {
-      loaded: false,
       calendarOptions: {
         height: 875,
         expandRows: true,
+        editable: true,
+        droppable: true,
         plugins: [listPlugin, dayGridPlugin, interactionPlugin, timeGridPlugin, multiMonthPlugin],
         allDaySlot: true,
         initialView: 'dayGridMonth',
@@ -61,7 +67,7 @@ export default {
           listMonth: { buttonText: 'List' },
         },
         weekends: true,
-        events: [...availableEvents.map(event => event.data), ...busyEvents.map(event => event.data)],
+        events: [...events.map(event => event.data), ...availableEvents.map(event => event.data), ...busyEvents.map(event => event.data)],
         headerToolbar: {
           left: 'prev,next,today',
           center: 'title',
@@ -70,18 +76,21 @@ export default {
         footerToolbar: {
           center: 'title',
         },
+        slotMinTime: "07:00:00",
+        slotMaxTime: "20:00:00",
+        eventResize: function (info) {
+          console.log(info.event.title + " end is now " + info.event.end.toISOString());
+
+          // if (!confirm("is this okay?")) {
+          //   info.revert();
+          // }
+        }
       }
     }
   },
-  async created() {
-    // this.team = "annieannick"
-    var teamName = "annieannick"
+  created() {
     this.calendarOptions.dateClick = this.handleDateClick
     this.calendarOptions.weekends = this.showWeekends
-
-    var busyEventsTest = await calendarServices.getBusyEvents(teamName);
-    this.calendarOptions.events = busyEventsTest.map(x => x.calendarObjectEvent)
-
   },
 }
 </script>

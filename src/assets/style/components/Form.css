@@ -10,7 +10,7 @@ label {
 }
 
 
-.form button {
+.form-submit {
     background-color: var(--theme-main-color);
     border-radius: 25px;
     padding: 10px;

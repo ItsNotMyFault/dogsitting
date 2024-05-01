@@ -6,22 +6,28 @@ import Team from '@model/team.js'
 
 export default {
   async getTeams() {
-    console.log('getAll')
-
     return await axios
       .get(`${domainUrl}/teams`)
       .then((res) => {
         return res.data
       })
       .catch((error) => {
-        console.error(`error during fetch teams: ${error}`)
+        return error.response
+      })
+  },
+
+  async getUserTeams(userId) {
+    return await axios
+      .get(`${domainUrl}/team/user/${userId}`)
+      .then((res) => {
+        return res.data.map((team) => new Team(team))
+      })
+      .catch((error) => {
         return error.response
       })
   },
 
   async create(team) {
-    console.log('createteam')
-
     return await axios
       .post(`${domainUrl}/Team/create`, team)
       .then((res) => {
@@ -29,7 +35,6 @@ export default {
         return res
       })
       .catch((error) => {
-        console.log('SelectMailSettings', error)
         return error.response
       })
   },
@@ -41,7 +46,6 @@ export default {
         return new Team(res.data)
       })
       .catch((error) => {
-        console.error(`error during fetch teams: ${error}`)
         return error.response
       })
   }

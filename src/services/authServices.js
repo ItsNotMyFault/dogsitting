@@ -8,10 +8,13 @@ export default {
   async FacebookOauthLogin() {
     return axios
       .get('https://localhost:5188/login')
-      .then((res) => {
+      .then(async (res) => {
         console.log('backend login res', res)
+
+        // return { success: true }
+        const loggedInUser = await this.GetCurrentUser()
         window.open(res.request.responseURL, '_self').focus()
-        return { success: true }
+        return loggedInUser
       })
       .catch((error) => {
         console.error(`error during authentication: ${error}`)
@@ -33,7 +36,7 @@ export default {
   },
   GetCurrentUser() {
     return axios
-      .get(`${domainUrl}/user`)
+      .get(`${domainUrl}/authuser`)
       .then((response) => {
         return new User(response.data)
       })

@@ -7,27 +7,7 @@
             </div>
         </div>
         <br>
-        <!-- this css is completely broken. -->
-        <div v-if="showCalendar" style="display: flex; flex-direction: row; height: 1000px;">
-            <ClientCalendar :team="normalizedTeamName"></ClientCalendar>
-            <div class="calendarControls">
-                asdfasdf
-                should show error message if trying to add event on unavailable cases.
-                <br>
-                auto complete after clicking on calendar. enable drag event.
-                <br>
-                should auto delete previously clicked event.
-                <div class="form">
-                    <label>lastName</label>
-                    <input type="text">
-                    <label>date start</label>
-                    <Datepicker />
-                    <label>date end</label>
-                    <Datepicker />
-                </div>
-                <button>Reserve</button>
-            </div>
-        </div>
+        <ClientCalendar v-if="showCalendar" :teamName="normalizedTeamName"></ClientCalendar>
         <div>
             <ActivityCard img="20230814_183252">
                 <template #title>
@@ -130,8 +110,9 @@
 </template>
 <script>
 import ActivityCard from '@components/ActivityCard.vue'
-import ClientCalendar from '@components/ClientCalendar.vue'
+import ClientCalendar from '@components/calendar/ClientCalendar.vue'
 import teamServices from '@services/teamServices.js'
+
 
 export default {
     name: 'TeamDetail',
@@ -162,7 +143,14 @@ export default {
         return {
             showCalendar: true,
             title: null,
-            team: null
+            team: null,
+
+        }
+    },
+
+    methods: {
+        submitForm() {
+            console.log('submit form');
         }
     },
 

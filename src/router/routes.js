@@ -33,7 +33,7 @@ const routes = [
   {
     path: '/reserve',
     name: 'reserve',
-    component: () => import('@views/ReserveView.vue'),
+    component: () => import('@views/Reservation/ReserveView.vue'),
     meta: {
       title: 'Réserver'
     }

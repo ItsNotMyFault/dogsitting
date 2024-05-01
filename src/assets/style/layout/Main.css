@@ -30,3 +30,8 @@ main {
     color: green;
     cursor: pointer;
   }
+
+  
+.teamtest:hover {
+    color:red;
+    }
