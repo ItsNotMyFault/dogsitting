@@ -52,6 +52,8 @@ import reservationServices from '@services/reservationServices'
 import { availableEvents, busyEvents } from '../../data/events'
 import Reservation from '@/model/reservation'
 import { useAuthStore } from '@/stores/authStore'
+import DateFormat from '@utils/DateFormat'
+import moment from 'moment'
 
 export default {
   name: 'ClientCalendar',
@@ -71,11 +73,14 @@ export default {
       if (this.dateFrom !== null) {
         return
       }
-      console.log('date click! ' + arg.dateStr, arg)
-      console.log(this.$refs.fullcalendar);
-      const fullCalendarApi = this.$refs.fullcalendar.getApi()
-      this.dateFrom = new Date(arg.dateStr)
-      console.log(fullCalendarApi);
+      // this.dateFrom = new Date(arg.dateStr)
+      // this.dateTo = moment(new Date(arg.dateStr)).add(1, 'hour')
+
+      // this.dateFrom = new Date(arg.dateStr)
+      console.log('date lcicked', new Date(arg.dateStr));
+      console.log('date lcicked moment', moment(new Date(arg.dateStr)).add(1, 'days'));
+      this.dateFrom = moment(new Date(arg.dateStr)).add(1, 'days').startOf('day')
+      this.dateTo = moment(new Date(arg.dateStr)).add(1, 'days').endOf('day')
       this.calendarOptions.events = [
         ...this.originalEvents,
         {
@@ -84,35 +89,14 @@ export default {
         }
       ]
     },
-    test(test) {
-      console.log('test', test)
-    },
     handleEventResize(info) {
       this.eventAdded = info
-      console.log(info.event.end)
-      this.dateTo = new Date(info.event.end)
+      this.dateTo = moment(new Date(info.event.end)).add(-1, 'days').endOf('day')
     },
     handleEventDragStop(info) {
       this.eventAdded = info
-      console.log(info);
-      console.log('info.event.start', info.event.start);
-      console.log('info.event.end', info.event.end);
-      this.dateFrom = new Date(info.event.start)
-      this.dateTo = new Date(info.event.end)
-    },
-    handleDateFrom(date) {
-      console.log('handledateFrom', date, this.$refs.fullcalendar);
-
-      this.dateFrom = date
-      this.calendarOptions.events = [
-        ...this.originalEvents,
-        {
-          start: date,
-          title: this.title
-        }
-      ]
-
-
+      this.dateFrom = moment(new Date(info.event.start))
+      this.dateTo = moment(new Date(info.event.end)).add(-1, 'days').endOf('day')
     },
     submitReservation() {
       const authStore = useAuthStore();
@@ -122,13 +106,26 @@ export default {
       newReservation.client = authStore.applicationUser
       reservationServices.createReservation(newReservation, this.teamName)
     },
+    handleDateFrom(date) {
+      //TODO fix this method ASAP
+      this.dateFrom = date
+      this.calendarOptions.events = [
+        ...this.originalEvents,
+        {
+          start: this.dateFrom,
+          end: this.dateTo,
+          title: this.title
+        }
+      ]
+    },
     handleDateTo(date) {
+      //TODO fix this method ASAP
       this.dateTo = date
       this.calendarOptions.events = [
         ...this.originalEvents,
         {
           start: this.dateFrom,
-          end: date,
+          end: this.dateTo,
           title: this.title
         }
       ]

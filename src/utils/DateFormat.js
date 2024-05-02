@@ -278,6 +278,9 @@ export default {
     weekday[10] = 'Novembre'
     weekday[11] = 'Décembre'
     return weekday
+  },
+  GetPreviousDay(date) {
+    return moment(date).add(-1, 'day')
   }
 }
 
