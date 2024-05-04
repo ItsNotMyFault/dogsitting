@@ -72,5 +72,15 @@ h2 {
   opacity: 0.6!important; 
 }
 
+.fc-theme-standard td {
+  cursor: pointer;
+}
 
+.fc-daygrid-day-events{
+  cursor: auto;
+}
 
+.fc-theme-standard td .selected-day{
+    border: solid 3px rgb(57, 158, 74);
+    background-color:  rgb(128, 227, 158);
+}

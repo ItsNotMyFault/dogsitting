@@ -1,5 +1,6 @@
 import axios from 'axios'
 import BusyEvent from '@model/busyEvent'
+import ReservationEvent from '@model/reservationEvent'
 
 axios.defaults.withCredentials = true
 let domainUrl = 'https://localhost:5188'
@@ -24,6 +25,18 @@ export default {
       .get(`${domainUrl}/calendar/team/${team}/busyevents`)
       .then((res) => {
         return res.data.map((event) => new BusyEvent(event))
+      })
+      .catch((error) => {
+        console.error(`error during fetch teams: ${error}`)
+        return error.response
+      })
+  },
+
+  getReservationEvents(team) {
+    return axios
+      .get(`${domainUrl}/calendar/team/${team}/reservationevents`)
+      .then((res) => {
+        return res.data.map((event) => new ReservationEvent(event))
       })
       .catch((error) => {
         console.error(`error during fetch teams: ${error}`)

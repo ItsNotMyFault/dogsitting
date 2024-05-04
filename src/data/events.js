@@ -23,15 +23,15 @@ const events = [
   new Event({
     id: 123123,
     title: 'Unknown Title boom',
-    start: '2024-04-01',
-    end: '2024-04-05',
+    start: '2024-05-01',
+    end: '2024-05-05',
     allDay: false,
     className: 'available'
   }),
   new Event({
     title: 'Meeting',
     start: '2024-03-12T14:30:00',
-    end: '2024-04-12T18:30:00',
+    end: '2024-05-12T18:30:00',
     className: 'classNameMetting',
     extendedProps: {
       status: 'done'
@@ -39,13 +39,13 @@ const events = [
   }),
   new Event({
     title: 'Birthday Party',
-    start: '2024-04-05T07:00:00',
+    start: '2024-05-05T07:00:00',
     backgroundColor: 'green',
     borderColor: 'green'
   }),
   new Event({
     // title: 'big test',
-    start: '2024-04-19',
+    start: '2024-05-19',
     display: 'background',
     backgroundColor: 'purple',
     test: {
@@ -56,9 +56,10 @@ const events = [
     }
   }),
   new Event({
-    // title: 'big test',
-    start: '2024-04-20',
-    display: 'background',
+    title: 'big test',
+    start: '2024-05-20',
+    end: '2024-05-25',
+    // display: 'background',
     backgroundColor: 'purple',
     borderColor: 'purple',
     extendedProps: {
@@ -67,7 +68,7 @@ const events = [
   })
   //   new Event({
   //     title: 'test',
-  //     start: '2024-04-06T07:00:00',
+  //     start: '2024-05-06T07:00:00',
   //     backgroundColor: 'green',
   //     borderColor: 'green',
   //     display: 'inverse-background'
@@ -75,41 +76,41 @@ const events = [
 ]
 
 const availableEvents = [
-  new Event({
-    start: '2024-03-28',
-    display: 'background',
-    backgroundColor: 'green',
-    extendedProps: {
-      status: false
-    }
-  }),
-  new Event({
-    start: '2024-03-29',
-    display: 'background',
-    backgroundColor: 'green',
-    extendedProps: {
-      status: false
-    }
-  })
+  // new Event({
+  //   start: '2024-03-28',
+  //   display: 'background',
+  //   backgroundColor: 'green',
+  //   extendedProps: {
+  //     status: false
+  //   }
+  // }),
+  // new Event({
+  //   start: '2024-03-29',
+  //   display: 'background',
+  //   backgroundColor: 'green',
+  //   extendedProps: {
+  //     status: false
+  //   }
+  // })
 ]
 
 const busyEvents = [
-  new Event({
-    start: '2024-04-25',
-    display: 'background',
-    backgroundColor: 'red',
-    extendedProps: {
-      status: false
-    }
-  }),
-  new Event({
-    start: '2024-04-26',
-    display: 'background',
-    backgroundColor: 'red',
-    extendedProps: {
-      status: false
-    }
-  })
+  // new Event({
+  //   start: '2024-05-25',
+  //   display: 'background',
+  //   backgroundColor: 'red',
+  //   extendedProps: {
+  //     status: false
+  //   }
+  // }),
+  // new Event({
+  //   start: '2024-05-26',
+  //   display: 'background',
+  //   backgroundColor: 'red',
+  //   extendedProps: {
+  //     status: false
+  //   }
+  // })
 ]
 
 export { events, availableEvents, busyEvents }
