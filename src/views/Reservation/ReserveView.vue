@@ -20,7 +20,7 @@ export default {
 
   data() {
     return {
-      isAdmin: false
+      isAdmin: true
     }
   },
 }

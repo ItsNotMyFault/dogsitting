@@ -18,6 +18,15 @@ class ReservationEvent extends Event {
     // borderColor: 'purple',
     // this.allDay = data?.IsAllDayEvent
   }
+
+  get calendarObjectEvent() {
+    return {
+      data: this.data,
+      title: this.title,
+      start: this.start,
+      end: this.end
+    }
+  }
 }
 
 export default ReservationEvent

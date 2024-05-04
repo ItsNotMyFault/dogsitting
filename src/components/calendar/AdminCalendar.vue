@@ -11,6 +11,7 @@
     <div class="calendarControls">
       <!-- {{ dateEvents }} -->
       <div v-for="event in dateEvents" :key="event.id">
+        <!-- event: {{ event }} -->
         title => {{ event.title }}
         <br>
         PERIOD => {{ event.start }} - {{ event.end }}
@@ -18,6 +19,7 @@
         event title => {{ event.extendedProps.data.EventSubject }}
         <br>
         <br>
+        <button class="cta-button" @click="deleteReservation(event)">Delete</button>
       </div>
     </div>
   </div>
@@ -33,8 +35,12 @@ import multiMonthPlugin from '@fullcalendar/multimonth'
 import interactionPlugin from '@fullcalendar/interaction'
 import listPlugin from '@fullcalendar/list';
 import calendarServices from '@services/calendarServices'
+import reservationServices from '@services/reservationServices'
 import { events, availableEvents, busyEvents } from '../../data/events'
 import DateFormat from '@utils/DateFormat'
+import ReservationEvent from '@model/reservationEvent'
+
+
 export default {
   name: 'AdminCalendar',
 
@@ -43,12 +49,6 @@ export default {
   },
   methods: {
     handleDateClick(arg) {
-      console.log('date click! ' + arg.dateStr, ' => ', arg)
-      console.log('date:', arg.date);
-      console.log('REF CALENDAR', this.fullCalendarApi);
-      const prevSelectedDate = this.selectedDate
-      this.selectedDate = arg.date;
-
       const prevSelectedCell = this.selectedCell
       if (prevSelectedCell) {
         prevSelectedCell.classList.remove('selected-day')
@@ -57,19 +57,30 @@ export default {
       this.selectedCell.classList.add('selected-day')
 
       const events = this.fullCalendarApi.getEvents(arg.date)
+      console.log('events', events);
       this.dateEvents = events.filter(event => {
         return event.start <= arg.date && arg.date <= event.end
-      });
+      })
+
     },
+    async deleteReservation(event) {
+      console.log('deleteReservation', event);
+      var reservationEvent = new ReservationEvent(event.extendedProps.data)
+      if (confirm(`Are you sure you want to delete this reservation ${reservationEvent.title}?`)) {
+        await reservationServices.deleteReservation(reservationEvent.reservationId)
+      }
+      console.log('this.calendarOptions.events', this.calendarOptions.events);
+      //TODO make method for .Id maj problem can occur..
+      this.calendarOptions.events = this.calendarOptions.events.filter(event => event.data.Id !== reservationEvent.data.Id)
+    }
   },
   data() {
     return {
       fullCalendarApi: null,
-      selectedDate: null,
       selectedCell: null,
       dateEvents: [],
       calendarOptions: {
-        height: 875,
+        height: 775,
         expandRows: false,
         editable: false,
         droppable: false,
@@ -86,7 +97,7 @@ export default {
           listMonth: { buttonText: 'List' },
         },
         weekends: true,
-        events: [...events.map(event => event.data), ...availableEvents.map(event => event.data), ...busyEvents.map(event => event.data)],
+        events: [],
         headerToolbar: {
           left: 'prev,next,today',
           center: 'title',
@@ -97,22 +108,14 @@ export default {
         },
         slotMinTime: "07:00:00",
         slotMaxTime: "20:00:00",
-        eventResize: function (info) {
-          console.log(info.event.title + " end is now " + info.event.end.toISOString());
-        }
+        dateClick: this.handleDateClick
       }
     }
   },
   async created() {
     var teamName = "annieannick"
     var reservationEvents = await calendarServices.getReservationEvents(teamName);
-    // this.originalEvents = reservationEvents.map(x => x.calendarObjectEvent)
-    this.originalEvents = reservationEvents
-    this.calendarOptions.events = this.originalEvents
-
-    this.calendarOptions.dateClick = this.handleDateClick
-    this.calendarOptions.dayCellDidMount = this.handleDayCellMount
-    this.calendarOptions.dayCellClassNames = this.handleDayCellClassNames
+    this.calendarOptions.events = reservationEvents.map(event => event.calendarObjectEvent)
   },
 
   mounted() {

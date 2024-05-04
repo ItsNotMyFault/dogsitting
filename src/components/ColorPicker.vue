@@ -125,10 +125,9 @@ export default {
     },
 
     data() {
-        console.log(this.color);
         return {
             themeColors: colors,
-            currentColor: this.color,
+            currentColor: null,
             isModalVisible: false,
         }
     }

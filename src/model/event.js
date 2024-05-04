@@ -15,6 +15,11 @@ class Event {
       backgroundColor: this.backgroundColor
     }
   }
+
+  get reservationId() {
+    console.log('get reservationId', this.data)
+    return this.data.ReservationId
+  }
 }
 
 export default Event

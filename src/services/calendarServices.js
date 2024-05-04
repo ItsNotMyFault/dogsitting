@@ -36,7 +36,9 @@ export default {
     return axios
       .get(`${domainUrl}/calendar/team/${team}/reservationevents`)
       .then((res) => {
-        return res.data.map((event) => new ReservationEvent(event))
+        var reservationevents = res.data.map((event) => new ReservationEvent(event))
+        console.log('reservationevents', reservationevents)
+        return reservationevents
       })
       .catch((error) => {
         console.error(`error during fetch teams: ${error}`)

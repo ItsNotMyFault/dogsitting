@@ -20,6 +20,15 @@ class BusyEvent extends Event {
       this.backgroundColor = 'purple'
     }
   }
+
+  get calendarObjectEvent() {
+    return {
+      data: this.data,
+      start: this.start,
+      display: this.display,
+      backgroundColor: this.backgroundColor
+    }
+  }
 }
 
 export default BusyEvent

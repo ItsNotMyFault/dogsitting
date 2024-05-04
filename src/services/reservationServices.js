@@ -36,5 +36,16 @@ export default {
       .catch((error) => {
         return error.response
       })
+  },
+  deleteReservation(reservationId) {
+    return axios
+      .delete(`${domainUrl}/reservation/${reservationId}`)
+      .then((res) => {
+        console.log('reservation deleted', res.data)
+      })
+      .catch((error) => {
+        console.log('reservation deleted', error.response)
+        return error.response
+      })
   }
 }
