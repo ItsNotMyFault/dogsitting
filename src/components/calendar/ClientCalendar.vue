@@ -25,9 +25,11 @@
         <VueDatePicker :model-value="dateTo" @update:model-value="handleDateTo" @change="test" auto-apply required />
         <label>Lodger count</label>
         <input type="number" v-model="lodgerCount" min="1" max="10" step="1">
+        <label> Notes</label>
+        <input type="text" v-model="notes">
         <label>
           <input type="checkbox" v-model="checked">
-          I accept conditions.
+          I accept <a href="#">conditions</a>.
         </label>
 
 
@@ -68,17 +70,12 @@ export default {
   components: {
     FullCalendar,
   },
+
   methods: {
     handleDateClick(arg) {
       if (this.dateFrom !== null) {
         return
       }
-      // this.dateFrom = new Date(arg.dateStr)
-      // this.dateTo = moment(new Date(arg.dateStr)).add(1, 'hour')
-
-      // this.dateFrom = new Date(arg.dateStr)
-      console.log('date lcicked', new Date(arg.dateStr));
-      console.log('date lcicked moment', moment(new Date(arg.dateStr)).add(1, 'days'));
       this.dateFrom = moment(new Date(arg.dateStr)).add(1, 'days').startOf('day')
       this.dateTo = moment(new Date(arg.dateStr)).add(1, 'days').endOf('day')
       this.calendarOptions.events = [
@@ -179,14 +176,15 @@ export default {
     }
   },
   async created() {
-    // this.team = "annieannick"
-    var teamName = "annieannick"
     this.calendarOptions.dateClick = this.handleDateClick
 
-    var busyEventsTest = await calendarServices.getBusyEvents(teamName);
+    var busyEvents = await calendarServices.getBusyEvents(this.teamName);
+    if (!busyEvents.error) {
+      console.log('busyEvents', busyEvents);
+      this.originalEvents = busyEvents.map(x => x.calendarObjectEvent)
+      this.calendarOptions.events = this.originalEvents
+    }
 
-    this.originalEvents = busyEventsTest.map(x => x.calendarObjectEvent)
-    this.calendarOptions.events = this.originalEvents
 
   },
 }

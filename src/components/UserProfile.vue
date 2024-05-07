@@ -25,6 +25,9 @@
             <div v-for="team in teams" :key="team.id" class="teamtest">
                 <span @click="setActive(team)">{{ team.normalizedName }}</span>
             </div>
+            <!-- TODO set default active team -->
+            <RouterLink to="/my-profile/edit"> <button>edit</button></RouterLink>
+
         </div>
     </div>
 </template>
@@ -60,6 +63,7 @@ export default {
         const authStore = useAuthStore();
         console.log(authStore.applicationUser);
         this.user = await userService.findById(authStore.applicationUser.id);
+        console.log('this.user', this.user);
 
         this.teams = await teamServices.getUserTeams(authStore.applicationUser.id)
     }

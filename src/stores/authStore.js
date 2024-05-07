@@ -20,6 +20,7 @@ export const useAuthStore = defineStore('auth', {
     getHasUserTeam: (state) => state.hasUserTeam,
     getIsSuperAdmin: (state) => state.isSuperAdmin,
     getUserId: (state) => state.applicationUser.id,
+    getTeam: (state) => state.team,
     getTeamName: (state) => state.team.normalizedName //selected team id, eventually allow changing team profile.
   },
   actions: {

@@ -27,6 +27,17 @@ export default {
       })
   },
 
+  findById(id) {
+    return axios
+      .get(`${domainUrl}/team/id/${id}`)
+      .then((res) => {
+        return new Team(res.data)
+      })
+      .catch((error) => {
+        return error.response
+      })
+  },
+
   async create(team) {
     return await axios
       .post(`${domainUrl}/Team/create`, team)
@@ -46,6 +57,26 @@ export default {
         return new Team(res.data)
       })
       .catch((error) => {
+        return error.response
+      })
+  },
+
+  update(id, team) {
+    delete team.data
+    delete team.approvedAt
+    delete team.createdAt
+    // delete team.id
+    // delete team.normalizedName
+    return axios
+      .put(`${domainUrl}/team/edit/${id}`, team, {})
+      .then((res) => {
+        console.log('update team res', res, res.data)
+        return new Team(res.data)
+      })
+      .catch((error) => {
+        console.log('error', error.response)
+        console.log('error', error.message)
+        console.error(`error during fetch teams: ${error}`)
         return error.response
       })
   }

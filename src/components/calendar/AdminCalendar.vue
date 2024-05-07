@@ -44,6 +44,13 @@ import ReservationEvent from '@model/reservationEvent'
 export default {
   name: 'AdminCalendar',
 
+  props: {
+    teamName: {
+      type: String,
+      required: true
+    }
+  },
+
   components: {
     FullCalendar,
   },
@@ -113,8 +120,8 @@ export default {
     }
   },
   async created() {
-    var teamName = "annieannick"
-    var reservationEvents = await calendarServices.getReservationEvents(teamName);
+    // var teamName = "annieannick"
+    var reservationEvents = await calendarServices.getReservationEvents(this.teamName);
     this.calendarOptions.events = reservationEvents.map(event => event.calendarObjectEvent)
   },
 

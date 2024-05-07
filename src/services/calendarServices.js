@@ -16,7 +16,7 @@ export default {
       })
       .catch((error) => {
         console.error(`error during fetch teams: ${error}`)
-        return error.response
+        return { error: error.message }
       })
   },
 
@@ -28,7 +28,7 @@ export default {
       })
       .catch((error) => {
         console.error(`error during fetch teams: ${error}`)
-        return error.response
+        return { error: error.message }
       })
   },
 
@@ -42,7 +42,7 @@ export default {
       })
       .catch((error) => {
         console.error(`error during fetch teams: ${error}`)
-        return error.response
+        return { error: error.message }
       })
   },
 
@@ -54,7 +54,7 @@ export default {
       })
       .catch((error) => {
         console.error(`error during fetch teams: ${error}`)
-        return error.response
+        return { error: error.message }
       })
   }
 }

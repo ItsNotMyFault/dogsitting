@@ -16,5 +16,21 @@ export default {
         console.error(`error during fetch teams: ${error}`)
         return error.response
       })
+  },
+
+  update(id, user) {
+    delete user.data
+    return axios
+      .put(`${domainUrl}/users/edit/${id}`, user, {})
+      .then((res) => {
+        return new User(res.data)
+      })
+      .catch((error) => {
+        console.log('error', error)
+        console.log('error', error.response)
+        console.log('error', error.message)
+        console.error(`error during fetch teams: ${error}`)
+        return error.response
+      })
   }
 }

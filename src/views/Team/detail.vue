@@ -132,16 +132,16 @@ export default {
     computed: {
         teamName() {
             console.log('TITLE this.team', this.team);
-            return this.team ? this.team.name : 'no team?'
+            return this.team ? this.team.name : null
         },
         normalizedTeamName() {
-            return this.team ? this.team.normalizedName : 'no team?'
+            return this.team ? this.team.normalizedName : null
         }
     },
 
     data() {
         return {
-            showCalendar: true,
+            showCalendar: false,
             title: null,
             team: null,
 
@@ -155,9 +155,12 @@ export default {
     },
 
     async created() {
-        const response = await teamServices.getTeamByNormalizedName(this.name)
+        const response = await teamServices.getTeamByNormalizedName(this.name).then(response => {
+            this.team = response
+            this.showCalendar = true
+        })
         console.log('response', response);
-        this.team = response
+
 
     }
 }
