@@ -26,10 +26,6 @@ export default {
         return new User(res.data)
       })
       .catch((error) => {
-        console.log('error', error)
-        console.log('error', error.response)
-        console.log('error', error.message)
-        console.error(`error during fetch teams: ${error}`)
         return error.response
       })
   }

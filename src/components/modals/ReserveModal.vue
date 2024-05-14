@@ -27,7 +27,7 @@
 </template>
 <script>
 import Modal from '@components/modals/Modal.vue'
-import ColorPicker from '@components/ColorPicker.vue'
+import ColorPicker from '@components/colorpicker/ColorPicker.vue'
 import Event from '@model/event'
 import Datepicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';

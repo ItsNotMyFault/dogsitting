@@ -5,8 +5,6 @@ let domainUrl = 'https://localhost:5188'
 
 export default {
   async getAll(model) {
-    console.log('getAll')
-
     return await axios
       .get(`${domainUrl}/${model}`)
       .then((res) => {

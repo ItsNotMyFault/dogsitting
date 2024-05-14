@@ -17,7 +17,6 @@ class Event {
   }
 
   get reservationId() {
-    console.log('get reservationId', this.data)
     return this.data.ReservationId
   }
 }

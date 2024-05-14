@@ -29,23 +29,6 @@ const routes = [
       title: 'Pricing'
     }
   },
-
-  {
-    path: '/reserve',
-    name: 'reserve',
-    component: () => import('@views/Reservation/ReserveView.vue'),
-    meta: {
-      title: 'Réserver'
-    }
-  },
-  {
-    path: '/activites',
-    name: 'activites',
-    component: () => import('@views/ActivitiesView.vue'),
-    meta: {
-      title: 'Activitées'
-    }
-  },
   {
     path: '/dogs',
     name: 'dogs',

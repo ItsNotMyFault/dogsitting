@@ -46,5 +46,13 @@ export const clientRoutes = [
     meta: {
       title: 'Team Reservations'
     }
+  },
+  {
+    path: '/team-calendar',
+    name: 'teamcalendar',
+    component: () => import('@views/Team/TeamCalendarAdminView.vue'),
+    meta: {
+      title: 'Team admin calendar'
+    }
   }
 ]

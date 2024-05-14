@@ -3,7 +3,7 @@
 @import '@style/layout/MyFooter.css';
 @import '@style/layout/Main.css';
 
-@import '@style/components/Calendar.css';
+
 @import '@style/components/Modal.css';
 @import '@style/components/ColorPicker.css';
 @import '@style/components/TeamCard.css';
@@ -13,7 +13,11 @@
 @import '@style/components/LoginControls.css';
 @import '@style/components/buttons/FacebookButton.css';
 @import '@style/components/ReservationCard.css';
-@import '@style/components/CalendarControls.css';
+/* calendar */
+@import '@style/components/calendar/Calendar.css';
+@import '@style/components/calendar/CalendarControls.css';
+@import '@style/components/calendar/AvailabilitiesCalendar.css';
+@import '@style/components/calendar/AdminCalendar.css';
 
 /* #app {
   max-width: 1280px;

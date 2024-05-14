@@ -6,6 +6,11 @@ class Team {
     this.id = data?.Id
     this.createdAt = data?.CreatedAt
     this.approvedAt = data?.ApprovedAt
+    // this.useAvailabilities = true
+    this.useAvailabilities = data?.UseAvailabilities
+    this.useUnavailabilities = data?.UseUnavailabilities
+    this.maxWeekDaysLodgerCount = data?.MaxWeekDaysLodgerCount
+    this.maxWeekendDaysLodgerCount = data?.MaxWeekendDaysLodgerCount
   }
 
   get normalizedIdentifier() {

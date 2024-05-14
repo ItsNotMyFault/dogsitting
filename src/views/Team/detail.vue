@@ -131,7 +131,6 @@ export default {
 
     computed: {
         teamName() {
-            console.log('TITLE this.team', this.team);
             return this.team ? this.team.name : null
         },
         normalizedTeamName() {
@@ -159,9 +158,6 @@ export default {
             this.team = response
             this.showCalendar = true
         })
-        console.log('response', response);
-
-
     }
 }
 </script>

@@ -1,11 +1,17 @@
 <template>
     <div>
         <div class="form">
+
             <label>
                 <span>name: </span>
                 <span>{{ team.name }}</span>
             </label>
-
+            <label>
+                UseAvailabilities: {{ team.useAvailabilities }} <br>
+                UseUnavailabilities: {{ team.useUnavailabilities }} <br>
+                MaxWeekDaysLodgerCount: {{ team.maxWeekDaysLodgerCount }} <br>
+                MaxWeekendDaysLodgerCount: {{ team.maxWeekendDaysLodgerCount }}
+            </label>
             <RouterLink to="/my-team/edit"> <button>edit</button></RouterLink>
         </div>
     </div>
@@ -26,9 +32,7 @@ export default {
 
     async created() {
         const authStore = useAuthStore();
-        console.log('get team from store', authStore.getTeam);
         this.team = await teamServices.findById(authStore.getTeam.id);
-        console.log('this.team', this.team);
     }
 
 }

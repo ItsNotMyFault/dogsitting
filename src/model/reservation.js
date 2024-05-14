@@ -5,7 +5,6 @@ import DateFormat from '@utils/DateFormat'
 class Reservation {
   constructor(data) {
     if (data) {
-      console.log('reservation', data)
       this.data = data
       this.title = data?.ReservationTitle
       this.id = data?.Id

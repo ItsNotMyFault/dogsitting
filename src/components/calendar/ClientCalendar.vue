@@ -1,28 +1,22 @@
 <template>
   <div class="demo-app">
     <div class="demo-app-main calendar">
-      <FullCalendar ref="fullcalendar" :options="calendarOptions">
+      <h1>CLIENT CALENDAR</h1>
+      <FullCalendar ref="fullcalendar" :editable="true" :droppable="true" :options="calendarOptions">
         <template v-slot:eventContent="arg">
-          {{ logstuff(arg.event) }}
           {{ arg.event?.title }}
         </template>
       </FullCalendar>
 
     </div>
     <div class="calendarControls">
-      asdfasdf
-      should show error message if trying to add event on unavailable cases.
-      <br>
-      auto complete after clicking on calendar. enable drag event.
-      <br>
-      should auto delete previously clicked event.
       <form class="form" @submit.prevent="submitForm">
         <label>date start</label>
         <!-- <VueDatePicker v-model="dateFrom" auto-apply :disabled-dates="[(new Date())]" :min-date="new Date()" /> -->
         <VueDatePicker :model-value="dateFrom" @update:model-value="handleDateFrom" auto-apply
           :disabled-dates="[(new Date())]" :min-date="new Date()" />
         <label>date end</label>
-        <VueDatePicker :model-value="dateTo" @update:model-value="handleDateTo" @change="test" auto-apply required />
+        <VueDatePicker :model-value="dateTo" @update:model-value="handleDateTo" auto-apply required />
         <label>Lodger count</label>
         <input type="number" v-model="lodgerCount" min="1" max="10" step="1">
         <label> Notes</label>
@@ -51,10 +45,9 @@ import interactionPlugin from '@fullcalendar/interaction'
 import listPlugin from '@fullcalendar/list'
 import calendarServices from '@services/calendarServices'
 import reservationServices from '@services/reservationServices'
-import { availableEvents, busyEvents } from '../../data/events'
+import { events, availableEvents, busyEvents } from '../../data/events'
 import Reservation from '@/model/reservation'
 import { useAuthStore } from '@/stores/authStore'
-import DateFormat from '@utils/DateFormat'
 import moment from 'moment'
 
 export default {
@@ -73,20 +66,32 @@ export default {
 
   methods: {
     handleDateClick(arg) {
-      if (this.dateFrom !== null) {
-        return
-      }
-      this.dateFrom = moment(new Date(arg.dateStr)).add(1, 'days').startOf('day')
-      this.dateTo = moment(new Date(arg.dateStr)).add(1, 'days').endOf('day')
+      // if (this.dateFrom !== null) {
+      //   return
+      // }
+      // this.dateFrom = moment(new Date(arg.dateStr)).add(1, 'days').startOf('day')
+      // this.dateTo = moment(new Date(arg.dateStr)).add(1, 'days').endOf('day')
+      // console.log('arg.dateStr', arg.dateStr);
+
+      // this.calendarOptions.events = [
+      //   ...this.originalEvents,
+      //   {
+      //     start: arg.dateStr,
+      //     title: this.title
+      //   },
+      //   { title: 'Event 2', start: '2024-05-20' },
+      // ]
+      // console.log('BROOOOOOOO');
       this.calendarOptions.events = [
-        ...this.originalEvents,
+        ...this.calendarOptions.events,
         {
           start: arg.dateStr,
-          title: this.title
+          title: 'red',
         }
       ]
     },
     handleEventResize(info) {
+      console.log('info', info);
       this.eventAdded = info
       this.dateTo = moment(new Date(info.event.end)).add(-1, 'days').endOf('day')
     },
@@ -104,61 +109,66 @@ export default {
       reservationServices.createReservation(newReservation, this.teamName)
     },
     handleDateFrom(date) {
-      //TODO fix this method ASAP
-      this.dateFrom = date
-      this.calendarOptions.events = [
-        ...this.originalEvents,
-        {
-          start: this.dateFrom,
-          end: this.dateTo,
-          title: this.title
-        }
-      ]
+      // if (date === null) {
+      //   this.dateTo = null
+      // }
+      // //TODO fix this method ASAP
+      // this.dateFrom = date
+      // this.calendarOptions.events = [
+      //   ...this.originalEvents,
+      //   {
+      //     start: this.dateFrom,
+      //     end: this.dateTo,
+      //     title: this.title
+      //   }
+      // ]
     },
     handleDateTo(date) {
       //TODO fix this method ASAP
-      this.dateTo = date
-      this.calendarOptions.events = [
-        ...this.originalEvents,
-        {
-          start: this.dateFrom,
-          end: this.dateTo,
-          title: this.title
-        }
-      ]
+      // this.dateTo = date
+      // this.calendarOptions.events = [
+      //   ...this.originalEvents,
+      //   {
+      //     start: this.dateFrom,
+      //     end: this.dateTo,
+      //     title: this.title
+      //   }
+      // ]
     },
-    logstuff(arg) {
-      // console.log(arg.title, arg)
-    },
+    async fetchEvents() {
+      var busyEvents = await calendarServices.getBusyEvents(this.teamName);
+      if (!busyEvents.error) {
+        this.originalEvents = busyEvents.map(x => x.calendarObjectEvent)
+        this.calendarOptions.events = this.originalEvents
+      }
+    }
   },
   data() {
     return {
-      loaded: false,
       checked: false,
       dateFrom: null,
       dateTo: null,
+      lodgerCount: 0,
+      notes: null,
       title: 'new reservation',
       eventAdded: null,
       calendarOptions: {
-        height: 875,
+        // height: 875,
         expandRows: true,
         allDaySlot: true,
         initialView: 'dayGridMonth',
-
+        editable: true,
+        droppable: true,
         eventResizableFromStart: true,
-        eventResourceEditable: true,
-
         weekends: true,
-        events: [
-          ...availableEvents.map((event) => event.data),
-          ...busyEvents.map((event) => event.data)
-        ],
+        // events: [],
+        events: [...events, ...busyEvents],
         headerToolbar: {
           left: 'prev,next,today',
           center: 'title',
           right: 'timeGridWeek,dayGridMonth,multiMonthYear'
         },
-        plugins: [listPlugin, dayGridPlugin, interactionPlugin, timeGridPlugin, multiMonthPlugin],
+        plugins: [interactionPlugin, listPlugin, dayGridPlugin, timeGridPlugin, multiMonthPlugin],
         views: {
           timeGridYear: {
             buttonText: 'Year'
@@ -168,22 +178,14 @@ export default {
           },
           listMonth: { buttonText: 'List' }
         },
-        editable: true,
-        droppable: true,
+        dateClick: (info) => this.handleDateClick(info),
         eventResize: (info) => this.handleEventResize(info),
         eventDrop: (info) => this.handleEventDragStop(info),
       }
     }
   },
-  async created() {
-    this.calendarOptions.dateClick = this.handleDateClick
-
-    var busyEvents = await calendarServices.getBusyEvents(this.teamName);
-    if (!busyEvents.error) {
-      console.log('busyEvents', busyEvents);
-      this.originalEvents = busyEvents.map(x => x.calendarObjectEvent)
-      this.calendarOptions.events = this.originalEvents
-    }
+  created() {
+    // this.fetchEvents()
 
 
   },

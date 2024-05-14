@@ -7,22 +7,21 @@
             <IconUser></IconUser>
         </div>
         <div class="loginControls-modal" v-if="isOpen" @blur="isOpen = false">
-            <span v-if="isLoggedIn === true">
-                <RouterLink class="loginControls-modalLink" to="/logout">logout</RouterLink>
-            </span>
-            <span v-else>
+            <span v-if="isLoggedIn === false">
                 <RouterLink class="loginControls-modalLink" to="/login">login</RouterLink>
             </span>
-            <hr v-if="isLoggedIn === true">
-            <span v-if="isLoggedIn === true">
+            <span v-else>
+                <RouterLink class="loginControls-modalLink" to="/logout">logout</RouterLink>
+                <hr>
                 User
                 <RouterLink class="loginControls-modalLink" to="/my-profile">my profile</RouterLink>
                 <RouterLink class="loginControls-modalLink" to="/my-reservations">reservations</RouterLink>
-            </span>
-            <span v-if="isLoggedIn === true">
-                Team
-                <RouterLink class="loginControls-modalLink" to="/my-team">profile</RouterLink>
-                <RouterLink class="loginControls-modalLink" to="/team-reservations">team reservations</RouterLink>
+                <span v-if="hasUserTeam">
+                    Team
+                    <RouterLink class="loginControls-modalLink" to="/my-team">Settings</RouterLink>
+                    <RouterLink class="loginControls-modalLink" to="/team-reservations">team reservations</RouterLink>
+                    <RouterLink class="loginControls-modalLink" to="/team-calendar">team calendar</RouterLink>
+                </span>
             </span>
         </div>
     </button>
@@ -34,26 +33,34 @@ import { useAuthStore } from '@/stores/authStore'
 import IconUser from '@/components/icons/IconUser.vue'
 import IconHamburger from '@/components/icons/IconHamburger.vue'
 import { defineComponent, ref } from 'vue'
-export default defineComponent({
+export default {
     name: 'LoginControls',
 
-    setup() {
-        const isOpen = ref(false)
-        const authStore = useAuthStore();
-
-        return { isOpen, authStore }
-    },
 
     computed: {
         isLoggedIn() {
             return this.authStore.getIsLoggedIn
         },
+        hasUserTeam() {
+            return this.authStore.getHasUserTeam
+        }
     },
 
 
     components: {
         IconUser,
-        IconHamburger
+        IconHamburger,
     },
-})
+
+    data() {
+        return {
+            authStore: null,
+            isOpen: false
+        }
+    },
+
+    created() {
+        this.authStore = useAuthStore();
+    }
+}
 </script>

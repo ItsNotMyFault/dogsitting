@@ -1,6 +1,7 @@
 <template>
   <div class="demo-app">
     <div class="demo-app-main calendar">
+      <h1>ADMIN CALENDAR</h1>
       <FullCalendar ref="fullcalendar" :options="calendarOptions">
         <!-- <template v-slot:eventContent="arg">
           {{ arg.event?.title }} 
@@ -36,8 +37,6 @@ import interactionPlugin from '@fullcalendar/interaction'
 import listPlugin from '@fullcalendar/list';
 import calendarServices from '@services/calendarServices'
 import reservationServices from '@services/reservationServices'
-import { events, availableEvents, busyEvents } from '../../data/events'
-import DateFormat from '@utils/DateFormat'
 import ReservationEvent from '@model/reservationEvent'
 
 
@@ -64,19 +63,16 @@ export default {
       this.selectedCell.classList.add('selected-day')
 
       const events = this.fullCalendarApi.getEvents(arg.date)
-      console.log('events', events);
       this.dateEvents = events.filter(event => {
         return event.start <= arg.date && arg.date <= event.end
       })
 
     },
     async deleteReservation(event) {
-      console.log('deleteReservation', event);
       var reservationEvent = new ReservationEvent(event.extendedProps.data)
       if (confirm(`Are you sure you want to delete this reservation ${reservationEvent.title}?`)) {
         await reservationServices.deleteReservation(reservationEvent.reservationId)
       }
-      console.log('this.calendarOptions.events', this.calendarOptions.events);
       //TODO make method for .Id maj problem can occur..
       this.calendarOptions.events = this.calendarOptions.events.filter(event => event.data.Id !== reservationEvent.data.Id)
     }
@@ -110,9 +106,6 @@ export default {
           center: 'title',
           right: 'timeGridWeek,dayGridMonth,multiMonthYear,listMonth'
         },
-        footerToolbar: {
-          center: 'title',
-        },
         slotMinTime: "07:00:00",
         slotMaxTime: "20:00:00",
         dateClick: this.handleDateClick
@@ -120,7 +113,6 @@ export default {
     }
   },
   async created() {
-    // var teamName = "annieannick"
     var reservationEvents = await calendarServices.getReservationEvents(this.teamName);
     this.calendarOptions.events = reservationEvents.map(event => event.calendarObjectEvent)
   },

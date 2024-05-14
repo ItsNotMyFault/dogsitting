@@ -1,7 +1,15 @@
-.css-1dnl5su-Container-hoverableStyles {
+.colorcircle {
     /* position: relative; */
     width: 24px;
     height: 24px;
+    border-radius: 100px;
+
+}
+
+.colorcircle.small {
+    /* position: relative; */
+    width: 12px;
+    height: 12px;
     border-radius: 100px;
 
 }
@@ -26,6 +34,12 @@
     background-color: aqua;
 }
 
-.css-125zpcz-ColorGridItem {
-    cursor: pointer;
+.colorCircle-content.clickable {
+   cursor: pointer;
+}
+
+.colorCircle-content{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }

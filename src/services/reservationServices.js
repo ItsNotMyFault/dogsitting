@@ -4,19 +4,19 @@ axios.defaults.withCredentials = true
 let domainUrl = 'https://localhost:5188'
 
 export default {
-  getUserReservations(id) {
+  getReservationsByUserId(id) {
     return axios
       .get(`${domainUrl}/reservation/user/${id}`)
       .then((res) => {
-        console.log('reservations', res.data)
         return res.data.map((reservation) => new Reservation(reservation))
       })
       .catch((error) => {
         return error.response
       })
   },
-  getTeamReservations(teamName) {
-    return axios
+  getReservationsByTeamName(teamName) {
+    var reservations = []
+    reservations = axios
       .get(`${domainUrl}/reservation/team/${teamName}`)
       .then((res) => {
         return res.data.map((reservation) => new Reservation(reservation))
@@ -24,13 +24,12 @@ export default {
       .catch((error) => {
         return error.response
       })
+    return reservations
   },
   createReservation(reservation, teamName) {
     return axios
       .post(`${domainUrl}/reservation/${teamName}`, reservation)
       .then((res) => {
-        console.log('reservation careateion', res.data)
-        //toastr
         return new Reservation(res.data)
       })
       .catch((error) => {
@@ -41,10 +40,9 @@ export default {
     return axios
       .delete(`${domainUrl}/reservation/${reservationId}`)
       .then((res) => {
-        console.log('reservation deleted', res.data)
+        return res
       })
       .catch((error) => {
-        console.log('reservation deleted', error.response)
         return error.response
       })
   }

@@ -7,10 +7,14 @@ class BusyEvent extends Event {
     this.display = 'background'
     this.start = DateFormat.GetDateFormatted(new Date(data?.DateTimePeriod?.StartDate))
     this.SetBackgroundColor()
+    this.isBusy = data?.IsBusy
+    this.isFree = data?.IsFree
+    this.isFull = data?.IsFull
   }
 
   SetBackgroundColor() {
     if (this.data.IsBusy && !this.data.IsFull) {
+      // this.backgroundColor = 'green'
       this.backgroundColor = 'yellow'
     } else if (this.data.IsFree) {
       this.backgroundColor = 'green'

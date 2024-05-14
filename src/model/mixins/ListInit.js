@@ -27,17 +27,7 @@ const listInit = {
       this.list = teams.map((team) => {
         return this.createEventInstance(team)
       })
-
       console.log('listInit mixin', this.list)
-
-      //call axios to get list of teams with images and titles
-
-      //   axios
-      //     .get(`asdfsadf`)
-      //     .then((res) => {
-      //       this.model = res.response
-      //     })
-      //     .catch()
     }
   },
 

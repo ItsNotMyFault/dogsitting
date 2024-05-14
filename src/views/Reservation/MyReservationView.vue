@@ -24,7 +24,7 @@ export default {
 
     async created() {
         const authStore = useAuthStore();
-        const reservations = await reservationServices.getUserReservations(authStore.getUserId);
+        const reservations = await reservationServices.getReservationsByUserId(authStore.getUserId);
         this.reservations = reservations
     }
 

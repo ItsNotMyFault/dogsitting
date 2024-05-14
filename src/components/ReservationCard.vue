@@ -52,6 +52,10 @@ export default {
         isApproved() {
             return this.reservation?.approvedAt
         }
+    },
+
+    created() {
+        console.log('reservation', this.reservation);
     }
 
 }

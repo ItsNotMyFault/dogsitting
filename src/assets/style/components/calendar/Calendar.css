@@ -54,33 +54,55 @@ h2 {
 
   .calendar{
     color: black;
+    border-radius: 25px;
+    background-color: aliceblue;
   }
+
+  .fc .fc-toolbar.fc-header-toolbar{
+    margin-bottom: 1.5em;
+    padding: 10px;
+  }
+
 
   .fc-daygrid-day-frame:has(.available) {
     background-color: rgb(128, 227, 158);
   }
 
   .fc-day-past {
-    background-color: rgb(237, 241, 240);
+    /* background-color: rgb(94, 95, 94); */
+    /* opacity: 0.8; */
 }
 
+.fc .fc-bg-event {
+  opacity: 1 !important; 
+}
+
+.fc-event {
+  z-index: -1 !important;
+  color: black !important;
+
+}
+
+/* make this clean without !important */
 .fc-event-today{
-  background-color: rgb(14, 161, 124);
+  border: solid 3px rgb(0, 213, 255) !important;
 }
 
-.fc-bg-event {
-  opacity: 0.6!important; 
-}
 
 .fc-theme-standard td {
   cursor: pointer;
+}
+
+.fc-view-harness {
+  margin-bottom: 30px;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
 .fc-daygrid-day-events{
   cursor: auto;
 }
 
-.fc-theme-standard td .selected-day{
-    border: solid 3px rgb(57, 158, 74);
-    background-color:  rgb(128, 227, 158);
+.fc-daygrid-day-number{
+  color: black;
 }

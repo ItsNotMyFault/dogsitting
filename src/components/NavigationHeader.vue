@@ -8,12 +8,10 @@
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/teams">Notre équipe</RouterLink>
       <RouterLink to="/pricing">Prix</RouterLink>
-      <RouterLink to="/reserve">Réserver</RouterLink>
-      <RouterLink to="/activites">Activitées</RouterLink>
       <RouterLink to="/dogs">Pensionnaires</RouterLink>
     </div>
     <div class="navbar-right">
-      <div>Summary</div>
+      <div style="width: 100%;" v-if="teamName">Active team: <span style="color: blue">{{ teamName }}</span></div>
       <LoginControls></LoginControls>
     </div>
   </nav>
@@ -22,12 +20,31 @@
 <script>
 
 import LoginControls from '@/components/LoginControls.vue'
+import { useAuthStore } from '@/stores/authStore'
 
 export default {
   name: 'NavigationHeader',
 
   components: {
     LoginControls
+  },
+
+  data() {
+    return {
+      teamName: null,
+      authStore: null
+    }
+  },
+
+  computed: {
+    teamName() {
+      return this.authStore.getTeamName
+    }
+  },
+
+  created() {
+    this.authStore = useAuthStore();
+
   }
 }
 </script>

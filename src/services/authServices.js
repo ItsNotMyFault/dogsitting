@@ -9,8 +9,6 @@ export default {
     return axios
       .get('https://localhost:5188/login')
       .then(async (res) => {
-        console.log('backend login res', res)
-
         // return { success: true }
         const loggedInUser = await this.GetCurrentUser()
         window.open(res.request.responseURL, '_self').focus()

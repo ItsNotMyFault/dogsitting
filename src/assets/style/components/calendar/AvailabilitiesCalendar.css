@@ -1,0 +1,15 @@
+.availabilities-calendar .fc .fc-bg-event {
+    opacity: 1 !important; 
+  }
+
+  .availabilities-calendar .fc-event {
+    /* background: transparent !important; */
+    z-index: -1 !important;
+    color: black !important;
+
+  }
+
+  .availabilities-calendar .fc-daygrid-day-number{
+    /* font-size: 18px; */
+    font-weight: bold;
+  }

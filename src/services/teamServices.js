@@ -42,7 +42,6 @@ export default {
     return await axios
       .post(`${domainUrl}/Team/create`, team)
       .then((res) => {
-        console.log('res', res)
         return res
       })
       .catch((error) => {
