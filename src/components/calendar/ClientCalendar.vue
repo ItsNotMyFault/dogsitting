@@ -93,10 +93,11 @@ export default {
     },
     submitReservation() {
       const authStore = useAuthStore();
-      const newReservation = new Reservation()
+      const newReservation = {}
       newReservation.dateFrom = this.dateFrom
       newReservation.dateTo = this.dateTo
-      newReservation.client = authStore.applicationUser
+      newReservation.notes = this.notes
+      newReservation.lodgerCount = this.lodgerCount
       console.log('newReservation', newReservation);
       reservationServices.createReservation(newReservation, this.teamName)
     },
@@ -141,6 +142,7 @@ export default {
       checked: false,
       dateFrom: null,
       dateTo: null,
+      notes: null,
       title: 'new reservation',
       eventAdded: null,
       calendarOptions: {
