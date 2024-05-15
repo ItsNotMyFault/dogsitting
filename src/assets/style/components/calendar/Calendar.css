@@ -14,7 +14,6 @@ h2 {
   }
   
   b {
-    /* used for event dates/times */
     margin-right: 3px;
   }
   
@@ -47,7 +46,6 @@ h2 {
   }
   
   .fc {
-    /* the calendar root */
     max-width: 1100px;
     margin: 0 auto;
   }
@@ -69,8 +67,6 @@ h2 {
   }
 
   .fc-day-past {
-    /* background-color: rgb(94, 95, 94); */
-    /* opacity: 0.8; */
 }
 
 .fc .fc-bg-event {
@@ -83,7 +79,6 @@ h2 {
 
 }
 
-/* make this clean without !important */
 .fc-event-today{
   border: solid 3px rgb(0, 213, 255) !important;
 }
