@@ -44,10 +44,21 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import multiMonthPlugin from '@fullcalendar/multimonth'
 import interactionPlugin from '@fullcalendar/interaction'
 import listPlugin from '@fullcalendar/list'
-import { events, availableEvents, busyEvents } from '../../data/events'
+import calendarServices from '@services/calendarServices'
+import reservationServices from '@services/reservationServices'
+import Reservation from '@/model/reservation'
+import { useAuthStore } from '@/stores/authStore'
+import moment from 'moment'
 
 export default {
   name: 'ClientCalendar',
+
+  props: {
+    teamName: {
+      type: String,
+      required: true
+    }
+  },
 
   components: {
     FullCalendar
@@ -55,35 +66,84 @@ export default {
 
   methods: {
     handleDateClick(arg) {
+      if (this.dateFrom !== null) {
+        return
+      }
+      this.dateFrom = moment(new Date(arg.dateStr)).add(1, 'days').startOf('day')
+      this.dateTo = moment(new Date(arg.dateStr)).add(1, 'days').endOf('day')
+      console.log('arg.dateStr', arg.dateStr);
+
       this.calendarOptions.events = [
-        ...this.calendarOptions.events,
+        ...this.originalEvents,
         {
           start: arg.dateStr,
-          title: 'red',
-          draggable: true,
-          resizable: true,
+          title: this.title
+        },
+      ]
+    },
+    handleEventResize(info) {
+      console.log('info', info);
+      this.eventAdded = info
+      this.dateTo = moment(new Date(info.event.end)).add(-1, 'days').endOf('day')
+    },
+    handleEventDragStop(info) {
+      this.eventAdded = info
+      this.dateFrom = moment(new Date(info.event.start))
+      this.dateTo = moment(new Date(info.event.end)).add(-1, 'days').endOf('day')
+    },
+    submitReservation() {
+      const authStore = useAuthStore();
+      const newReservation = new Reservation()
+      newReservation.dateFrom = this.dateFrom
+      newReservation.dateTo = this.dateTo
+      newReservation.client = authStore.applicationUser
+      console.log('newReservation', newReservation);
+      reservationServices.createReservation(newReservation, this.teamName)
+    },
+    handleDateFrom(date) {
+      if (date === null) {
+        this.dateTo = null
+      }
+      //TODO fix this method ASAP
+      this.dateFrom = date
+      this.calendarOptions.events = [
+        ...this.originalEvents,
+        {
+          start: this.dateFrom,
+          end: this.dateTo,
+          title: this.title
         }
       ]
     },
+    handleDateTo(date) {
+      // TODO fix this method ASAP
+      this.dateTo = date
+      this.calendarOptions.events = [
+        ...this.originalEvents,
+        {
+          start: this.dateFrom,
+          end: this.dateTo,
+          title: this.title
+        }
+      ]
+    },
+    async fetchEvents() {
+      var busyEvents = await calendarServices.getBusyEvents(this.teamName);
+      if (!busyEvents.error) {
+        this.originalEvents = busyEvents.map(x => x.calendarObjectEvent)
+        this.calendarOptions.events = this.originalEvents
+      }
+    }
   },
   data() {
     return {
+      originalEvents: [],
       checked: false,
       dateFrom: null,
       dateTo: null,
       title: 'new reservation',
       eventAdded: null,
       calendarOptions: {
-        // // height: 875,
-        // expandRows: true,
-        // allDaySlot: true,
-        // initialView: 'dayGridMonth',
-        // editable: true,
-        // droppable: true,
-        // draggable: true,
-        // resizable: true,
-        // eventResizableFromStart: true,
-        // weekends: true,
         expandRows: true,
         allDaySlot: true,
         initialView: 'dayGridMonth',
@@ -110,8 +170,12 @@ export default {
         droppable: true,
         eventResize: (info) => this.handleEventResize(info),
         eventDrop: (info) => this.handleEventDragStop(info),
+        dateClick: (info) => this.handleDateClick(info),
       }
     }
+  },
+  created() {
+    this.fetchEvents()
   },
 
 }

@@ -66,15 +66,15 @@ h2 {
     background-color: rgb(128, 227, 158);
   }
 
-  .fc-day-past {
-}
+  /* .fc-day-past {
+} */
 
 .fc .fc-bg-event {
   opacity: 1 !important; 
 }
 
 .fc-event {
-  z-index: -1 !important;
+  /* z-index: -1 !important; */
   color: black !important;
 
 }

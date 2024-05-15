@@ -14,17 +14,10 @@
 @import '@style/components/buttons/FacebookButton.css';
 @import '@style/components/ReservationCard.css';
 /* calendar */
-/* @import '@style/components/calendar/Calendar.css';
+@import '@style/components/calendar/Calendar.css';
 @import '@style/components/calendar/CalendarControls.css';
 @import '@style/components/calendar/AvailabilitiesCalendar.css';
-@import '@style/components/calendar/AdminCalendar.css'; */
-
-/* #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
-} */
+@import '@style/components/calendar/AdminCalendar.css';
 
 a,
 .green {
