@@ -1,9 +1,12 @@
 <template>
-    <ReservationList :reservations="reservations">
+    <ReservationList :reservations="reservations" v-if="reservations?.length > 0">
         <template #title>
             My Reservations
         </template>
     </ReservationList>
+    <h1 v-else>
+        no reservations
+    </h1>
 </template>
 <script>
 import ReservationList from '@components/ReservationList.vue';
@@ -18,14 +21,20 @@ export default {
 
     data() {
         return {
-            reservations: []
+            reservations: [],
+            authStore: null
+        }
+    },
+
+    methods: {
+        async fetchReservations() {
+            this.reservations = await reservationServices.getReservationsByUserId(this.authStore.getUserId);
         }
     },
 
     async created() {
-        const authStore = useAuthStore();
-        const reservations = await reservationServices.getReservationsByUserId(authStore.getUserId);
-        this.reservations = reservations
+        this.authStore = useAuthStore();
+        this.fetchReservations()
     }
 
 

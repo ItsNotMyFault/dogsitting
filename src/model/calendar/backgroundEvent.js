@@ -1,11 +1,8 @@
-import Event from '@model/event'
 import DateFormat from '@utils/DateFormat'
 
-class BusyEvent extends Event {
+class BackgroundEvent {
   constructor(data) {
-    super(data)
     this.display = 'background'
-    //Busy events must use Date object for it to display properly. Can't use dateTime.
     this.start = DateFormat.GetDateFormatted(new Date(data?.DateTimePeriod?.StartDate))
     this.SetBackgroundColor()
     this.isBusy = data?.IsBusy
@@ -36,4 +33,4 @@ class BusyEvent extends Event {
   }
 }
 
-export default BusyEvent
+export default BackgroundEvent

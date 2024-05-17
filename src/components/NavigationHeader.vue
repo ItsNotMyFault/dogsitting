@@ -31,14 +31,13 @@ export default {
 
   data() {
     return {
-      teamName: null,
       authStore: null
     }
   },
 
   computed: {
     teamName() {
-      return this.authStore.getTeamName
+      return this.authStore.getTeamName || "no team found"
     }
   },
 

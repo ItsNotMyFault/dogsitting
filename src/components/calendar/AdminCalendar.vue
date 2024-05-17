@@ -11,13 +11,12 @@
     </div>
     <div class="calendarControls">
       <!-- {{ dateEvents }} -->
+      dateEvents.length: {{ dateEvents.length }}
       <div v-for="event in dateEvents" :key="event.id">
         <!-- event: {{ event }} -->
         title => {{ event.title }}
         <br>
         PERIOD => {{ event.start }} - {{ event.end }}
-        <br>
-        event title => {{ event.extendedProps.data.EventSubject }}
         <br>
         <br>
         <button class="cta-button" @click="deleteReservation(event)">Delete</button>
@@ -38,7 +37,8 @@ import listPlugin from '@fullcalendar/list';
 import calendarServices from '@services/calendarServices'
 import reservationServices from '@services/reservationServices'
 import ReservationEvent from '@model/reservationEvent'
-
+import DateFormat from '@/utils/DateFormat'
+import LabeledEvent from '@/model/calendar/labeledEvent'
 
 export default {
   name: 'AdminCalendar',
@@ -55,6 +55,13 @@ export default {
   },
   methods: {
     handleDateClick(arg) {
+      try {
+        DateFormat.ValidateDatePastToday(arg.date)
+      } catch (err) {
+        console.warn(err)
+        return
+      }
+
       const prevSelectedCell = this.selectedCell
       if (prevSelectedCell) {
         prevSelectedCell.classList.remove('selected-day')
@@ -62,19 +69,29 @@ export default {
       this.selectedCell = arg.dayEl
       this.selectedCell.classList.add('selected-day')
 
+      //retrieve all events on a specific date.
       const events = this.fullCalendarApi.getEvents(arg.date)
+      console.log('events', events);
       this.dateEvents = events.filter(event => {
-        return event.start <= arg.date && arg.date <= event.end
-      })
-
+        var end = event.start
+        if (event?.end) {
+          end = event?.end
+        }
+        return event.start <= arg.date && arg.date <= end
+      }).map(dateEv => new ReservationEvent(dateEv.extendedProps.data))
     },
-    async deleteReservation(event) {
-      var reservationEvent = new ReservationEvent(event.extendedProps.data)
-      if (confirm(`Are you sure you want to delete this reservation ${reservationEvent.title}?`)) {
-        await reservationServices.deleteReservation(reservationEvent.reservationId)
+    async deleteReservation(reservationEvent) {
+      if (confirm(`Are you sure you want to delete this reservation ${reservationEvent.title} => ${reservationEvent.id}?`)) {
+        await reservationServices.deleteReservation(reservationEvent.id)
+        this.fetchEvents()
       }
-      //TODO make method for .Id maj problem can occur..
-      this.calendarOptions.events = this.calendarOptions.events.filter(event => event.data.Id !== reservationEvent.data.Id)
+    },
+    async fetchEvents() {
+      var reservationEvents = await calendarServices.getReservationEvents(this.teamName);
+      //TODO ya un problème d'affichage. Les dates reçu sont OK, mais les dates sont seulement sur une journée for some reason.
+      this.originalReservationEvents = reservationEvents.map(event => event.calendarObjectEvent)
+      console.log('this.originalReservationEvents', this.originalReservationEvents)
+      this.calendarOptions.events = this.originalReservationEvents
     }
   },
   data() {
@@ -82,6 +99,7 @@ export default {
       fullCalendarApi: null,
       selectedCell: null,
       dateEvents: [],
+      originalReservationEvents: [],
       calendarOptions: {
         height: 775,
         expandRows: false,
@@ -106,15 +124,12 @@ export default {
           center: 'title',
           right: 'timeGridWeek,dayGridMonth,multiMonthYear,listMonth'
         },
-        slotMinTime: "07:00:00",
-        slotMaxTime: "20:00:00",
         dateClick: this.handleDateClick
       }
     }
   },
   async created() {
-    var reservationEvents = await calendarServices.getReservationEvents(this.teamName);
-    this.calendarOptions.events = reservationEvents.map(event => event.calendarObjectEvent)
+    this.fetchEvents()
   },
 
   mounted() {

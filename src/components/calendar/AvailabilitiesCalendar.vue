@@ -80,7 +80,8 @@ export default {
       this.compute()
     },
     handleDateClick(arg) {
-      if (moment(arg.dateStr) < moment()) {
+      if (moment(arg.dateStr) < moment().startOf('day')) {
+        console.warn('clicked date is past.')
         return;
       }
       if (this.isEdit) {

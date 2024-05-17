@@ -4,11 +4,22 @@ export default {
   GetTimeAgo(date) {
     const now = moment()
     const days = now.diff(date, 'days')
-    if (days < 0) {
+    if (days <= 0) {
+      const hours = now.diff(date, 'hours')
+      if (hours <= 0) {
+        const minutes = now.diff(date, 'minutes')
+        if (minutes <= 3) {
+          return 'Now'
+        }
+        return `${Math.abs(minutes)} minutes ago`
+      }
+      return `${Math.abs(hours)} hours ago`
+    }
+    if (days > 1) {
       return `Coming up in ${Math.abs(days)} days`
     }
     const weeks = now.diff(date, 'weeks')
-    return days > 14 ? `${weeks} weeks ago` : `${days} days ago`
+    return days > 14 ? `${Math.abs(weeks)} weeks ago` : `${Math.abs(days)} days ago`
   },
   SetDateThisMonth() {
     var dateFrom = moment().startOf('month')
@@ -108,14 +119,6 @@ export default {
       const momentDate = moment(date)
       const formattedDate = FormatMomentjsToNewDate(momentDate)
       return formattedDate
-    } else {
-      return null
-    }
-  },
-  GetNewDateTime(date) {
-    if (date) {
-      const newDate = new Date(date)
-      return newDate
     } else {
       return null
     }
@@ -281,6 +284,13 @@ export default {
   },
   GetPreviousDay(date) {
     return moment(date).add(-1, 'day')
+  },
+  ValidateDatePastToday(date) {
+    const momentDate = moment(date, 'YYYY-MM-DD')
+    if (momentDate.isSameOrBefore(moment(), 'day')) {
+      throw 'Invalid date'
+    }
+    return true
   }
 }
 

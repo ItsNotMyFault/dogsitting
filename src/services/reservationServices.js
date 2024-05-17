@@ -28,12 +28,13 @@ export default {
   },
   createReservation(reservation, teamName) {
     return axios
-      .post(`${domainUrl}/reservation/${teamName}`, reservation)
+      .post(`${domainUrl}/reservation/${teamName}`, reservation, {})
       .then((res) => {
-        return new Reservation(res.data)
+        console.log('res')
+        return { success: true }
       })
       .catch((error) => {
-        return error.response
+        return error.response.data
       })
   },
   deleteReservation(reservationId) {
@@ -43,7 +44,17 @@ export default {
         return res
       })
       .catch((error) => {
-        return error.response
+        return error.response.data
+      })
+  },
+  approveReservation(reservationId) {
+    return axios
+      .post(`${domainUrl}/reservation/${reservationId}/approve`, {})
+      .then((res) => {
+        return res
+      })
+      .catch((error) => {
+        return error.response.data
       })
   }
 }

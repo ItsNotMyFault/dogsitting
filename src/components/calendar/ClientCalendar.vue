@@ -14,10 +14,11 @@
       <form class="form" @submit.prevent="submitForm">
         <label>date start</label>
         <!-- <VueDatePicker v-model="dateFrom" auto-apply :disabled-dates="[(new Date())]" :min-date="new Date()" /> -->
-        <VueDatePicker :model-value="dateFrom" @update:model-value="handleDateFrom" auto-apply
-          :disabled-dates="[(new Date())]" :min-date="new Date()" />
+        <VueDatePicker :model-value="labeledEvent.dateFrom" format="yyyy-MM-dd HH:mm:ss"
+          @update:model-value="handleDateFrom" auto-apply :min-date="minDate" />
         <label>date end</label>
-        <VueDatePicker :model-value="dateTo" @update:model-value="handleDateTo" auto-apply required />
+        <VueDatePicker :model-value="labeledEvent.dateTo" format="yyyy-MM-dd HH:mm:ss"
+          @update:model-value="handleDateTo" auto-apply :min-date="minDate" />
         <label>Lodger count</label>
         <input type="number" v-model="lodgerCount" min="1" max="10" step="1">
         <label> Notes</label>
@@ -37,18 +38,23 @@
 
 <script>
 
-
+//plugins
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import multiMonthPlugin from '@fullcalendar/multimonth'
 import interactionPlugin from '@fullcalendar/interaction'
 import listPlugin from '@fullcalendar/list'
+//services
 import calendarServices from '@services/calendarServices'
 import reservationServices from '@services/reservationServices'
+//models
 import Reservation from '@/model/reservation'
+import LabeledEvent from '@/model/calendar/labeledEvent'
+import DateFormat from '@/utils/DateFormat'
 import { useAuthStore } from '@/stores/authStore'
 import moment from 'moment'
+import BusyEvent from '@/model/busyEvent'
 
 export default {
   name: 'ClientCalendar',
@@ -66,67 +72,90 @@ export default {
 
   methods: {
     handleDateClick(arg) {
-      if (this.dateFrom !== null) {
-        return
+      const events = this.fullCalendarApi.getEvents(arg.date)
+      var foundEvent = events.find(event => {
+        return event.start.getTime() == arg.date.getTime()
+      })
+      if (foundEvent) {
+        foundEvent = new BusyEvent(foundEvent.extendedProps.data)
       }
-      this.dateFrom = moment(new Date(arg.dateStr)).add(1, 'days').startOf('day')
-      this.dateTo = moment(new Date(arg.dateStr)).add(1, 'days').endOf('day')
-      console.log('arg.dateStr', arg.dateStr);
+      if (foundEvent?.isFull) {
+        console.warn('this day is not available')
+        return;
+      }
 
-      this.calendarOptions.events = [
-        ...this.originalEvents,
-        {
-          start: arg.dateStr,
-          title: this.title
-        },
-      ]
+      if (this.labeledEvent && this.labeledEvent.isDefined()) {
+        console.warn('labeledEvent dateFrom already defined', this.labeledEvent);
+        return
+      } else {
+        this.labeledEvent = new LabeledEvent(arg.date)
+      }
+
+      this.refreshCalendarEvents()
     },
     handleEventResize(info) {
-      console.log('info', info);
-      this.eventAdded = info
-      this.dateTo = moment(new Date(info.event.end)).add(-1, 'days').endOf('day')
+      var end = moment(info.event.end, 'YYYY-MM-DD HH:mm:ss').add(-1, 'day').endOf('day').add(-1, 'hour')
+      this.labeledEvent = new LabeledEvent(info.event.start, end, this.title)
     },
     handleEventDragStop(info) {
-      this.eventAdded = info
-      this.dateFrom = moment(new Date(info.event.start))
-      this.dateTo = moment(new Date(info.event.end)).add(-1, 'days').endOf('day')
+      var oldLabeledEvent = this.labeledEvent
+      //-1hour is important because 1 seconds doesn't work when saving to SQL
+      var end = moment(info.event.end, 'YYYY-MM-DD HH:mm:ss').add(-1, 'day').endOf('day').add(-1, 'hour')
+      try {
+        this.labeledEvent = new LabeledEvent(info.event.start, end)
+      } catch (err) {
+        console.warn(err)
+        info.revert()
+        this.labeledEvent = oldLabeledEvent
+      }
     },
     submitReservation() {
       const authStore = useAuthStore();
       const newReservation = {}
-      newReservation.dateFrom = this.dateFrom
-      newReservation.dateTo = this.dateTo
+      newReservation.dateFrom = this.labeledEvent.dateFrom
+      newReservation.dateTo = this.labeledEvent.dateTo
       newReservation.notes = this.notes
       newReservation.lodgerCount = this.lodgerCount
-      console.log('newReservation', newReservation);
-      reservationServices.createReservation(newReservation, this.teamName)
+      reservationServices.createReservation(newReservation, this.teamName).then(res => {
+        if (res?.status < 400 || res?.success) {
+          this.labeledEvent.clearInputDates()
+          this.fetchEvents()
+          console.log('router navig');
+          this.$router.push({ path: `/my-reservations` })
+        }
+      })
     },
     handleDateFrom(date) {
       if (date === null) {
-        this.dateTo = null
+        this.labeledEvent.clearInputDates()
+        this.refreshCalendarEvents()
+        return
       }
-      //TODO fix this method ASAP
-      this.dateFrom = date
-      this.calendarOptions.events = [
-        ...this.originalEvents,
-        {
-          start: this.dateFrom,
-          end: this.dateTo,
-          title: this.title
-        }
-      ]
+      this.labeledEvent = new LabeledEvent(date, this.dateTo, this.title)
+
+      this.refreshCalendarEvents()
     },
     handleDateTo(date) {
-      // TODO fix this method ASAP
-      this.dateTo = date
-      this.calendarOptions.events = [
-        ...this.originalEvents,
-        {
-          start: this.dateFrom,
-          end: this.dateTo,
-          title: this.title
-        }
-      ]
+      //TODO fix this, it doesn't update the calendar correctly, dateTo is 1 day earlier than supposed to.
+      //might be because of labeledEvent initiazliation with time or without time...
+      if (date === null) {
+        this.labeledEvent = new LabeledEvent(DateFormat.GetDateTimeFormatted(this.labeledEvent.dateFrom))
+      } else {
+        this.labeledEvent = new LabeledEvent(DateFormat.GetDateTimeFormatted(this.labeledEvent.dateFrom), DateFormat.GetDateTimeFormatted(date))
+        this.labeledEvent.toString()
+      }
+      this.refreshCalendarEvents()
+    },
+    refreshCalendarEvents() {
+      if (this.labeledEvent.isDefined()) {
+        this.calendarOptions.events = [
+          ...this.originalEvents,
+          this.labeledEvent.calendarObjectEvent
+        ]
+      } else {
+        this.calendarOptions.events = [...this.originalEvents]
+      }
+
     },
     async fetchEvents() {
       var busyEvents = await calendarServices.getBusyEvents(this.teamName);
@@ -137,14 +166,19 @@ export default {
     }
   },
   data() {
+    const minDate = moment().add(1, 'day')
+    const formattedMinDate = DateFormat.FormatToNewDate(minDate)
     return {
+      fullCalendarApi: null,
+      labeledEvent: new LabeledEvent(),
       originalEvents: [],
+      lodgerCount: 1,
       checked: false,
       dateFrom: null,
       dateTo: null,
       notes: null,
+      minDate: formattedMinDate,
       title: 'new reservation',
-      eventAdded: null,
       calendarOptions: {
         expandRows: true,
         allDaySlot: true,
@@ -176,9 +210,15 @@ export default {
       }
     }
   },
+
   created() {
     this.fetchEvents()
   },
+
+  mounted() {
+    this.fullCalendarApi = this.$refs.fullcalendar.getApi();
+  }
+
 
 }
 </script>

@@ -1,6 +1,7 @@
 <template>
     <div>
-        <ReservationList :reservations="reservations" v-if="reservations?.length > 0">
+        <ReservationList :reservations="reservations" v-if="reservations?.length > 0" @refresh="fetchReservations"
+            :isAdmin="isAdmin" is-admin>
             <template #title>
                 Team Reservations
             </template>
@@ -24,17 +25,25 @@ export default {
 
     data() {
         return {
-            reservations: []
+            reservations: [],
+            authStore: null,
+            isAdmin: false
+        }
+    },
+
+    methods: {
+        async fetchReservations() {
+            if (this.authStore.getTeamNormalizedName) {
+                const reservations = await reservationServices.getReservationsByTeamName(this.authStore.getTeamNormalizedName);
+                this.reservations = reservations
+            }
         }
     },
 
     async created() {
-        const authStore = useAuthStore();
-        console.log('authStore.$state team ', authStore.$state);
-        if (authStore.getTeamNormalizedName) {
-            const reservations = await reservationServices.getReservationsByTeamName(authStore.getTeamNormalizedName);
-            this.reservations = reservations
-        }
+        this.authStore = useAuthStore();
+        this.isAdmin = this.authStore.getIsSuperAdmin
+        this.fetchReservations()
 
 
     }

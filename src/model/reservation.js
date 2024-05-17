@@ -22,6 +22,14 @@ class Reservation {
     //TODO
     return 3
   }
+
+  get isApproved() {
+    return !!this.approvedAt
+  }
+
+  get dates() {
+    return `${this.dateFrom} - ${this.dateTo}`
+  }
 }
 
 export default Reservation

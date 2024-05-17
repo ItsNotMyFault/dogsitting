@@ -6,7 +6,7 @@
             <span>Client: {{ reservation.client.name }}</span>
 
             <span>
-                created at: <moment-ago :date="reservation.dateFrom"></moment-ago>
+                created at: <moment-ago :date="reservation.createdAt"></moment-ago>
             </span>
         </div>
         <div>
@@ -23,10 +23,13 @@
             modi.
         </div>
         <div class="reservationCard-footer">
-            <span :class="{ 'reservation-approved': isApproved }">
-                <!-- TODO: set right daate -->
-                approved at: <moment-ago :date="reservation.dateFrom"></moment-ago>
+            <span :class="{ 'reservation-approved': isApproved }" v-if="reservation.approvedAt">
+                approved at: <moment-ago :date="reservation.approvedAt"></moment-ago>
             </span>
+            <span v-else>
+                waiting for approval
+            </span>
+            <slot name="actions"></slot>
         </div>
 
     </div>
@@ -50,13 +53,8 @@ export default {
 
     computed: {
         isApproved() {
-            return this.reservation?.approvedAt
+            return this.reservation?.isApproved
         }
     },
-
-    created() {
-        console.log('reservation', this.reservation);
-    }
-
 }
 </script>
