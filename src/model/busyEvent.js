@@ -1,29 +1,38 @@
-import Event from '@model/event'
+// import Event from '@model/event'
 import DateFormat from '@utils/DateFormat'
 
-class BusyEvent extends Event {
+class BusyEvent {
   constructor(data) {
-    super(data)
+    this.data = data
+    this.id = data?.Id
+    console.log('busyEvent construct', data)
     this.display = 'background'
     //Busy events must use Date object for it to display properly. Can't use dateTime.
     this.start = DateFormat.GetDateFormatted(new Date(data?.DateTimePeriod?.StartDate))
     this.SetBackgroundColor()
-    this.isBusy = data?.IsBusy
-    this.isFree = data?.IsFree
-    this.isFull = data?.IsFull
   }
 
   SetBackgroundColor() {
-    if (this.data.IsBusy && !this.data.IsFull) {
+    if (this.data?.IsBusy && !this.data?.IsFull) {
       // this.backgroundColor = 'green'
       this.backgroundColor = 'yellow'
-    } else if (this.data.IsFree) {
+    } else if (this.data?.IsFree) {
       this.backgroundColor = 'green'
-    } else if (this.data.IsFull) {
+    } else if (this.data?.IsFull) {
       this.backgroundColor = 'red'
     } else {
       this.backgroundColor = 'purple'
     }
+  }
+
+  get isBusy() {
+    return this.data.IsBusy
+  }
+  get isFree() {
+    return this.data.IsFree
+  }
+  get isFull() {
+    return this.data.IsFull
   }
 
   get calendarObjectEvent() {

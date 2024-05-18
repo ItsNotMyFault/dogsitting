@@ -10,10 +10,8 @@
 
     </div>
     <div class="calendarControls">
-      <!-- {{ dateEvents }} -->
       dateEvents.length: {{ dateEvents.length }}
       <div v-for="event in dateEvents" :key="event.id">
-        <!-- event: {{ event }} -->
         title => {{ event.title }}
         <br>
         PERIOD => {{ event.start }} - {{ event.end }}
@@ -71,7 +69,6 @@ export default {
 
       //retrieve all events on a specific date.
       const events = this.fullCalendarApi.getEvents(arg.date)
-      console.log('events', events);
       this.dateEvents = events.filter(event => {
         var end = event.start
         if (event?.end) {

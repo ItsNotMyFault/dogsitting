@@ -25,6 +25,7 @@ class LabeledEvent {
     this.dateTo = moment(dateToStr, 'YYYY-MM-DD HH:mm:ss').endOf('day').add(-1, 'hour')
     this.start = DateFormat.GetDateFormatted(new Date(this.dateFrom))
     this.end = DateFormat.GetDateFormatted(new Date(this.dateTo))
+    //-1hour is important because 1 seconds doesn't work when saving to SQL
     this.toString()
   }
 

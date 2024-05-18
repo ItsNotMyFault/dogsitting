@@ -291,6 +291,17 @@ export default {
       throw 'Invalid date'
     }
     return true
+  },
+  GetDailyDates(startDate, endDate) {
+    let start = moment(startDate)
+    const end = moment(endDate)
+    let dates = []
+    while (start.isSameOrBefore(end)) {
+      dates.push(FormatMomentjsToNewDate(start))
+      start.add(1, 'days')
+    }
+
+    return dates
   }
 }
 

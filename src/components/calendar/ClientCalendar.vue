@@ -1,4 +1,3 @@
-@ -1,54 +1,27 @@
 <template>
   <div class="demo-app">
     <div class="demo-app-main calendar">
@@ -55,6 +54,7 @@ import DateFormat from '@/utils/DateFormat'
 import { useAuthStore } from '@/stores/authStore'
 import moment from 'moment'
 import BusyEvent from '@/model/busyEvent'
+import Calendar from '@/utils/Calendar'
 
 export default {
   name: 'ClientCalendar',
@@ -72,37 +72,28 @@ export default {
 
   methods: {
     handleDateClick(arg) {
-      const events = this.fullCalendarApi.getEvents(arg.date)
-      var foundEvent = events.find(event => {
-        return event.start.getTime() == arg.date.getTime()
-      })
-      if (foundEvent) {
-        foundEvent = new BusyEvent(foundEvent.extendedProps.data)
+      try {
+        if (this.labeledEvent && this.labeledEvent.isDefined()) {
+          throw 'labeledEvent dateFrom already defined'
+        } else {
+          this.apiEvents = this.fullCalendarApi.getEvents()
+          Calendar.ValidateNoOverlapBusyEvent(arg.date, this.apiEvents)
+          this.labeledEvent = new LabeledEvent(arg.date)
+        }
+      } catch (err) {
+        console.warn(err);
       }
-      if (foundEvent?.isFull) {
-        console.warn('this day is not available')
-        return;
-      }
-
-      if (this.labeledEvent && this.labeledEvent.isDefined()) {
-        console.warn('labeledEvent dateFrom already defined', this.labeledEvent);
-        return
-      } else {
-        this.labeledEvent = new LabeledEvent(arg.date)
-      }
-
       this.refreshCalendarEvents()
     },
-    handleEventResize(info) {
-      var end = moment(info.event.end, 'YYYY-MM-DD HH:mm:ss').add(-1, 'day').endOf('day').add(-1, 'hour')
-      this.labeledEvent = new LabeledEvent(info.event.start, end, this.title)
-    },
+
     handleEventDragStop(info) {
       var oldLabeledEvent = this.labeledEvent
-      //-1hour is important because 1 seconds doesn't work when saving to SQL
-      var end = moment(info.event.end, 'YYYY-MM-DD HH:mm:ss').add(-1, 'day').endOf('day').add(-1, 'hour')
+      var properEndDate = Calendar.GetProperEndDate(info.event.end, info.event.start)
+      var dailyDates = DateFormat.GetDailyDates(DateFormat.GetDateFormatted(info.event.start), DateFormat.GetDateFormatted(properEndDate))
       try {
-        this.labeledEvent = new LabeledEvent(info.event.start, end)
+        this.apiEvents = this.fullCalendarApi.getEvents()
+        dailyDates.forEach(dailyDate => Calendar.ValidateNoOverlapBusyEvent(dailyDate, this.apiEvents))
+        this.labeledEvent = new LabeledEvent(DateFormat.GetDateFormatted(info.event.start), DateFormat.GetDateFormatted(properEndDate))
       } catch (err) {
         console.warn(err)
         info.revert()
@@ -120,7 +111,6 @@ export default {
         if (res?.status < 400 || res?.success) {
           this.labeledEvent.clearInputDates()
           this.fetchEvents()
-          console.log('router navig');
           this.$router.push({ path: `/my-reservations` })
         }
       })
@@ -162,6 +152,7 @@ export default {
       if (!busyEvents.error) {
         this.originalEvents = busyEvents.map(x => x.calendarObjectEvent)
         this.calendarOptions.events = this.originalEvents
+        this.apiEvents = this.fullCalendarApi.getEvents()
       }
     }
   },
@@ -170,6 +161,7 @@ export default {
     const formattedMinDate = DateFormat.FormatToNewDate(minDate)
     return {
       fullCalendarApi: null,
+      apiEvents: [],
       labeledEvent: new LabeledEvent(),
       originalEvents: [],
       lodgerCount: 1,
@@ -204,7 +196,7 @@ export default {
         },
         editable: true,
         droppable: true,
-        eventResize: (info) => this.handleEventResize(info),
+        eventResize: (info) => this.handleEventDragStop(info),
         eventDrop: (info) => this.handleEventDragStop(info),
         dateClick: (info) => this.handleDateClick(info),
       }
