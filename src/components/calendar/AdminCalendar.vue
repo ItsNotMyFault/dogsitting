@@ -61,12 +61,15 @@ export default {
       }
 
       this.cssSelectDay(arg)
+      this.refreshSelectedEvents(arg.date)
 
+    },
+    refreshSelectedEvents(date) {
       var events = this.fullCalendarApi.getEvents()
 
       this.dateEvents = events.map(dateEv => new ReservationEvent(dateEv.extendedProps.data))
       this.dateEvents = this.dateEvents.filter(event => {
-        return event.dateFrom <= arg.date && arg.date <= event.dateTo
+        return event.dateFrom <= date && date <= event.dateTo
       })
     },
     cssSelectDay(arg) {
