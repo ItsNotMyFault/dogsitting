@@ -3,9 +3,6 @@
     <div class="demo-app-main calendar">
       <h1>ADMIN CALENDAR</h1>
       <FullCalendar ref="fullcalendar" :options="calendarOptions">
-        <!-- <template v-slot:eventContent="arg">
-          {{ arg.event?.title }} 
-        </template> -->
       </FullCalendar>
 
     </div>
@@ -37,6 +34,7 @@ import reservationServices from '@services/reservationServices'
 import ReservationEvent from '@model/reservationEvent'
 import DateFormat from '@/utils/DateFormat'
 import LabeledEvent from '@/model/calendar/labeledEvent'
+import Calendar from '@/utils/Calendar'
 
 export default {
   name: 'AdminCalendar',
@@ -54,28 +52,30 @@ export default {
   methods: {
     handleDateClick(arg) {
       try {
+        console.log('arg.date', arg.date);
+        Calendar.DoMagic(arg.date)
         DateFormat.ValidateDatePastToday(arg.date)
       } catch (err) {
         console.warn(err)
         return
       }
 
+      this.cssSelectDay(arg)
+
+      var events = this.fullCalendarApi.getEvents()
+
+      this.dateEvents = events.map(dateEv => new ReservationEvent(dateEv.extendedProps.data))
+      this.dateEvents = this.dateEvents.filter(event => {
+        return event.dateFrom <= arg.date && arg.date <= event.dateTo
+      })
+    },
+    cssSelectDay(arg) {
       const prevSelectedCell = this.selectedCell
       if (prevSelectedCell) {
         prevSelectedCell.classList.remove('selected-day')
       }
       this.selectedCell = arg.dayEl
       this.selectedCell.classList.add('selected-day')
-
-      //retrieve all events on a specific date.
-      const events = this.fullCalendarApi.getEvents(arg.date)
-      this.dateEvents = events.filter(event => {
-        var end = event.start
-        if (event?.end) {
-          end = event?.end
-        }
-        return event.start <= arg.date && arg.date <= end
-      }).map(dateEv => new ReservationEvent(dateEv.extendedProps.data))
     },
     async deleteReservation(reservationEvent) {
       if (confirm(`Are you sure you want to delete this reservation ${reservationEvent.title} => ${reservationEvent.id}?`)) {

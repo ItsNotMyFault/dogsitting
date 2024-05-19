@@ -17,6 +17,10 @@ export default {
     }
     return properEndDate
   },
+  GetProperEndDateTest2(endDate) {
+    var properEndDate = DateFormat.GetDate(moment(endDate, 'YYYY-MM-DD HH:mm:ss').add(1, 'day'))
+    return properEndDate
+  },
   ValidateNoOverlapBusyEvent(date, events) {
     if (date === null) {
       console.log('other date null')
@@ -33,5 +37,8 @@ export default {
         throw 'this day is not available because it is full'
       }
     }
+  },
+  DoMagic(date) {
+    return DateFormat.GetDate(moment(date, 'YYYY-MM-DD').add(-1, 'day'))
   }
 }

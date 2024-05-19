@@ -1,4 +1,4 @@
-import DateFormat from '@utils/DateFormat'
+import DateFormat from '@/utils/DateFormat'
 import moment from 'moment'
 
 class LabeledEvent {

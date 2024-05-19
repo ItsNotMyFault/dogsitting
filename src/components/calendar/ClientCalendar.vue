@@ -3,16 +3,12 @@
     <div class="demo-app-main calendar">
       <h1>CLIENT CALENDAR</h1>
       <FullCalendar ref="fullcalendar" :options="calendarOptions">
-        <template v-slot:eventContent="arg">
-          {{ arg.event?.title }}
-        </template>
       </FullCalendar>
 
     </div>
     <div class="calendarControls">
       <form class="form" @submit.prevent="submitForm">
         <label>date start</label>
-        <!-- <VueDatePicker v-model="dateFrom" auto-apply :disabled-dates="[(new Date())]" :min-date="new Date()" /> -->
         <VueDatePicker :model-value="labeledEvent.dateFrom" format="yyyy-MM-dd HH:mm:ss"
           @update:model-value="handleDateFrom" auto-apply :min-date="minDate" />
         <label>date end</label>

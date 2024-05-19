@@ -1,17 +1,17 @@
 import Event from '@model/event'
-import DateFormat from '@utils/DateFormat'
-// import DateFormat from '@utils/DateFormat'
-import moment from 'moment'
+import DateFormat from '@/utils/DateFormat'
+import Calendar from '@/utils/Calendar'
 
 class ReservationEvent extends Event {
   constructor(data) {
     super(data)
     this.data = data
     this.id = data?.Id
-    this.dateFrom = moment(data?.DateTimePeriod?.StartDate, 'YYYY-MM-DD HH:mm:ss')
-    this.dateTo = moment(data?.DateTimePeriod?.EndDate, 'YYYY-MM-DD HH:mm:ss').add(1, 'day')
-    this.start = DateFormat.GetDateFormatted(new Date(this.dateFrom))
-    this.end = DateFormat.GetDateFormatted(new Date(this.dateTo))
+    this.dateFrom = new Date(data?.DateTimePeriod?.StartDate)
+    this.dateTo = new Date(data?.DateTimePeriod?.EndDate)
+    var propEnddate = Calendar.GetProperEndDateTest2(data?.DateTimePeriod?.EndDate)
+    this.start = DateFormat.GetDateFormatted(new Date(data?.DateTimePeriod?.StartDate))
+    this.end = DateFormat.GetDateFormatted(propEnddate)
     this.title = data?.EventSubject || 'missing title'
   }
 

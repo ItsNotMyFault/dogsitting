@@ -87,33 +87,6 @@ export default {
     var daterange = [formattedDateFrom, formattedDateFrom]
     return daterange
   },
-  SetAllDate() {
-    var dateFrom = moment(['1900-01-01'])
-    var dateTo = moment(['3000-01-01'])
-    const formattedDateFrom = FormatMomentjsToNewDate(dateFrom)
-    const formattedDateTo = FormatMomentjsToNewDate(dateTo)
-
-    var daterange = [formattedDateFrom, formattedDateTo]
-    return daterange
-  },
-  GetExpired() {
-    const dateFrom = moment([1900, 0, 1])
-    const dateTo = moment().startOf('day')
-    const formattedDateFrom = FormatMomentjsToNewDate(dateFrom)
-    const formattedDateTo = FormatMomentjsToNewDate(dateTo)
-    var daterange = [formattedDateFrom, formattedDateTo]
-    return daterange
-  },
-  GetNonExpired() {
-    const dateFrom = moment().startOf('day')
-    const dateTo = moment([3000, 0, 1])
-    const formattedDateFrom = FormatMomentjsToNewDate(dateFrom)
-    const formattedDateTo = FormatMomentjsToNewDate(dateTo)
-    var daterange = [formattedDateFrom, formattedDateTo]
-    return daterange
-  },
-
-  //GetDate
   GetDate(date) {
     if (date) {
       const momentDate = moment(date)
