@@ -42,6 +42,7 @@ export const useAuthStore = defineStore('auth', {
       const response = { success: true }
       if (response?.success) {
         this.$state.isLoggedIn = false
+        this.$state.isSuperAdmin = false
         this.$state.team = null
         this.$state.applicationUser = null
         window.open('/', '_self')

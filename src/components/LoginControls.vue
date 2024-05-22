@@ -1,26 +1,26 @@
 <template>
-    <button class="loginControls" @click="isOpen = !isOpen">
+    <button class="loginControls" @click.stop="togglePopup">
         <div class="icons">
-            <IconHamburger></IconHamburger>
+            <IconHamburger />
         </div>
         <div class="icons">
-            <IconUser></IconUser>
+            <IconUser />
         </div>
-        <div class="loginControls-modal" v-if="isOpen" @blur="isOpen = false">
-            <span v-if="isLoggedIn === false">
-                <RouterLink class="loginControls-modalLink" to="/login">login</RouterLink>
+        <div class="loginControls-modal" ref="modal" v-if="isOpen">
+            <span v-if="isLoggedIn() === false">
+                <router-link class="loginControls-modalLink" to="/login">Login</router-link>
             </span>
             <span v-else>
-                <RouterLink class="loginControls-modalLink" to="/logout">logout</RouterLink>
-                <hr>
-                User
-                <RouterLink class="loginControls-modalLink" to="/my-profile">my profile</RouterLink>
-                <RouterLink class="loginControls-modalLink" to="/my-reservations">reservations</RouterLink>
-                <span v-if="hasUserTeam">
-                    Team
-                    <RouterLink class="loginControls-modalLink" to="/my-team">Settings</RouterLink>
-                    <RouterLink class="loginControls-modalLink" to="/team-reservations">team reservations</RouterLink>
-                    <RouterLink class="loginControls-modalLink" to="/team-calendar">team calendar</RouterLink>
+                <router-link class="loginControls-modalLink" to="/logout">Logout</router-link>
+                <hr />
+                User:
+                <router-link class="loginControls-modalLink" to="/my-profile">My Profile</router-link>
+                <router-link class="loginControls-modalLink" to="/my-reservations">Reservations</router-link>
+                <span v-if="hasUserTeam()">
+                    Team:
+                    <router-link class="loginControls-modalLink" to="/my-team">Settings</router-link>
+                    <router-link class="loginControls-modalLink" to="/team-reservations">Team Reservations</router-link>
+                    <router-link class="loginControls-modalLink" to="/team-calendar">Team Calendar</router-link>
                 </span>
             </span>
         </div>
@@ -28,39 +28,49 @@
 </template>
 
 <script>
-import { useAuthStore } from '@/stores/authStore'
+import { useAuthStore } from '@/stores/authStore';
+import IconUser from '@/components/icons/IconUser.vue';
+import IconHamburger from '@/components/icons/IconHamburger.vue';
+import { defineComponent, ref, onMounted, onBeforeUnmount } from 'vue';
 
-import IconUser from '@/components/icons/IconUser.vue'
-import IconHamburger from '@/components/icons/IconHamburger.vue'
-import { defineComponent, ref } from 'vue'
-export default {
+export default defineComponent({
     name: 'LoginControls',
-
-
-    computed: {
-        isLoggedIn() {
-            return this.authStore.getIsLoggedIn
-        },
-        hasUserTeam() {
-            return this.authStore.getHasUserTeam
-        }
-    },
-
-
     components: {
         IconUser,
         IconHamburger,
     },
+    setup() {
+        console.log('setup');
+        const authStore = useAuthStore();
+        const isOpen = ref(false);
+        const modal = ref(null);
 
-    data() {
+        const togglePopup = () => {
+            isOpen.value = !isOpen.value;
+        };
+
+        const handleClickOutside = (event) => {
+            if (isOpen.value && modal.value && !modal.value.contains(event.target)) {
+                togglePopup();
+            }
+        };
+
+        onMounted(() => {
+            document.addEventListener('click', handleClickOutside);
+        });
+
+        onBeforeUnmount(() => {
+            document.removeEventListener('click', handleClickOutside);
+        });
+
         return {
-            authStore: null,
-            isOpen: false
-        }
+            authStore,
+            isOpen,
+            modal,
+            togglePopup,
+            isLoggedIn: () => authStore.getIsLoggedIn,
+            hasUserTeam: () => authStore.getHasUserTeam,
+        };
     },
-
-    created() {
-        this.authStore = useAuthStore();
-    }
-}
+});
 </script>

@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  border: black;
 }
 
 .loginControls .icons{
@@ -31,7 +32,7 @@
 
 .loginControls-modalLink {
   margin: 5px;
-  width: 100%;
+  border: black;
   border-radius: 25px;
   padding: 5px;
   display: flex;
