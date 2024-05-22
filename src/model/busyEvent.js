@@ -5,7 +5,6 @@ class BusyEvent {
   constructor(data) {
     this.data = data
     this.id = data?.Id
-    console.log('busyEvent construct', data)
     this.display = 'background'
     //Busy events must use Date object for it to display properly. Can't use dateTime.
     this.start = DateFormat.GetDateFormatted(new Date(data?.DateTimePeriod?.StartDate))

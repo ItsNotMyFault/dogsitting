@@ -1,22 +1,22 @@
 <template>
     <div>
         <div class="sectionTitle">
-            <div>
-                <span @click="showCalendar = false"> {{ teamName }}</span> - <span class="link"
-                    @click="showCalendar = true"> calendar</span>
-            </div>
+            {{ teamName }}
         </div>
-        <br>
-        <TeamCards></TeamCards>
-        <ClientCalendar v-if="showCalendar" :teamName="normalizedTeamName"></ClientCalendar>
+        <SubMenu :componentList="componentListKeys" v-model="component"></SubMenu>
+        <component :is="componentItem" :teamName="name"></component>
     </div>
 </template>
 <script>
 import TeamCards from '@components/team/TeamCards.vue'
-import ActivityCard from '@components/ActivityCard.vue'
 import ClientCalendar from '@components/calendar/ClientCalendar.vue'
+import SubMenu from '@components/navigation/SubMenu.vue'
 import teamServices from '@services/teamServices.js'
 
+const componentList = {
+    'detail': TeamCards,
+    'reserve': ClientCalendar,
+}
 
 export default {
     name: 'TeamDetail',
@@ -30,7 +30,7 @@ export default {
 
     components: {
         TeamCards,
-        ActivityCard,
+        SubMenu,
         ClientCalendar
     },
 
@@ -38,31 +38,25 @@ export default {
         teamName() {
             return this.team ? this.team.name : null
         },
-        normalizedTeamName() {
-            return this.team ? this.team.normalizedName : null
+        componentItem() {
+            return componentList[this.component]
         }
     },
 
     data() {
         return {
-            showCalendar: false,
+            component: 'detail',
+            componentListKeys: Object.keys(componentList),
             title: null,
             team: null,
 
         }
     },
 
-    methods: {
-        submitForm() {
-            console.log('submit form');
-        }
-    },
-
     async created() {
-        const response = await teamServices.getTeamByNormalizedName(this.name).then(response => {
-            this.team = response
-            this.showCalendar = true
-        })
+        const response = await teamServices.getTeamByNormalizedName(this.name)
+        this.team = response
+        this.showCalendar = true
     }
 }
 </script>
