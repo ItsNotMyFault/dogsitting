@@ -1,0 +1,13 @@
+.subSectionMenu {
+    display: flex;
+    flex-direction: row;
+}
+
+.subSectionMenu-title {
+    margin: 5px;
+    color: var(--theme-main-color);
+}
+
+.subSectionMenu-title.active {
+    background-color: var(--vt-c-indigo);
+}
