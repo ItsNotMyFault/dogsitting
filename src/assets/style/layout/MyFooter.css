@@ -1,13 +1,5 @@
-/* 
-footer {
-    color: blue;
-    position: absolute;
-    bottom: 0;
-    padding: 30px;
-} */
 
 .footer {
-    /* width: 100%; */
     padding: 50px;
 }
 
@@ -45,4 +37,10 @@ footer {
     right: 0;
     z-index: -1;
     background-color: black;
+}
+
+.footer-socials {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }

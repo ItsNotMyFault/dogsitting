@@ -1,6 +1,7 @@
 input {
     border-radius: 25px;
     padding: 10px;
+    border: solid 1px #a8a4a4
 }
 
 label {
@@ -9,19 +10,16 @@ label {
     margin-left: 10px;
 }
 
-
 .form-submit {
     background-color: var(--theme-main-color);
     border-radius: 25px;
     padding: 10px;
+    border: black;
 }
 
 .form {
  display: flex;   
  flex-direction: column;
- width: 100%;
- background-color: rgb(44, 52, 59);
- color: white;
  padding: 15px;
  border-radius: 25px;
 }

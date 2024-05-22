@@ -17,7 +17,7 @@
         <label>Lodger count</label>
         <input type="number" v-model="lodgerCount" min="1" max="10" step="1">
         <label> Notes</label>
-        <input type="text" v-model="notes">
+        <textarea type="text" v-model="notes" rows="6" placeholder="Médicaments, horaire, info suppl+, etc." />
         <label>
           <input type="checkbox" v-model="checked">
           I accept <a href="#">conditions</a>.
