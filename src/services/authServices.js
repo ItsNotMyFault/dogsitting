@@ -1,36 +1,25 @@
 import axios from 'axios'
-import User from '@model/user'
 axios.defaults.withCredentials = true
+import User from '@model/user'
 let domainUrl = 'https://localhost:5188'
 // let domainUrl = process.env.VUE_APP_DOMAIN_API
 
 export default {
   async FacebookOauthLogin() {
-    return axios
-      .get('https://localhost:5188/login')
-      .then(async (res) => {
-        // return { success: true }
-        const loggedInUser = await this.GetCurrentUser()
-        window.open(res.request.responseURL, '_self').focus()
-        return loggedInUser
-      })
-      .catch((error) => {
-        console.error(`error during authentication: ${error}`)
-        return error.response
-      })
+    window.location.href = 'https://localhost:5188/login'
+    return { success: true }
   },
-  async Logout() {
-    const result = await axios
-      .get(`${domainUrl}/Authentication/LogOff`, {})
+  async LogoutUser() {
+    return axios
+      .get(`${domainUrl}/LogOff`, {})
       .then((response) => {
-        console.info('Successfully logged out', response)
-        return response
+        console.error('Successfully logged out', response)
+        return response.data
       })
       .catch((error) => {
-        console.info('Error when trying to log out', error)
-        return error.response
+        const errorr = `${error.response.data.message}, ${error.response.data.code}`
+        throw new Error(errorr)
       })
-    return result
   },
   GetCurrentUser() {
     return axios
@@ -39,7 +28,8 @@ export default {
         return new User(response.data)
       })
       .catch((error) => {
-        return error.response
+        const errorr = `${error.response.data.message}, ${error.response.data.code}`
+        throw new Error(errorr)
       })
   },
   async GetUserLoginProviders() {
@@ -49,8 +39,8 @@ export default {
         return response
       })
       .catch((error) => {
-        console.log(error.response)
-        return error.response
+        const errorr = `${error.response.data.message}, ${error.response.data.code}`
+        throw new Error(errorr)
       })
     return result
   },
@@ -63,8 +53,8 @@ export default {
         return response
       })
       .catch((error) => {
-        console.log(error.response)
-        return error.response
+        const errorr = `${error.response.data.message}, ${error.response.data.code}`
+        throw new Error(errorr)
       })
     return result
   }

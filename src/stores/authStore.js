@@ -28,27 +28,37 @@ export const useAuthStore = defineStore('auth', {
     async authenticateUser() {
       try {
         const response = await AuthService.FacebookOauthLogin()
-        if (response?.success || (response !== null && response !== undefined)) {
-          this.$state.isLoggedIn = true
-          this.$state.applicationUser = response
-        } else {
-          throw new Error('User must be authenticated')
-        }
+        console.log('FacebookOauthLogin: response', response)
+        this.$state.isLoggedIn = true
+        this.$state.applicationUser = response
       } catch (error) {
         throw new Error(error)
       }
     },
-    async logoutUser() {
-      const response = { success: true }
-      if (response?.success) {
-        this.$state.isLoggedIn = false
-        this.$state.isSuperAdmin = false
-        this.$state.team = null
-        this.$state.applicationUser = null
-        window.open('/', '_self')
-      } else {
-        throw new Error("User couldn't loggout")
+    async fetchLoggedInUser() {
+      // if (this.$state.applicationUser) {
+      //   return
+      // }
+      try {
+        const loggedInUser = await AuthService.GetCurrentUser()
+        if (loggedInUser) {
+          this.$state.isLoggedIn = true
+          this.$state.applicationUser = loggedInUser
+        }
+      } catch (error) {
+        this.clearUser()
       }
+    },
+    clearUser() {
+      this.$state.isLoggedIn = false
+      this.$state.isSuperAdmin = false
+      this.$state.team = null
+      this.$state.applicationUser = null
+    },
+    async logoutUser() {
+      await AuthService.LogoutUser()
+      this.clearUser()
+      window.open('/', '_self')
     },
     setActiveTeam(team) {
       this.$state.team = team

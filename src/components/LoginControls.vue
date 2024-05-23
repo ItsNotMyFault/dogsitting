@@ -40,12 +40,12 @@ export default defineComponent({
         IconHamburger,
     },
     setup() {
-        console.log('setup');
         const authStore = useAuthStore();
         const isOpen = ref(false);
         const modal = ref(null);
 
-        const togglePopup = () => {
+        const togglePopup = async () => {
+            authStore.fetchLoggedInUser();
             isOpen.value = !isOpen.value;
         };
 
