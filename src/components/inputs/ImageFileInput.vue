@@ -42,6 +42,7 @@ export default {
             if (file && file.type.startsWith('image/')) {
                 const reader = new FileReader();
                 reader.onload = e => {
+                    console.log('should emit modelValue', e.target.result);
                     this.$emit('update:modelValue', e.target.result)
                 };
                 reader.readAsDataURL(file);
