@@ -14,6 +14,9 @@
 @import '@style/components/LoginControls.css';
 @import '@style/components/buttons/FacebookButton.css';
 @import '@style/components/ReservationCard.css';
+@import '@style/components/inputs/ImageFileInput.css';
+
+@import '@style/TeamProfileEdit.css';
 /* calendar */
 @import '@style/components/calendar/Calendar.css';
 @import '@style/components/calendar/CalendarControls.css';

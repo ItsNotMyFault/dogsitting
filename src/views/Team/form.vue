@@ -4,6 +4,12 @@
         create team
     </div>
 
+    <div class="sectionDescription">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores minima non, odio pariatur quisquam vero
+        officiis repellat temporibus labore maxime obcaecati! Eaque, error consectetur repellat quam minima possimus
+        eligendi fugit.
+    </div>
+
     <div class="form">
         <label>name</label>
         <input type="text" v-model="team.name">

@@ -48,7 +48,7 @@ export default {
     },
 
     props: {
-        value: {
+        modelValue: {
             type: String,
             default: colors.orange
         }

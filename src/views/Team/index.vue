@@ -1,23 +1,19 @@
 <template>
     <div class="section">
         <div class="sectionTitle">Teams</div>
-        <RouterLink to="/teams/create">
-            <button>
-                Créer une équipe
-            </button>
-        </RouterLink>
         <TeamCardList :model="model"></TeamCardList>
     </div>
 </template>
 <script>
-import TeamCardList from '@/components/TeamCardList.vue'
+import TeamCardList from '@/components/team/TeamCardList.vue'
+
 import Team from '@/model/team'
 
 export default {
     name: 'TeamIndex',
 
     components: {
-        TeamCardList
+        TeamCardList,
     },
 
     data() {

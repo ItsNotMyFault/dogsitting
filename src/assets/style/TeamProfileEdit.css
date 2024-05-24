@@ -1,0 +1,18 @@
+.teamProfileEdit{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.teamProfileEdit .form{
+    width: 50%;
+}
+
+
+.teamProfileEdit-pictureList {
+    display: flex;
+     flex-direction: row;
+     width: 100%;
+}

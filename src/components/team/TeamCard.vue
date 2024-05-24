@@ -18,6 +18,8 @@
 <script>
 import Team from '@/model/team'
 export default {
+    name: 'TeamCard',
+
     props: {
         team: {
             type: Team,
@@ -27,7 +29,7 @@ export default {
 
     computed: {
         teamName() {
-            return this.team.name || 'undefined'
+            return this.team?.name || 'undefined'
         }
 
     },

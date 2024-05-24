@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="teamProfileEdit">
         <div class="form">
             <RouterLink to="/my-team"> <button>go back <= </button>
             </RouterLink>
@@ -24,26 +24,53 @@
             </label>
             <button @click="save">Save</button>
             saving => {{ saving }}
-
         </div>
+        <label>
+            Profile picture combination
+        </label>
+        <div class="teamProfileEdit-pictureList">
+            <ImageFileInput v-model="image1"></ImageFileInput>
+            <ImageFileInput v-model="image2"></ImageFileInput>
+            <ImageFileInput v-model="image3"></ImageFileInput>
+            <ImageFileInput v-model="image4"></ImageFileInput>
+        </div>
+        <label>
+            Profile picture combination - PREVIEW
+        </label>
+        <TeamCardPreview :image1="image1" :image2="image2" :image3="image3" :image4="image4"></TeamCardPreview>
     </div>
 </template>
 <script>
 import Team from '@model/team'
 import { useAuthStore } from '@/stores/authStore'
 import teamServices from '@services/teamServices'
+import ImageFileInput from '@components/inputs/ImageFileInput.vue'
+import TeamCardPreview from '@components/team/TeamCardPreview.vue'
 
 export default {
     name: 'TeamProfileEdit',
 
+    components: {
+        ImageFileInput,
+        TeamCardPreview
+    },
+
     data() {
         return {
             team: new Team(),
-            saving: false
+            saving: false,
+            files: [],
+            image1: null,
+            image2: null,
+            image3: null,
+            image4: null,
         }
     },
 
     methods: {
+        update(test) {
+            console.log('update test', test);
+        },
         async save() {
             this.saving = true
             teamServices.update(this.team.id, this.team).then(response => {
