@@ -50,7 +50,7 @@ export const teamRoutes = [
   },
   {
     path: '/reservations/:id/detail',
-    name: 'teamreservations',
+    name: 'reservation-detail',
     component: () => import('@views/Reservation/Detail.vue'),
     meta: {
       title: 'Team Reservations'
