@@ -8,6 +8,8 @@
 
 .teamProfileEdit .form{
     width: 50%;
+    color: black;
+    background-color: var(--vt-c-indigo);
 }
 
 

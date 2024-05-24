@@ -16,7 +16,7 @@
     </div>
 </template>
 <script>
-import ReservationCard from '@/components/ReservationCard.vue'
+import ReservationCard from '@/components/reservation/ReservationCard.vue'
 import reservationServices from '@/services/reservationServices.js'
 
 export default {

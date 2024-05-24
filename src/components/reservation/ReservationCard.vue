@@ -1,5 +1,5 @@
 <template>
-    <div class="reservationCard">
+    <div class="reservationCard" @click="navigate()">
         <div class="reservationCard-title">
             <!-- TODO Créer une 2e CARD pour différencier team reservations de réservations d'un client. -->
             <span>Team: {{ reservation.team.name }}</span>
@@ -56,5 +56,11 @@ export default {
             return this.reservation?.isApproved
         }
     },
+
+    methods: {
+        navigate() {
+            this.$router.push({ path: `/reservations/${this.reservation.id}/detail` })
+        }
+    }
 }
 </script>

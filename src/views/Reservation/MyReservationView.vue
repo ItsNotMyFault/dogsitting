@@ -9,7 +9,7 @@
     </h1>
 </template>
 <script>
-import ReservationList from '@components/ReservationList.vue';
+import ReservationList from '@components/reservation/ReservationList.vue';
 import reservationServices from '@services/reservationServices'
 import { useAuthStore } from '@/stores/authStore'
 export default {

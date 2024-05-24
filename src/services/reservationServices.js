@@ -11,8 +11,22 @@ export default {
         return res.data.map((reservation) => new Reservation(reservation))
       })
       .catch((error) => {
-        return error.response
+        const errorr = `${error.response.data.message}, ${error.response.data.code}`
+        throw new Error(errorr)
       })
+  },
+  findReservationById(id) {
+    var reservations = []
+    reservations = axios
+      .get(`${domainUrl}/reservation/${id}`)
+      .then((res) => {
+        return new Reservation(res.data)
+      })
+      .catch((error) => {
+        const errorr = `${error.response.data.message}, ${error.response.data.code}`
+        throw new Error(errorr)
+      })
+    return reservations
   },
   getReservationsByTeamName(teamName) {
     var reservations = []
@@ -22,7 +36,8 @@ export default {
         return res.data.map((reservation) => new Reservation(reservation))
       })
       .catch((error) => {
-        return error.response
+        const errorr = `${error.response.data.message}, ${error.response.data.code}`
+        throw new Error(errorr)
       })
     return reservations
   },
@@ -34,7 +49,8 @@ export default {
         return { success: true }
       })
       .catch((error) => {
-        return error.response.data
+        const errorr = `${error.response.data.message}, ${error.response.data.code}`
+        throw new Error(errorr)
       })
   },
   deleteReservation(reservationId) {
@@ -44,7 +60,8 @@ export default {
         return res
       })
       .catch((error) => {
-        return error.response.data
+        const errorr = `${error.response.data.message}, ${error.response.data.code}`
+        throw new Error(errorr)
       })
   },
   approveReservation(reservationId) {
@@ -54,7 +71,8 @@ export default {
         return res
       })
       .catch((error) => {
-        return error.response.data
+        const errorr = `${error.response.data.message}, ${error.response.data.code}`
+        throw new Error(errorr)
       })
   }
 }
