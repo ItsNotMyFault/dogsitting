@@ -39,32 +39,5 @@ export const teamRoutes = [
     meta: {
       title: 'Edit my team'
     }
-  },
-  {
-    path: '/team-reservations',
-    name: 'teamreservations',
-    component: () => import('@views/Reservation/TeamReservationView.vue'),
-    meta: {
-      title: 'Team Reservations'
-    }
-  },
-  {
-    path: '/reservations/:id/detail',
-    name: 'reservation-detail',
-    component: () => import('@views/Reservation/Detail.vue'),
-    meta: {
-      title: 'Team Reservations'
-    },
-    props: (route) => ({
-      ...route.params
-    })
-  },
-  {
-    path: '/team-calendar',
-    name: 'teamcalendar',
-    component: () => import('@views/Team/TeamCalendarAdminView.vue'),
-    meta: {
-      title: 'Team admin calendar'
-    }
   }
 ]

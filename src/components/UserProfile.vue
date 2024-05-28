@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="bloc">
         <div class="form">
             <label>
                 <span>firstname: </span>
@@ -26,7 +26,7 @@
                 <span @click="setActive(team)">{{ team.normalizedName }}</span>
             </div>
             <!-- TODO set default active team -->
-            <RouterLink to="/my-profile/edit"> <button>edit</button></RouterLink>
+            <RouterLink to="/my-profile/edit"> edit</RouterLink>
 
         </div>
     </div>

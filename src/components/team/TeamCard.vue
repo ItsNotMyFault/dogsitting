@@ -1,5 +1,5 @@
 <template>
-    <div class="TeamCard" @click="navigate()">
+    <div class="TeamCard TeamCard-dimensions" @click="navigate()">
         <div class="TeamCard-title">{{ teamName }}</div>
         <div class="TeamCard-image">
             <img alt="img" src="@/assets/images/20230814_183252.jpg" />

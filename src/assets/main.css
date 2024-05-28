@@ -3,6 +3,7 @@
 @import '@style/layout/MyFooter.css';
 @import '@style/layout/Main.css';
 @import '@style/layout/SubMenu.css';
+@import '@style/layout/Bloc.css';
 
 
 @import '@style/components/Modal.css';
@@ -15,6 +16,7 @@
 @import '@style/components/buttons/FacebookButton.css';
 @import '@style/components/ReservationCard.css';
 @import '@style/components/inputs/ImageFileInput.css';
+@import '@style/components/inputs/CardAddButton.css';
 
 @import '@style/TeamProfileEdit.css';
 /* calendar */

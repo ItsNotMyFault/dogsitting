@@ -53,6 +53,25 @@ export default {
         throw new Error(errorr)
       })
   },
+  saveReservationFiles(id, files) {
+    const formData = new FormData()
+    var fileList = Array.from(files)
+    console.log('fileList', fileList)
+    fileList.forEach((file) => {
+      formData.append('files', file)
+    })
+
+    return axios
+      .post(`${domainUrl}/reservation/${id}/media`, formData, {})
+      .then((res) => {
+        console.log('res', res)
+        return res
+      })
+      .catch((error) => {
+        const errorr = `${error.response.data.message}, ${error.response.data.code}`
+        throw new Error(errorr)
+      })
+  },
   deleteReservation(reservationId) {
     return axios
       .delete(`${domainUrl}/reservation/${reservationId}`)

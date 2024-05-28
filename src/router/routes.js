@@ -1,5 +1,6 @@
-import { clientRoutes } from './clientRoutes.js'
+import { userRoutes } from './userRoutes.js'
 import { teamRoutes } from './teamRoutes.js'
+import { reservationRoutes } from './reservationRoutes.js'
 import { Roles } from '@utils/Roles.js'
 
 const routes = [
@@ -11,8 +12,9 @@ const routes = [
       title: 'Home'
     }
   },
-  ...clientRoutes,
+  ...userRoutes,
   ...teamRoutes,
+  ...reservationRoutes,
   {
     path: '/about',
     name: 'about',

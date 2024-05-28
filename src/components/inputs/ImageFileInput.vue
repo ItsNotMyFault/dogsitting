@@ -1,6 +1,5 @@
 <template>
-
-    <div class="imageFileInput">
+    <CardAddButton class="imageFileInput">
         <div class="imageFileInput-imageName" v-if="modelValue">
             <span class="fileName">{{ fileName }}</span>
         </div>
@@ -12,12 +11,18 @@
             <img v-if="modelValue" :src="modelValue" alt="Image Preview">
         </div>
         <button v-if="modelValue" class="imageFileInput-delete" @click="clearImage()">DELETE</button>
-    </div>
+    </CardAddButton>
 </template>
 
 <script>
+import CardAddButton from '@components/buttons/CardAddButton.vue'
 export default {
     name: 'ImageFileInput',
+
+    components: {
+        CardAddButton
+    },
+
 
     props: {
         modelValue: {
@@ -48,6 +53,7 @@ export default {
                 reader.readAsDataURL(file);
             } else {
                 this.$emit('update:modelValue', null)
+                console.warn('file is not an image')
             }
         }
     }

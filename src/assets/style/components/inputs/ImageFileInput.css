@@ -1,14 +1,11 @@
 
 .imageFileInput {
     position: relative;
-    border: solid 1px white;
-    border-radius: 25px;
+    background-color: var(--vt-c-black);
     margin: 10px;
-    height: 450px;
     overflow: hidden;
     display: grid;
     cursor: pointer;
-    width: 100%;
 }
 
 .imageFileInput:hover {

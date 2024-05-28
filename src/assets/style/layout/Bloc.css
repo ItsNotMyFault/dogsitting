@@ -1,0 +1,36 @@
+
+.bloc{
+    background-color: white;
+    border-radius: 25px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.bloc-images {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.bloc-image {
+    position: relative;
+    border-radius: 25px;
+    overflow: hidden;
+    margin: 5px;
+
+}
+
+.block-imageButton {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
+
+.bloc-image-dimensions {
+    width: 300px; 
+    height: 200px;
+
+}

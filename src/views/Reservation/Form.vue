@@ -1,26 +1,30 @@
 <template>
     <div class="reservationDetail">
         <div class="sectionTitle">
-            Booking CLIENT Détails
+            Booking Détails
         </div>
         <div class="bloc">
-            <IsApproved :isApproved="reservation.isApproved"></IsApproved>
-            Reservation Dates: {{ dates }}
-            Reserved on: {{ reservation.createdAt }}
+            Dates: {{ dates }}
         </div>
         <div class="bloc">
-            Gardien: OUI
+            Gardien: {{ reservation.team }}
+            Lister les détails de la réservation
         </div>
         <div class="bloc">
-            Chiens: Liste de chiens ici
-        </div>   
-        <div class="bloc">
-            <button> Cancel</button>
+            Chiens: {{ reservation.team }}
+            Lister les détails de la réservation
         </div>
         <div>
-            Reservation's pictures ({{imageCount}})
-            <button v-if="imageCount > 0" @click="loadPictures()"> Click to load pictures</button>
+            Reservation's pictures
         </div>
+
+        <div style="display: flex; flex-direction: row; flex-wrap: wrap;">
+            <ImageFileInput @update:model-value="addImage" style="width: 50px"></ImageFileInput>
+            <div v-for="image in images" :key="image">
+                <img :src="image" alt="Image Preview" style="width: 50px; height: 50px;">
+            </div>
+        </div>
+        <button> Cancel</button>
     </div>
 </template>
 
@@ -31,7 +35,7 @@ import CardAddButton from '@components/buttons/CardAddButton.vue'
 import IsApproved from '@components/IsApproved.vue'
 
 export default {
-    name: 'ReservationDetail',
+    name: 'ReservationForm',
 
     components: {
         ImageFileInput,
@@ -46,22 +50,16 @@ export default {
         }
     },
 
-    computed:{
-        dates(){
+    computed: {
+        dates() {
             return this.reservation?.dates
-        },
-        contactInfo(){
-            return 'phone: 5345-345-6556'
         }
     },
 
     methods: {
-        loadPictures(){
-            //axios call to fetch resrvation's pictures
-        },
         addImage(imageUrl) {
             console.log('imageUrl', imageUrl);
-    
+
             this.images.push(imageUrl)
             // this.imageTest = null
         },
@@ -74,8 +72,7 @@ export default {
         return {
             reservation: null,
             images: [],
-            imageTest: null,
-            imageCount: 6
+            imageTest: null
         }
     },
 

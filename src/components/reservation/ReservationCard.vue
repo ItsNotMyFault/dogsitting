@@ -48,6 +48,10 @@ export default {
         reservation: {
             type: Reservation,
             required: true
+        },
+        isAdmin: {
+            type: Boolean,
+            default: false
         }
     },
 
@@ -59,7 +63,8 @@ export default {
 
     methods: {
         navigate() {
-            this.$router.push({ path: `/reservations/${this.reservation.id}/detail` })
+            const adminPath = this.isAdmin ? '-admin' : ''
+            this.$router.push({ path: `/reservations/${this.reservation.id}/detail${adminPath}` })
         }
     }
 }

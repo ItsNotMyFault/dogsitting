@@ -1,11 +1,13 @@
 
+
+
 .TeamCard {
     position: relative;
     border: solid 1px white;
     border-radius: 25px;
     margin: 10px;
-    width: 30%;
-    height: 450px;
+    min-width: 200px;
+    min-height: 250px;
     overflow: hidden;
     display: grid;
     cursor: pointer;
@@ -13,6 +15,12 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
 
+}
+
+.TeamCard-dimensions {
+    width: 30%;
+    height: 450px;
+    overflow: hidden;
 }
 
 .TeamCard img {

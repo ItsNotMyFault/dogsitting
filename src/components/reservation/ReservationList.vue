@@ -6,7 +6,8 @@
             </slot> ({{ reservationCount }})
         </div>
         <div style="display: flex; flex-direction: column;">
-            <ReservationCard :reservation="reservation" v-for="reservation in reservations" :key="reservation">
+            <ReservationCard :reservation="reservation" v-for="reservation in reservations" :key="reservation"
+                :isAdmin="isAdmin">
                 <template #actions v-if="!reservation.isApproved && isAdmin">
                     <button @click="approve(reservation)">Approve</button>
                     <button @click="remove(reservation)">Delete</button>

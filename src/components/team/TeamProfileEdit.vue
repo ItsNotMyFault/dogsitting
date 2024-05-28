@@ -1,30 +1,34 @@
 <template>
     <div class="teamProfileEdit">
-        <div class="form">
-            <RouterLink to="/my-team"> <button>go back <= </button>
-            </RouterLink>
-            <label>
-                <span>name: </span>
-                <span>{{ team.name }}</span>
-                <input type="text" v-model="team.name">
-            </label>
-            <label>
-                <input type="checkbox" v-model="team.useAvailabilities"> UseAvailabilities
-            </label>
-            <label>
-                <input type="checkbox" v-model="team.useUnavailabilities"> UseUnavailabilities
-            </label>
-            <label>
-                MaxWeekDaysLodgerCount
-                <input type="number" v-model="team.maxWeekDaysLodgerCount" min="1" max="10" step="1">
-            </label>
-            <label>
-                MaxWeekendDaysLodgerCount
-                <input type="number" v-model="team.maxWeekendDaysLodgerCount" min="1" max="10" step="1">
-            </label>
-            <button @click="save">Save</button>
-            saving => {{ saving }}
+        <div class="teamProfileEdit-form">
+            <TeamCardPreview :image1="image1" :image2="image2" :image3="image3" :image4="image4"></TeamCardPreview>
+            <div class="form">
+                <RouterLink to="/my-team"> <button>go back <= </button>
+                </RouterLink>
+                <label>
+                    <span>name: </span>
+                    <span>{{ team.name }}</span>
+                    <input type="text" v-model="team.name">
+                </label>
+                <label>
+                    <input type="checkbox" v-model="team.useAvailabilities"> UseAvailabilities
+                </label>
+                <label>
+                    <input type="checkbox" v-model="team.useUnavailabilities"> UseUnavailabilities
+                </label>
+                <label>
+                    MaxWeekDaysLodgerCount
+                    <input type="number" v-model="team.maxWeekDaysLodgerCount" min="1" max="10" step="1">
+                </label>
+                <label>
+                    MaxWeekendDaysLodgerCount
+                    <input type="number" v-model="team.maxWeekendDaysLodgerCount" min="1" max="10" step="1">
+                </label>
+                <button @click="save">Save</button>
+                saving => {{ saving }}
+            </div>
         </div>
+
         <label>
             Profile picture combination
         </label>
@@ -37,7 +41,6 @@
         <label>
             Profile picture combination - PREVIEW
         </label>
-        <TeamCardPreview :image1="image1" :image2="image2" :image3="image3" :image4="image4"></TeamCardPreview>
     </div>
 </template>
 <script>

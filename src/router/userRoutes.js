@@ -1,4 +1,4 @@
-export const clientRoutes = [
+export const userRoutes = [
   {
     path: '/my-profile',
     name: 'myprofile',
@@ -13,14 +13,6 @@ export const clientRoutes = [
     component: () => import('@views/MyUser/MyProfileEditView.vue'),
     meta: {
       title: 'My Profile'
-    }
-  },
-  {
-    path: '/my-reservations',
-    name: 'myreservations',
-    component: () => import('@views/Reservation/MyReservationView.vue'),
-    meta: {
-      title: 'My Reservations'
     }
   }
 ]

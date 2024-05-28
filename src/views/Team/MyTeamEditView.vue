@@ -1,6 +1,6 @@
 <template>
     <div class="sectionTitle">
-        Modification Profile
+        Modification TEAM Profile
     </div>
     <TeamProfileEdit></TeamProfileEdit>
 </template>

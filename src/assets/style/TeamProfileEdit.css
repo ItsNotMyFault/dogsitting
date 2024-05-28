@@ -5,6 +5,12 @@
     align-items: center;
     width: 100%;
 }
+.teamProfileEdit-form{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+}
 
 .teamProfileEdit .form{
     width: 50%;
@@ -15,6 +21,5 @@
 
 .teamProfileEdit-pictureList {
     display: flex;
-     flex-direction: row;
-     width: 100%;
+    flex-direction: row;
 }
