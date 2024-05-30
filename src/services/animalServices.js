@@ -8,7 +8,7 @@ let domainUrl = 'https://localhost:5188'
 export default {
   findById(id) {
     return axios
-      .get(`${domainUrl}/users/${id}`)
+      .get(`${domainUrl}/animals/${id}`)
       .then((res) => {
         return new User(res.data)
       })
@@ -21,7 +21,7 @@ export default {
   update(id, user) {
     delete user.data
     return axios
-      .put(`${domainUrl}/users/edit/${id}`, user, {})
+      .put(`${domainUrl}/animals/edit/${id}`, user, {})
       .then((res) => {
         return new User(res.data)
       })
@@ -30,11 +30,11 @@ export default {
       })
   },
 
-  getAnimals(userId) {
+  getAnimals() {
     return axios
-      .get(`${domainUrl}/user/${userId}/animals`)
+      .get(`${domainUrl}/animals`)
       .then((res) => {
-        return new Animal(res.data)
+        return res.data.map((animal) => new Animal(animal))
       })
       .catch((error) => {
         return error.response

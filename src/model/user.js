@@ -6,7 +6,7 @@ class User {
     this.lastName = data?.LastName
     this.phonenumber = data?.PhoneNumber
     this.name = data?.Name
-    this.id = data?.Id
+    this.id = data?.Id //very important property.
   }
 
   get normalizedIdentifier() {

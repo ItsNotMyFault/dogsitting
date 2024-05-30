@@ -1,6 +1,7 @@
 import { userRoutes } from './userRoutes.js'
 import { teamRoutes } from './teamRoutes.js'
 import { reservationRoutes } from './reservationRoutes.js'
+import { animalRoutes } from './animalRoutes.js'
 import { Roles } from '@utils/Roles.js'
 
 const routes = [
@@ -15,6 +16,7 @@ const routes = [
   ...userRoutes,
   ...teamRoutes,
   ...reservationRoutes,
+  ...animalRoutes,
   {
     path: '/about',
     name: 'about',
@@ -29,14 +31,6 @@ const routes = [
     component: () => import('@views/Pricing/index.vue'),
     meta: {
       title: 'Pricing'
-    }
-  },
-  {
-    path: '/dogs',
-    name: 'dogs',
-    component: () => import('@views/Dog/index.vue'),
-    meta: {
-      title: 'Pensionnaires'
     }
   },
   {

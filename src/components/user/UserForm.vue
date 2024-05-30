@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="bloc">
         <div class="form">
             <label>firstName</label>
             <input type="text" v-model="user.firstName">
@@ -16,14 +16,20 @@
 </template>
 <script>
 import User from '@model/user'
-import authServices from '@services/authServices'
 import userServices from '@services/userServices'
+
 export default {
-    name: 'UserProfileEdit',
+    name: 'UserForm',
+
+    props: {
+        user: {
+            type: User,
+            required: true
+        }
+    },
 
     data() {
         return {
-            user: new User(),
             saving: false
         }
     },
@@ -38,9 +44,6 @@ export default {
     },
 
 
-    async created() {
-        this.user = await authServices.GetCurrentUser();
-    }
 
 }
 </script>

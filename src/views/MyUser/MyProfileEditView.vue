@@ -2,17 +2,28 @@
     <div class="sectionTitle">
         Modification Profile
     </div>
-    <UserProfileEdit></UserProfileEdit>
+    <UserForm :user="user"></UserForm>
 </template>
 <script>
-import UserProfileEdit from '@components/UserProfileEdit.vue';
+import UserForm from '@components/user/UserForm.vue';
+import authServices from '@services/authServices'
+import User from '@model/user'
 export default {
     name: 'MyProfileEditView',
 
     components: {
-        UserProfileEdit
+        UserForm,
     },
 
+    data() {
+        return {
+            user: new User()
+        }
+    },
+
+    async created() {
+        this.user = await authServices.GetCurrentUser();
+    }
 
 }
 </script>
