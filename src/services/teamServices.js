@@ -49,6 +49,40 @@ export default {
       })
   },
 
+  getTeamFiles(id) {
+    return axios
+      .get(`${domainUrl}/team/${id}/media`)
+      .then((res) => {
+        return res.data
+      })
+      .catch((error) => {
+        // const errorr = `${error.response.data.message}, ${error.response.data.code}`
+        // throw new Error(errorr)
+        throw new Error(error)
+      })
+  },
+
+  saveTeamFiles(id, files) {
+    const formData = new FormData()
+    var fileList = Array.from(files)
+    console.log('fileList', fileList)
+    fileList.forEach((file) => {
+      formData.append('files', file.file)
+      formData.append('positions', file.position) // Positions are 1-based
+    })
+
+    return axios
+      .post(`${domainUrl}/team/${id}/media`, formData, {})
+      .then((res) => {
+        return res.data
+      })
+      .catch((error) => {
+        console.log('error', error)
+        // const errorr = `${error.response.data.message}, ${error.response.data.code}`
+        // throw new Error(errorr)
+      })
+  },
+
   getTeamByNormalizedName(teamNormalizedName) {
     return axios
       .get(`${domainUrl}/team/${teamNormalizedName}`)
@@ -56,7 +90,8 @@ export default {
         return new Team(res.data)
       })
       .catch((error) => {
-        return error.response
+        const errorr = `${error.response.data.message}, ${error.response.data.code}`
+        throw new Error(errorr)
       })
   },
 
@@ -64,19 +99,14 @@ export default {
     delete team.data
     delete team.approvedAt
     delete team.createdAt
-    // delete team.id
-    // delete team.normalizedName
     return axios
       .put(`${domainUrl}/team/edit/${id}`, team, {})
       .then((res) => {
-        console.log('update team res', res, res.data)
         return new Team(res.data)
       })
       .catch((error) => {
-        console.log('error', error.response)
-        console.log('error', error.message)
-        console.error(`error during fetch teams: ${error}`)
-        return error.response
+        const errorr = `${error.response.data.message}, ${error.response.data.code}`
+        throw new Error(errorr)
       })
   }
 }

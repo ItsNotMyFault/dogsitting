@@ -28,7 +28,6 @@ export const useAuthStore = defineStore('auth', {
     async authenticateUser() {
       try {
         const response = await AuthService.FacebookOauthLogin()
-        console.log('FacebookOauthLogin: response', response)
         this.$state.isLoggedIn = true
         this.$state.applicationUser = response
       } catch (error) {

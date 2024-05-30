@@ -27,7 +27,6 @@ const listInit = {
       this.list = teams.map((team) => {
         return this.createEventInstance(team)
       })
-      console.log('listInit mixin', this.list)
     }
   },
 

@@ -24,6 +24,10 @@ export default {
         navigate() {
             this.$router.push({ path: `/teams/create` })
         }
+    },
+
+    updated() {
+        console.log('this.list', this.list);
     }
 }
 </script>

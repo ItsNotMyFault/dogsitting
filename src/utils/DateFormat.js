@@ -201,7 +201,6 @@ export default {
     const FromJan = new Date(year, 0, 1)
     const ToDec = new Date(year, 11, 31)
     var daterange = [FromJan, ToDec]
-    console.log('FromJan', FromJan, ' => ', ToDec)
     return daterange
   },
   GetPreviousYearToDaterange() {

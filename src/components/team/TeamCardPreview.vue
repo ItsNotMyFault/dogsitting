@@ -2,39 +2,43 @@
     <div class="TeamCard">
         <div class="TeamCard-title">Title</div>
         <div class="TeamCard-image">
-            <img :src="image1" alt="Image Preview">
+            <ImageFileDisplay :file="image1"></ImageFileDisplay>
         </div>
         <div class="TeamCard-image">
-            <img :src="image2" alt="Image Preview">
+            <ImageFileDisplay :file="image2"></ImageFileDisplay>
         </div>
         <div class="TeamCard-image">
-            <img :src="image3" alt="Image Preview">
+            <ImageFileDisplay :file="image3"></ImageFileDisplay>
         </div>
         <div class="TeamCard-image">
-            <img :src="image4" alt="Image Preview">
+            <ImageFileDisplay :file="image4"></ImageFileDisplay>
         </div>
     </div>
 </template>
 <script>
-import Team from '@/model/team'
+import ImageFileDisplay from '@components/inputs/ImageFileDisplay.vue'
 export default {
     name: 'TeamCardPreview',
 
+    components: {
+        ImageFileDisplay
+    },
+
     props: {
         image1: {
-            type: [String, null],
+            type: [String, null, File],
             required: true
         },
         image2: {
-            type: [String, null],
+            type: [String, null, File],
             required: true
         },
         image3: {
-            type: [String, null],
+            type: [String, null, File],
             required: true
         },
         image4: {
-            type: [String, null],
+            type: [String, null, File],
             required: true
         }
     },

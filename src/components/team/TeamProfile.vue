@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="bloc">
         <div class="form">
 
             <label>

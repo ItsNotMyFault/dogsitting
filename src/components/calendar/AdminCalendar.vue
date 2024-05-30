@@ -52,7 +52,6 @@ export default {
   methods: {
     handleDateClick(arg) {
       try {
-        console.log('arg.date', arg.date);
         Calendar.DoMagic(arg.date)
         DateFormat.ValidateDatePastToday(arg.date)
       } catch (err) {
@@ -90,7 +89,6 @@ export default {
       var reservationEvents = await calendarServices.getReservationEvents(this.teamName);
       //TODO ya un problème d'affichage. Les dates reçu sont OK, mais les dates sont seulement sur une journée for some reason.
       this.originalReservationEvents = reservationEvents.map(event => event.calendarObjectEvent)
-      console.log('this.originalReservationEvents', this.originalReservationEvents)
       this.calendarOptions.events = this.originalReservationEvents
     }
   },

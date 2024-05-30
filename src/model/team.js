@@ -11,6 +11,7 @@ class Team {
     this.useUnavailabilities = data?.UseUnavailabilities
     this.maxWeekDaysLodgerCount = data?.MaxWeekDaysLodgerCount
     this.maxWeekendDaysLodgerCount = data?.MaxWeekendDaysLodgerCount
+    this.teamMediaResponses = data?.TeamMediaResponses
   }
 
   get normalizedIdentifier() {

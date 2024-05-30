@@ -58,10 +58,7 @@ export default {
 
     methods: {
         addImage(imageUrl) {
-            console.log('imageUrl', imageUrl);
-
             this.images.push(imageUrl)
-            // this.imageTest = null
         },
         navigate() {
             this.$router.push({ path: `/teams/create` })

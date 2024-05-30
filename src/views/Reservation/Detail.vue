@@ -60,10 +60,7 @@ export default {
             //axios call to fetch resrvation's pictures
         },
         addImage(imageUrl) {
-            console.log('imageUrl', imageUrl);
-    
             this.images.push(imageUrl)
-            // this.imageTest = null
         },
         navigate() {
             this.$router.push({ path: `/teams/create` })

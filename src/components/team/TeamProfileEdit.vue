@@ -37,10 +37,8 @@
             <ImageFileInput v-model="image2"></ImageFileInput>
             <ImageFileInput v-model="image3"></ImageFileInput>
             <ImageFileInput v-model="image4"></ImageFileInput>
+            <button @click="saveImages()">Save</button>
         </div>
-        <label>
-            Profile picture combination - PREVIEW
-        </label>
     </div>
 </template>
 <script>
@@ -55,7 +53,7 @@ export default {
 
     components: {
         ImageFileInput,
-        TeamCardPreview
+        TeamCardPreview,
     },
 
     data() {
@@ -71,8 +69,24 @@ export default {
     },
 
     methods: {
-        update(test) {
-            console.log('update test', test);
+        saveImages() {
+            const pictures = []
+            if (this.image1 instanceof File) {
+                pictures.push({ file: this.image1, position: 1 })
+            }
+            if (this.image2 instanceof File) {
+                pictures.push({ file: this.image2, position: 2 })
+            }
+            if (this.image3 instanceof File) {
+                pictures.push({ file: this.image3, position: 3 })
+            }
+            if (this.image4 instanceof File) {
+                pictures.push({ file: this.image4, position: 4 })
+            }
+            console.log('pictures', pictures);
+            teamServices.saveTeamFiles(this.team.id, pictures).then(response => {
+                this.saving = false
+            });
         },
         async save() {
             this.saving = true
@@ -80,6 +94,10 @@ export default {
                 this.saving = false
             });
         },
+        findFileByPosition(position) {
+            const file = this.files.find(file => file.Position === position)
+            return file?.FileData || null
+        }
 
     },
 
@@ -87,6 +105,14 @@ export default {
 
         const authStore = useAuthStore();
         this.team = await teamServices.findById(authStore.getTeam.id);
+        this.files = await teamServices.getTeamFiles(authStore.getTeam.id);
+        if (this.files?.length) {
+            this.image1 = this.findFileByPosition(1)
+            this.image2 = this.findFileByPosition(2)
+            this.image3 = this.findFileByPosition(3)
+            this.image4 = this.findFileByPosition(4)
+        }
+
     }
 
 }

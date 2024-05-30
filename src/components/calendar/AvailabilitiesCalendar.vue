@@ -122,8 +122,6 @@ export default {
         console.warn('cant set availabilities on a day with reservation')
         return
       }
-      console.log('availableDates.includes: ', this.availableDates.includes(arg.dateStr));
-
       if (!this.toRemoveDates.includes(arg.dateStr)) {
         if (this.availableEventDates.includes(arg.dateStr)) {
           this.toRemoveDates.push({ start: arg.dateStr, IsAvailable: true })
@@ -137,7 +135,6 @@ export default {
       this.computeDeleteAvailabilities()
     },
     computeAddAvailabilities() {
-      console.log('computeAddAvailabilities');
       const events = this.toAddDates.map(date => {
         return {
           start: date,
@@ -153,7 +150,6 @@ export default {
       ]
     },
     computeDeleteAvailabilities() {
-      console.log('computeDeleteAvailabilities');
       const filteredEvents = this.originalAvailableEvents.filter(event => this.toRemoveDates.map(date => date.start).includes(event.start) === false)
       const mappedfilteredEvents = filteredEvents.map(date => {
         return {
@@ -195,7 +191,6 @@ export default {
       var { busyDates, availableDates } = await calendarServices.getAvailableEvents(this.teamName);
       this.originalBusyEvents = busyDates.map(x => x.calendarObjectEvent)
       this.originalAvailableEvents = availableDates.map(x => x.calendarObjectEvent)
-      console.log('originalAvailableEvents', this.originalAvailableEvents);
       this.calendarOptions.events = [...this.originalBusyEvents, ...this.originalAvailableEvents]
     }
   },

@@ -83,7 +83,6 @@ export default {
   },
 
   deleteAvailabilities(team, availabilities) {
-    console.log('availabilities', availabilities)
     return axios
       .put(`${domainUrl}/calendar/team/${team}/availabilities`, availabilities)
       .then((res) => {

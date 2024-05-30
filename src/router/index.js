@@ -20,7 +20,6 @@ router.beforeEach((to) => {
   }
 
   if (to.meta.authorize && !authStore.isLoggedIn) {
-    console.log('route requires auth')
     return '/login'
   }
 })
