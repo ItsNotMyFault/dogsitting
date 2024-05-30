@@ -1,11 +1,13 @@
 class Animal {
   constructor(data) {
     this.data = data
-    this.name = data?.name
-    this.id = data?.id
-    this.birthdate = data?.birthdate
-    this.species = data?.species
-    this.breed = data?.breed
+    this.name = data?.Name
+    this.id = data?.Id
+    this.birthdate = data?.Birthdate
+    this.species = data?.Species
+    this.breed = data?.Breed
+    this.gender = data?.Gender
+    this.createdAt = data?.CreatedAt
   }
 
   get description() {

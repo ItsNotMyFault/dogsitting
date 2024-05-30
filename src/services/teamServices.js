@@ -7,7 +7,7 @@ import Team from '@model/team.js'
 export default {
   async getTeams() {
     return await axios
-      .get(`${domainUrl}/teams`)
+      .get(`${domainUrl}/team`)
       .then((res) => {
         return res.data
       })

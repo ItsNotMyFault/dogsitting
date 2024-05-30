@@ -13,10 +13,6 @@
     <div class="form">
         <label>name</label>
         <input type="text" v-model="team.name">
-        <label>phone</label>
-        <input type="text" v-model="team.phone">
-        <label>email</label>
-        <input type="text" v-model="team.email">
         double => {{ double }} <br>
         <button type="submit" @click="submit">submit count {{ count }}</button>
         <button type="submit" @click="submitCreate">submit team</button>

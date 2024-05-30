@@ -24,8 +24,8 @@ export default {
         }
     },
 
-    created() {
-        // this.animals = userServices.getAnimals()
+    async created() {
+        this.animals = await userServices.getUserAnimals(this.userId)
     }
 
 

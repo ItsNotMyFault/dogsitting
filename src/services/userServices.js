@@ -30,11 +30,11 @@ export default {
       })
   },
 
-  getAnimals(userId) {
+  getUserAnimals(userId) {
     return axios
-      .get(`${domainUrl}/user/${userId}/animals`)
+      .get(`${domainUrl}/users/${userId}/animals`)
       .then((res) => {
-        return new Animal(res.data)
+        return res.data.map((animal) => new Animal(animal))
       })
       .catch((error) => {
         return error.response

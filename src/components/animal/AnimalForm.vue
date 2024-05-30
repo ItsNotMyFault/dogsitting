@@ -1,36 +1,39 @@
 <template>
     <div class="bloc">
         <div class="form">
-            {{ animal }}
+            <label>name</label>
+            <input type="text" v-model="animal.name">
+            <label>birthdate</label>
+            <input type="text" v-model="animal.birthdate">
+            <label>species</label>
+            <input type="text" v-model="animal.species">
+            <label>breed</label>
+            <input type="text" v-model="animal.breed">
+            <label>gender</label>
+            <input type="text" v-model="animal.gender">
+            <label>notes</label>
+            <input type="text" v-model="animal.notes">
             <button @click="save">Save</button>
-            saving => {{ saving }}
         </div>
     </div>
 </template>
 <script>
 import Animal from '@model/animal'
 import authServices from '@services/authServices'
-import userServices from '@services/userServices'
 export default {
     name: 'AnimalForm',
 
-    data() {
-        return {
-            user: new Animal(),
-            saving: false
+    props: {
+        animal: {
+            type: Animal,
+            required: true
         }
     },
 
     methods: {
         async save() {
-            this.saving = true
+            this.$emit('submit', this.animal)
         }
     },
-
-
-    async created() {
-        this.user = await authServices.GetCurrentUser();
-    }
-
 }
 </script>

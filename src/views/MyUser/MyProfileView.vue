@@ -14,7 +14,7 @@
             </UserDetail>
             <RouterLink to="/my-profile/edit"> edit</RouterLink>
         </div>
-        <UserAnimals :userId="user.id"></UserAnimals>
+        <UserAnimals v-if="userId" :userId="userId"></UserAnimals>
         <RouterLink to="/animal/create"> add animal</RouterLink>
     </div>
 
@@ -44,6 +44,9 @@ export default {
     computed: {
         teamNames() {
             return this.teams.map(team => team.normalizedName)
+        },
+        userId() {
+            return this.user?.id || null
         }
     },
 

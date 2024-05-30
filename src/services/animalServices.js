@@ -8,7 +8,7 @@ let domainUrl = 'https://localhost:5188'
 export default {
   findById(id) {
     return axios
-      .get(`${domainUrl}/animals/${id}`)
+      .get(`${domainUrl}/animal/${id}`)
       .then((res) => {
         return new User(res.data)
       })
@@ -19,9 +19,19 @@ export default {
   },
 
   update(id, user) {
-    delete user.data
     return axios
-      .put(`${domainUrl}/animals/edit/${id}`, user, {})
+      .put(`${domainUrl}/animal/edit/${id}`, user, {})
+      .then((res) => {
+        return new User(res.data)
+      })
+      .catch((error) => {
+        return error.response
+      })
+  },
+
+  create(user) {
+    return axios
+      .post(`${domainUrl}/animal/create`, user, {})
       .then((res) => {
         return new User(res.data)
       })
@@ -32,7 +42,7 @@ export default {
 
   getAnimals() {
     return axios
-      .get(`${domainUrl}/animals`)
+      .get(`${domainUrl}/animal`)
       .then((res) => {
         return res.data.map((animal) => new Animal(animal))
       })
