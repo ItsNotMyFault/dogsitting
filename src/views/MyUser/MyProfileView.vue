@@ -15,7 +15,7 @@
             <RouterLink to="/my-profile/edit"> edit</RouterLink>
         </div>
         <UserAnimals v-if="userId" :userId="userId"></UserAnimals>
-        <RouterLink to="/animal/create"> add animal</RouterLink>
+        <RouterLink to="/animals/create"> add animal</RouterLink>
     </div>
 
 </template>

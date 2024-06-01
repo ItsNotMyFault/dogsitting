@@ -6,8 +6,10 @@ class Animal {
     this.birthdate = data?.Birthdate
     this.species = data?.Species
     this.breed = data?.Breed
+    this.weightKg = data?.weightKg
     this.gender = data?.Gender
     this.createdAt = data?.CreatedAt
+    this.media = data?.Media
   }
 
   get description() {
