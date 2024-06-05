@@ -6,6 +6,9 @@
       </FullCalendar>
 
     </div>
+    <!-- //TODO split controls in another component. Client Calendar should only emit a date.  -->
+    <!-- // Séparer ClientCalendar pour emit des dates.
+    // => Recevoir ces dates dans une View TeamPresentationView. -->
     <div class="calendarControls">
       <form class="form" @submit.prevent="submitForm">
         <label>date start</label>
@@ -22,8 +25,6 @@
           <input type="checkbox" v-model="checked">
           I accept <a href="#">conditions</a>.
         </label>
-
-
         <button class="form-submit" type="text" @click="submitReservation()">Reserve</button>
       </form>
 
@@ -103,12 +104,11 @@ export default {
       newReservation.dateTo = this.labeledEvent.dateTo
       newReservation.notes = this.notes
       newReservation.lodgerCount = this.lodgerCount
-      reservationServices.createReservation(newReservation, this.teamName).then(res => {
-        if (res?.status < 400 || res?.success) {
-          this.labeledEvent.clearInputDates()
-          this.fetchEvents()
-          this.$router.push({ path: `/my-reservations` })
-        }
+      reservationServices.createReservation(newReservation, this.teamName).then(reservation => {
+        console.log('res', res);
+        this.labeledEvent.clearInputDates()
+        this.fetchEvents()
+        this.$router.push({ path: `/my-reservations` })
       })
     },
     handleDateFrom(date) {

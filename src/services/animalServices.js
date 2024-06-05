@@ -17,9 +17,26 @@ export default {
       })
   },
 
-  update(id, user) {
+  update(id, animal, file) {
+    const formData = new FormData()
+    if (file) {
+      formData.append('file', file)
+    }
+
+    for (const key in animal) {
+      if (Object.prototype.hasOwnProperty.call(animal, key)) {
+        const value = animal[key]
+        if (value instanceof Date) {
+          formData.append(key, value.toISOString()) // Convert Date objects to ISO string
+        } else if (typeof value === 'object' && value !== null) {
+          formData.append(key, JSON.stringify(value)) // Convert other objects to JSON strings
+        } else {
+          formData.append(key, value)
+        }
+      }
+    }
     return axios
-      .put(`${domainUrl}/animal/edit/${id}`, user, {})
+      .put(`${domainUrl}/animal/edit/${id}`, formData, {})
       .then((res) => {
         return new Animal(res.data)
       })

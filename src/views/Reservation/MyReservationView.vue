@@ -13,7 +13,7 @@ import ReservationList from '@components/reservation/ReservationList.vue';
 import reservationServices from '@services/reservationServices'
 import { useAuthStore } from '@/stores/authStore'
 export default {
-    name: 'MyProfileView',
+    name: 'MyReservationView',
 
     components: {
         ReservationList,

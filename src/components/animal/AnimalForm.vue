@@ -18,9 +18,9 @@
                 <label>gender</label>
                 <input type="text" v-model="animal.gender">
                 <label>Weight</label>
-                <input type="number" v-model="animal.weightKg">
+                <input type="number" v-model="animal.weightkg">
                 <label>notes</label>
-                <input type="text" v-model="animal.notes">
+                <input type="textarea" v-model="animal.notes">
             </div>
         </div>
         <button @click="save">Save</button>
@@ -49,9 +49,5 @@ export default {
             this.$emit('submit', this.animal)
         }
     },
-
-    created() {
-        console.log('this.animal', this.animal);
-    }
 }
 </script>

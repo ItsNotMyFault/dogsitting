@@ -1,7 +1,10 @@
 <template>
     <div>
-        animal UPDATE
-        <AnimalForm :animal="animal" @submit="save" is-edit></AnimalForm>
+        <h1 v-if="loading">Loading...</h1>
+        <div v-else>
+            <h2>Animal UPDATE</h2>
+            <AnimalForm :animal="animal" @submit="save" :is-edit="true"></AnimalForm>
+        </div>
     </div>
 </template>
 
@@ -28,26 +31,32 @@ export default {
     methods: {
         save(animal) {
             //TODO : make update call
-            // animalServices.update(animal, animal.media).then(response => {
-            //     console.log('response', response);
-            //     this.saving = false
-            // });
+            animalServices.update(animal.id, animal, animal.media.FileData).then(response => {
+                console.log('response', response);
+                this.saving = false
+            });
         }
     },
 
     data() {
         return {
             animal: new Animal(),
-            user: null
+            user: null,
+            loading: true,
         }
     },
 
     async created() {
-        const authStore = useAuthStore();
-        this.user = authStore.applicationUser;
-        this.animal = await animalServices.findById(this.id)
-        console.log('this.animal', this.animal);
-        //fetch 
+        try {
+            const authStore = useAuthStore();
+            this.user = authStore.applicationUser;
+            this.animal = await animalServices.findById(this.id);
+            console.log('this.animal', this.animal);
+        } catch (error) {
+            console.error('Error fetching animal:', error);
+        } finally {
+            this.loading = false;
+        }
     }
 
 

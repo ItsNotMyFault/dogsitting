@@ -45,7 +45,7 @@ export default {
     return axios
       .post(`${domainUrl}/reservation/${teamName}`, reservation, {})
       .then((res) => {
-        return { success: true }
+        return new Reservation(res.data)
       })
       .catch((error) => {
         const errorr = `${error.response.data.message}, ${error.response.data.code}`
