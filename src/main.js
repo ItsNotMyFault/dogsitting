@@ -7,6 +7,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import { useAuthStore } from '@/stores/authStore'
+import { useReservationFormStore } from '@/stores/reservationFormStore'
 const pinia = createPinia()
 
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
@@ -17,6 +18,10 @@ const app = createApp(App)
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 app.component('VueDatePicker', VueDatePicker)
+
+import 'vue3-select-component/dist/style.css'
+import VueSelect from 'vue3-select-component'
+app.component('VueSelect', VueSelect)
 
 //initialize components in @components as global
 const components = import.meta.glob(`./components/icons/*.vue`, { eager: true })
@@ -33,4 +38,7 @@ app.use(pinia)
 app.use(router)
 const authStore = useAuthStore()
 app.use(authStore)
+const reservationFormStore = useReservationFormStore()
+app.use(reservationFormStore)
+
 app.mount('#app')

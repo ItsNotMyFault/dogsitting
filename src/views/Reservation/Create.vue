@@ -13,32 +13,30 @@
 //Add reservation form.
 //faire la logique pour créer une réservation avec les bon chiens associé
 //Créer la Réservation pour l'équipe désiré.
-import AnimalForm from '@/components/animal/AnimalForm.vue'
-import Animal from '@model/animal'
-import animalServices from '@services/animalServices'
+import ReservationForm from '@/components/reservation/ReservationForm.vue'
+import reservationServices from '@services/reservationServices'
 import { useAuthStore } from '@/stores/authStore'
 
 export default {
     name: 'ReservationCreateView',
 
     components: {
-        AnimalForm
+        ReservationForm
     },
 
     methods: {
-        save(animal) {
-            console.log('animal', animal);
-
-            animalServices.create(animal, animal.media).then(response => {
+        save(reservation) {
+            reservationServices.create(reservation).then(response => {
                 console.log('response', response);
                 this.saving = false
+                //if reservation reated with success => redirect to 'my reservations'
+                //this.$router.push({ path: `/my-reservations` })
             });
         }
     },
 
     data() {
         return {
-            animal: new Animal(),
             user: null
         }
     },

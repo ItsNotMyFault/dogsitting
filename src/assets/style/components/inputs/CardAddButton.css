@@ -1,41 +1,41 @@
 
 .cardAddButton {
     position: relative;
-    border: solid 3px var(--theme-main-color);;
+    border: solid 3px var(--theme-main-color);
     border-radius: 25px;
     margin: 10px;
-    min-width: 150px;
-    min-height: 150px;
+    min-width: 150px; /* Ensuring container can be resized */
+    min-height: 150px; /* Ensuring container can be resized */
     overflow: hidden;
-    cursor: pointer;
-}
-
-.cardAddButton:hover {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .cardAddButton:hover {
     background-color: var(--vt-c-indigo);
-    cursor: pointer;
-    user-select: none; 
-}
-
-.cardAddButton-container input[type=file] {
+  }
+  
+  .cardAddButton-container input[type=file] {
     opacity: 0;
-}
-
-.cardAddButton-container{
+  }
+  
+  .cardAddButton-container {
     color: var(--theme-main-color);
     margin: 0;
     z-index: 1;
     height: 100%;
     width: 100%;
     position: absolute;
-}
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
 .cardAddButton-title {
-    color: var(--theme-main-color);
-    font-size: 5rem;
-    font-weight: 600;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    position: absolute;
-
+  color: var(--theme-main-color);
+  font-size: calc(2rem + 2vw); /* Dynamically adjust the font size */
+  font-weight: 600;
+  position: relative; /* Positioned relative to the container */
 }

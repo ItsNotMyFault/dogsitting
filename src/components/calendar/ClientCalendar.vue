@@ -49,6 +49,7 @@ import Reservation from '@/model/reservation'
 import LabeledEvent from '@/model/calendar/labeledEvent'
 import DateFormat from '@/utils/DateFormat'
 import { useAuthStore } from '@/stores/authStore'
+import { useReservationFormStore } from '@/stores/reservationFormStore'
 import moment from 'moment'
 import BusyEvent from '@/model/busyEvent'
 import Calendar from '@/utils/Calendar'
@@ -100,16 +101,19 @@ export default {
     submitReservation() {
       const authStore = useAuthStore();
       const newReservation = {}
+      console.log('this.labeledEvent', this.labeledEvent);
       newReservation.dateFrom = this.labeledEvent.dateFrom
       newReservation.dateTo = this.labeledEvent.dateTo
       newReservation.notes = this.notes
       newReservation.lodgerCount = this.lodgerCount
-      reservationServices.createReservation(newReservation, this.teamName).then(reservation => {
-        console.log('res', res);
-        this.labeledEvent.clearInputDates()
-        this.fetchEvents()
-        this.$router.push({ path: `/my-reservations` })
-      })
+      if (!this.labeledEvent.dateFrom || !this.labeledEvent.dateTo) {
+        //TODO add warning missing datefrom & dateto
+        console.error('warning missing datefrom & dateto')
+        return
+      }
+
+      this.reservationFormStore.setStep1Data(newReservation)
+      this.$router.push({ path: `/reservations/create` })
     },
     handleDateFrom(date) {
       if (date === null) {
@@ -156,6 +160,7 @@ export default {
     const minDate = moment().add(1, 'day')
     const formattedMinDate = DateFormat.FormatToNewDate(minDate)
     return {
+      reservationFormStore: null,
       fullCalendarApi: null,
       apiEvents: [],
       labeledEvent: new LabeledEvent(),
@@ -200,6 +205,8 @@ export default {
   },
 
   created() {
+    this.reservationFormStore = useReservationFormStore()
+    this.reservationFormStore.setTeamName(this.teamName)
     this.fetchEvents()
   },
 

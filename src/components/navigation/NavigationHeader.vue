@@ -8,8 +8,7 @@
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/teams">Notre équipe</RouterLink>
       <RouterLink to="/pricing">Prix</RouterLink>
-      <RouterLink to="/dogs">Pensionnaires</RouterLink>
-      <RouterLink to="/contact-us">Contactez-nous</RouterLink>
+      <RouterLink to="/animals">Pensionnaires</RouterLink>
     </div>
     <div class="navbar-right">
       <div style="width: 100%;" v-if="teamName">Active team: <span style="color: blue">{{ teamName }}</span></div>

@@ -19,6 +19,14 @@ export const reservationRoutes = [
     })
   },
   {
+    path: '/reservations/create',
+    name: 'reservation-create',
+    component: () => import('@views/Reservation/Create.vue'),
+    meta: {
+      title: 'Reservation create'
+    }
+  },
+  {
     path: '/reservations/:id/detail-admin',
     name: 'reservation-detail-admin',
     component: () => import('@views/Reservation/DetailAdmin.vue'),

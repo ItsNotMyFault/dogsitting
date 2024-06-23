@@ -20,6 +20,10 @@ class Animal {
   get age() {
     return '4 years old'
   }
+
+  get asOption() {
+    return { label: `${this.name} ${this.breed} ${this.gender}`, value: this.id, data: this }
+  }
 }
 
 export default Animal

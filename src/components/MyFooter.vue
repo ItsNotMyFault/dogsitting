@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="mainFooter-extendColumn" style="width: 150px;">
-                <RouterLink to="/contact-us">Nous joindre</RouterLink>
+                <a href="#">Nous joindre</a>
             </div>
         </div>
         <p>

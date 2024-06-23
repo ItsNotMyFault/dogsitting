@@ -30,10 +30,10 @@ export default {
 
     methods: {
         save(animal) {
-            //TODO : make update call
             animalServices.update(animal.id, animal, animal.media.FileData).then(response => {
                 console.log('response', response);
                 this.saving = false
+                this.$router.go(-1)
             });
         }
     },

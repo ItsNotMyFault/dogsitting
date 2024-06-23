@@ -66,8 +66,9 @@ h2 {
     background-color: rgb(128, 227, 158);
   }
 
-  /* .fc-day-past {
-} */
+  .fc-day-past {
+    background-color: #dce2e4;
+}
 
 .fc .fc-bg-event {
   opacity: 1 !important; 
@@ -79,10 +80,10 @@ h2 {
 
 }
 
+.fc-day-today,
 .fc-event-today{
   border: solid 3px rgb(0, 213, 255) !important;
 }
-
 
 .fc-theme-standard td {
   cursor: pointer;

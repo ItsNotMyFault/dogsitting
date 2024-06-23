@@ -1,5 +1,5 @@
 <template>
-    <span class="imageTest">
+    <span>
         <img v-if="file" :src="imageUrl" alt="Image Preview">
     </span>
 </template>
