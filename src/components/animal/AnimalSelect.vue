@@ -23,78 +23,58 @@
     </div>
 </template>
 
-<script>
+<script setup>
+import { ref, watch } from 'vue'
 import ImageFileDisplay from '@components/inputs/ImageFileDisplay.vue'
-export default {
-    name: 'AnimalSelect',
 
-    components: {
-        ImageFileDisplay
+const props = defineProps({
+    modelValue: {
+        type: Array,
+        required: true
     },
+    options: {
+        type: Array,
+        required: true
+    }
+})
 
-    props: {
-        //is an array of animal id
-        modelValue: {
-            type: Array,
-            required: true
-        },
-        options: {
-            type: Array,
-            required: true
-        }
-    },
+const emit = defineEmits(['update:modelValue'])
 
-    watch: {
-        options: {
-            immediate: true,
-            handler(newVal) {
-                this.updateSelectedFromModelValue(this.modelValue)
-                this.updateAvailableOptions(this.modelValue)
-            }
-        },
-        modelValue: {
-            immediate: true,
-            handler(newVal) {
-                this.updateAvailableOptions(this.modelValue)
-            }
-        }
-    },
+const selected = ref([])
+const filteredOptions = ref([])
 
-
-    data() {
-        return {
-            selected: [],
-            filteredOptions: []
-        }
-    },
-
-    methods: {
-        updateSelectedFromModelValue(modelValue) {
-            if (this.options.length > 0) {
-                this.selected = this.options.filter(option => modelValue.includes(option.value))
-            }
-
-        },
-        updateAvailableOptions() {
-            if (this.options.length > 0) {
-                this.filteredOptions = this.options.filter(option => !this.modelValue.includes(option.value))
-            }
-            console.log('this.options', this.options);
-            console.log('this.modelValue', this.modelValue);
-            console.log('this.filteredOptions', this.filteredOptions);
-        },
-        optionSelected(selectedOptions) {
-            //same as this.selected
-            this.$emit('update:modelValue', selectedOptions.map(option => option.value))
-        },
-        optionDeselected() {
-            this.$emit('update:modelValue', this.selected.map(opt => opt.value))
-        },
-    },
-
+const updateSelectedFromModelValue = (modelValue) => {
+    if (props.options.length > 0) {
+        selected.value = props.options.filter(option => modelValue.includes(option.value))
+    }
 }
 
+const updateAvailableOptions = () => {
+    if (props.options.length > 0) {
+        filteredOptions.value = props.options.filter(option => !props.modelValue.includes(option.value))
+    }
+}
+
+const optionSelected = (selectedOptions) => {
+    emit('update:modelValue', selectedOptions.map(option => option.value))
+}
+
+const optionDeselected = () => {
+    emit('update:modelValue', selected.value.map(opt => opt.value))
+}
+
+watch(() => props.options, (newVal) => {
+    updateSelectedFromModelValue(props.modelValue)
+    updateAvailableOptions(props.modelValue)
+}, { immediate: true })
+
+watch(() => props.modelValue, (newVal) => {
+    updateAvailableOptions(props.modelValue)
+}, { immediate: true })
+
 </script>
+
+
 
 <style scoped>
 .animalSelect-option {
