@@ -31,6 +31,10 @@ export default {
   },
 
   getUserAnimals(userId) {
+    if(!userId){
+      return
+    }
+
     return axios
       .get(`${domainUrl}/users/${userId}/animals`)
       .then((res) => {

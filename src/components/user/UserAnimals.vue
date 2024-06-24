@@ -50,7 +50,7 @@ export default {
     top: 50%;
     left: 50%;
     object-fit: cover;
-    width: 100px;
-    height: 100px !important;
+    width: 50px;
+    height: 50px !important;
 }
 </style>

@@ -20,13 +20,21 @@ import { useAuthStore } from '@/stores/authStore'
 export default {
     name: 'ReservationCreateView',
 
+
+    props: {
+        teamName: {
+            type: String,
+            required: true
+        }
+    },
+
     components: {
         ReservationForm
     },
 
     methods: {
         save(reservation) {
-            reservationServices.create(reservation).then(response => {
+            reservationServices.create(reservation, this.teamName).then(response => {
                 console.log('response', response);
                 this.saving = false
                 //if reservation reated with success => redirect to 'my reservations'

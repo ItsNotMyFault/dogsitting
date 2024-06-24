@@ -113,7 +113,7 @@ export default {
       }
 
       this.reservationFormStore.setStep1Data(newReservation)
-      this.$router.push({ path: `/reservations/create` })
+      this.$router.push({ path: `/teams/${this.teamName}/reservations/create` })
     },
     handleDateFrom(date) {
       if (date === null) {

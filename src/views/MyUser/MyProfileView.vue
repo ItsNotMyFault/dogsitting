@@ -59,9 +59,7 @@ export default {
 
     async created() {
         const authStore = useAuthStore();
-        console.log('authStore.applicationUser.id', authStore.applicationUser);
         this.user = await userService.findById(authStore.applicationUser.id);
-        console.log('this.user', this.user);
         this.teams = await teamServices.getUserTeams(authStore.applicationUser.id)
     }
 

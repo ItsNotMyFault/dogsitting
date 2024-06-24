@@ -20,8 +20,6 @@ npm install
 
 ```sh
 npm run dev
-or
-npx vite --port=4000
 ```
 
 ### Compile and Minify for Production

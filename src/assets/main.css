@@ -25,6 +25,9 @@
 @import '@style/components/calendar/AvailabilitiesCalendar.css';
 @import '@style/components/calendar/AdminCalendar.css';
 
+/* overrides */
+@import '@style/overrides/vue-select.css';
+
 a,
 .green {
   text-decoration: none;

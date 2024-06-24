@@ -20,10 +20,7 @@ export default {
 
     methods: {
         save(animal) {
-            console.log('animal', animal);
-
             animalServices.create(animal, animal.media).then(response => {
-                console.log('response', response);
                 this.saving = false
             });
         }

@@ -51,7 +51,6 @@ export default {
             const authStore = useAuthStore();
             this.user = authStore.applicationUser;
             this.animal = await animalServices.findById(this.id);
-            console.log('this.animal', this.animal);
         } catch (error) {
             console.error('Error fetching animal:', error);
         } finally {

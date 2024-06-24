@@ -1,19 +1,26 @@
 <template>
-    {{ modelValue }} <br>
-    {{ selected }}
-    <VueSelect v-model="selected" isMulti :options="options" placeholder="Select an option">
-        <template #option="{ option }">
-            {{ option }}
-            <div class="animalSelect-option">
-                <ImageFileDisplay v-if="option.data.media" :file="option.data.media.FileData"></ImageFileDisplay>
-                <!-- {{ option?.label }} <br> -->
-                {{ option.value }}
-            </div>
-        </template>
-        <template #no-options>
-            No options found.
-        </template>
-    </VueSelect>
+    <div v-if="options && options.length">
+        <VSelect v-model="selected" multiple :options="filteredOptions" placeholder="Select an option"
+            @option:selected="optionSelected" @option:deselected="optionDeselected">
+            <template #selected-option="option">
+                {{ option?.label }} - TEST
+                <!-- TODO add image display here in mini -->
+            </template>
+            <template #option="option">
+                <div class="animalSelect-option">
+                    <ImageFileDisplay v-if="option.data.media" :file="option.data.media.FileData"></ImageFileDisplay>
+                    {{ option?.label }}
+                </div>
+            </template>
+            <template #no-options>
+                No options found.
+            </template>
+        </VSelect>
+    </div>
+    <div v-else>
+
+        <h1 style="color: yellow; font-size: large;">Loading options...</h1>
+    </div>
 </template>
 
 <script>
@@ -38,20 +45,53 @@ export default {
     },
 
     watch: {
-        selected(newVal) {
-            this.$emit('update:modelValue', newVal)
+        options: {
+            immediate: true,
+            handler(newVal) {
+                this.updateSelectedFromModelValue(this.modelValue)
+                this.updateAvailableOptions(this.modelValue)
+            }
+        },
+        modelValue: {
+            immediate: true,
+            handler(newVal) {
+                this.updateAvailableOptions(this.modelValue)
+            }
         }
     },
 
 
     data() {
-        const filteredAnimalOptions = this.options.filter(animalOption => this.modelValue.includes(animalOption.value))
-        console.log('filteredAnimalOptions', filteredAnimalOptions);
         return {
-            // selected: this.modelValue
-            selected: this.modelValue
+            selected: [],
+            filteredOptions: []
         }
     },
+
+    methods: {
+        updateSelectedFromModelValue(modelValue) {
+            if (this.options.length > 0) {
+                this.selected = this.options.filter(option => modelValue.includes(option.value))
+            }
+
+        },
+        updateAvailableOptions() {
+            if (this.options.length > 0) {
+                this.filteredOptions = this.options.filter(option => !this.modelValue.includes(option.value))
+            }
+            console.log('this.options', this.options);
+            console.log('this.modelValue', this.modelValue);
+            console.log('this.filteredOptions', this.filteredOptions);
+        },
+        optionSelected(selectedOptions) {
+            //same as this.selected
+            this.$emit('update:modelValue', selectedOptions.map(option => option.value))
+        },
+        optionDeselected() {
+            this.$emit('update:modelValue', this.selected.map(opt => opt.value))
+        },
+    },
+
 }
 
 </script>

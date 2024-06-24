@@ -1,4 +1,4 @@
-import './assets/main.css'
+
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
@@ -19,10 +19,10 @@ import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 app.component('VueDatePicker', VueDatePicker)
 
-import 'vue3-select-component/dist/style.css'
-import VueSelect from 'vue3-select-component'
-app.component('VueSelect', VueSelect)
-
+import 'vue-select/dist/vue-select.css';
+import vSelect from 'vue-select'
+app.component('VSelect', vSelect)
+import './assets/main.css'
 //initialize components in @components as global
 const components = import.meta.glob(`./components/icons/*.vue`, { eager: true })
 Object.entries(components).forEach(([path, definition]) => {

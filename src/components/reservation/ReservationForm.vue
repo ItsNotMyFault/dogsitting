@@ -4,9 +4,9 @@
         <VueDatePicker v-model="dateFrom" format="yyyy-MM-dd HH:mm:ss" auto-apply :min-date="minDate" />
         <label>date end</label>
         <VueDatePicker v-model="dateTo" format="yyyy-MM-dd HH:mm:ss" auto-apply :min-date="minDate" />
-        <span>
+        <div>
             Note that hours mentioned are not fixed and might change if necessary.
-        </span>
+        </div>
         <label>Lodger count</label>
         <input type="number" v-model="lodgerCount" min="1" max="10" step="1">
         <label> Notes</label>
@@ -16,7 +16,8 @@
             I accept <a href="#">conditions</a>.
         </label>
         <div class="reservationForm-addanimals">
-            <AnimalSelect v-model="animals" :options="animalOptions" @selected="setSelectedAnimals"></AnimalSelect>
+            animals => {{ animals }} <br>
+            <AnimalSelect v-model="animals" :options="animalOptions" style="min-width: 600px;"></AnimalSelect>
             <CardAddButton class="reservationForm-addanimals-button" @click="navigateCreateAnimal()"></CardAddButton>
         </div>
         <AnimalList :animals=displaySelectedAnimals></AnimalList>
@@ -64,10 +65,7 @@ export default {
 
     computed: {
         displaySelectedAnimals() {
-            console.log('this.animalOptions', this.animalOptions);
-            const filteredAnimalOptions = this.animalOptions.filter(animalOption => this.animals.includes(animalOption.value))
-            console.log('filteredAnimalOptions', filteredAnimalOptions);
-            return filteredAnimalOptions
+            return this.animalOptions.filter(animalOption => this.animals.includes(animalOption.value))
         }
     },
 
@@ -83,10 +81,6 @@ export default {
         navigateCreateAnimal() {
             this.$router.push({ path: `/animals/create` })
         },
-        setSelectedAnimals(animals) {
-            this.animals = animals
-            console.log('this.reservationFormStore.animals', this.reservationFormStore.animals);
-        }
     },
 
     async created() {
@@ -95,10 +89,7 @@ export default {
         this.user = authStore.applicationUser;
         const useranimals = await userServices.getUserAnimals(authStore.applicationUser.id)
         this.animalOptions = useranimals.map(animal => animal.asOption)
-
-        console.log('this.animalOptions', this.animalOptions);
         this.animals = this.reservationFormStore.getAnimals
-        console.log('this.reservationFormStore.getAnimals', this.reservationFormStore.getAnimals);
     }
 
 

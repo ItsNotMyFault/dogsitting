@@ -26,7 +26,6 @@ export const useReservationFormStore = defineStore('reservationForm', {
           reservation,
           this.$state.teamName
         )
-        console.log('response', response)
       } catch (error) {
         throw new Error(error)
       } finally {
@@ -38,9 +37,6 @@ export const useReservationFormStore = defineStore('reservationForm', {
       this.$state.dateTo = data.dateTo
       this.$state.notes = data.notes
       this.$state.lodgerCount = data.lodgerCount
-    },
-    async setAnimals(animals) {
-      this.$state.animals = animals
     },
     setTeamName(name) {
       this.$state.teamName = name

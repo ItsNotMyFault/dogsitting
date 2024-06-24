@@ -1,5 +1,6 @@
 export const reservationRoutes = [
   {
+    // TODO: add team name to route
     path: '/team-reservations',
     name: 'teamreservations',
     component: () => import('@views/Reservation/TeamReservationView.vue'),
@@ -19,12 +20,15 @@ export const reservationRoutes = [
     })
   },
   {
-    path: '/reservations/create',
+    path: '/teams/:teamName/reservations/create',
     name: 'reservation-create',
     component: () => import('@views/Reservation/Create.vue'),
     meta: {
       title: 'Reservation create'
-    }
+    },
+    props: (route) => ({
+      ...route.params
+    })
   },
   {
     path: '/reservations/:id/detail-admin',

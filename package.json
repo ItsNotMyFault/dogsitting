@@ -29,8 +29,8 @@
     "toast": "^0.5.4",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
+    "vue-select": "^4.0.0-beta.6",
     "vue-toast-notification": "^3.1.2",
-    "vue3-select-component": "^0.2.4",
     "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
