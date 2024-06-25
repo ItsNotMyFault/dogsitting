@@ -16,12 +16,9 @@
             I accept <a href="#">conditions</a>.
         </label>
         <div class="reservationForm-addanimals">
-            animals => {{ animals }} <br>
             <AnimalSelect v-model="animals" :options="animalOptions" style="min-width: 600px;"></AnimalSelect>
             <CardAddButton class="reservationForm-addanimals-button" @click="navigateCreateAnimal()"></CardAddButton>
         </div>
-        <AnimalList :animals=displaySelectedAnimals></AnimalList>
-
         <button class="form-submit" type="text" @click="submitReservation()">Reserve</button>
     </div>
 </template>
@@ -71,12 +68,14 @@ export default {
 
     methods: {
         submitReservation() {
-            this.reservationFormStore.createReservation({
+            const newReservation = {
                 dateFrom: this.dateFrom,
                 dateTo: this.dateTo,
                 notes: this.notes,
-                lodgerCount: this.lodgerCount
-            })
+                lodgerCount: this.lodgerCount,
+                animals: this.animals
+            }
+            this.$emit('submit', newReservation)
         },
         navigateCreateAnimal() {
             this.$router.push({ path: `/animals/create` })

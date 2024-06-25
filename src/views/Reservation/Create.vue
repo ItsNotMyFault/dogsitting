@@ -14,7 +14,7 @@
 //faire la logique pour créer une réservation avec les bon chiens associé
 //Créer la Réservation pour l'équipe désiré.
 import ReservationForm from '@/components/reservation/ReservationForm.vue'
-import reservationServices from '@services/reservationServices'
+import { useReservationFormStore } from '@/stores/reservationFormStore'
 import { useAuthStore } from '@/stores/authStore'
 
 export default {
@@ -34,7 +34,10 @@ export default {
 
     methods: {
         save(reservation) {
-            reservationServices.create(reservation, this.teamName).then(response => {
+            console.log('save reservation', reservation);
+            const reservationFormStore = useReservationFormStore()
+            console.log('this.teamName', this.teamName);
+            reservationFormStore.createReservation(reservation, this.teamName).then(response => {
                 console.log('response', response);
                 this.saving = false
                 //if reservation reated with success => redirect to 'my reservations'

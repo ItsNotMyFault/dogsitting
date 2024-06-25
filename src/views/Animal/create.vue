@@ -22,6 +22,7 @@ export default {
         save(animal) {
             animalServices.create(animal, animal.media).then(response => {
                 this.saving = false
+                this.$router.go(-1)
             });
         }
     },

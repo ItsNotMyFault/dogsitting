@@ -68,7 +68,7 @@
 
     /* Deselect State */
     --vs-dropdown-option--deselect-bg: #fb5858;
-    --vs-dropdown-option--deselect-color: #fff;
+    --vs-dropdown-option--deselect-color: #2633c2;
 
     /* Transitions */
     --vs-transition-timing-function: cubic-bezier(1, -0.115, 0.975, 0.855);

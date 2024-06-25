@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Reservation from '@model/reservation'
 axios.defaults.withCredentials = true
-let domainUrl = 'https://localhost:5188'
+let domainUrl = 'https://localhost:5188/api'
 
 export default {
   getReservationsByUserId(id) {
@@ -41,9 +41,10 @@ export default {
       })
     return reservations
   },
-  createReservation(reservation, teamName) {
+  async createReservation(reservation, teamName) {
+    console.log('createReservation ... teamName', teamName);
     return axios
-      .post(`${domainUrl}/reservation/${teamName}`, reservation, {})
+      .post(`${domainUrl}/teams/${teamName}/reservations`, reservation, {})
       .then((res) => {
         return new Reservation(res.data)
       })

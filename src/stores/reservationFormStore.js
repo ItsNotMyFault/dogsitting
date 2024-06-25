@@ -20,11 +20,11 @@ export const useReservationFormStore = defineStore('reservationForm', {
     getAnimals: (state) => state.animals
   },
   actions: {
-    async createReservation(reservation) {
+    async createReservation(reservation, teamName) {
       try {
         const response = await reservationServices.createReservation(
           reservation,
-          this.$state.teamName
+          teamName || this.$state.teamName
         )
       } catch (error) {
         throw new Error(error)
