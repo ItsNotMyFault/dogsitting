@@ -35,6 +35,10 @@ const props = defineProps({
     options: {
         type: Array,
         required: true
+    },
+    limit: {
+        type: Number,
+        default: null
     }
 })
 
@@ -53,9 +57,16 @@ const updateAvailableOptions = () => {
     if (props.options.length > 0) {
         filteredOptions.value = props.options.filter(option => !props.modelValue.includes(option.value))
     }
+    console.log('filteredOptions.value', filteredOptions.value);
 }
 
 const optionSelected = (selectedOptions) => {
+    if (props.limit && selectedOptions?.length > props.limit) {
+        selected.value.splice(selected.value?.length - 1, 1)
+        console.warn('too many options selected: Veuillez sélectionner une nouvelle plage horaire en ajoutant un autre espace d\'animaux');
+        // Todo add link go back
+        return
+    }
     emit('update:modelValue', selectedOptions.map(option => option.value))
 }
 
