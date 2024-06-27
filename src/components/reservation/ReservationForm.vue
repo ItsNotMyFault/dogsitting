@@ -23,77 +23,65 @@
         <button class="form-submit" type="text" @click="submitReservation()">Reserve</button>
     </div>
 </template>
-<script>
+<script setup>
+
+import { ref, computed, onMounted, watch } from 'vue'
+import { useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
 import { useReservationFormStore } from '@/stores/reservationFormStore'
+import { useAuthStore } from '@/stores/authStore'
 import moment from 'moment'
 import DateFormat from '@/utils/DateFormat'
 import AnimalSelect from '@/components/animal/AnimalSelect.vue'
 import AnimalList from '@/components/animal/AnimalList.vue'
 import CardAddButton from '@components/buttons/CardAddButton.vue'
 import userServices from '@services/userServices'
-import { useAuthStore } from '@/stores/authStore'
 
-/*
-The goal with this component is making it versatile to allow future 
-reservation edit form feature.
-Emitting save command allows more flexibility.
-*/
+const router = useRouter()
+const reservationFormStore = useReservationFormStore()
+const authStore = useAuthStore()
 
-export default {
-    name: 'ReservationForm',
+const { dateFrom, dateTo, notes, lodgerCount } = storeToRefs(reservationFormStore)
+const animals = ref([])
+const checked = ref(false)
+const animalOptions = ref([])
+const user = computed(() => authStore.applicationUser)
+const emit = defineEmits(['submit'])
 
-    components: {
-        AnimalSelect,
-        CardAddButton,
-        AnimalList
-    },
+const minDate = computed(() => {
+    const date = moment().add(1, 'day')
+    return DateFormat.FormatToNewDate(date)
+})
 
-    data() {
-        const minDate = moment().add(1, 'day')
-        const formattedMinDate = DateFormat.FormatToNewDate(minDate)
-        const reservationFormStore = useReservationFormStore()
-        return {
-            reservationFormStore: reservationFormStore,
-            ...reservationFormStore,
-            minDate: formattedMinDate,
-            animalOptions: [],
-            checked: false,
-        }
-    },
-
-    methods: {
-        submitReservation() {
-            const newReservation = {
-                dateFrom: this.dateFrom,
-                dateTo: this.dateTo,
-                notes: this.notes,
-                lodgerCount: this.lodgerCount,
-                animals: this.animals
-            }
-            this.$emit('submit', newReservation)
-        },
-        navigateCreateAnimal() {
-            this.$router.push({ path: `/animals/create` })
-        },
-    },
-
-    updated() {
-        this.reservationFormStore.setAnimals(this.animals)
-    },
-
-    async created() {
-        this.reservationFormStore = useReservationFormStore()
-        const authStore = useAuthStore();
-        this.user = authStore.applicationUser;
-        const useranimals = await userServices.getUserAnimals(authStore.applicationUser.id)
-        this.animalOptions = useranimals.map(animal => animal.asOption)
-        this.animals = this.reservationFormStore.getAnimals
-        console.log('this.reservationFormStore', this.reservationFormStore);
+const submitReservation = () => {
+    const newReservation = {
+        dateFrom: dateFrom.value,
+        dateTo: dateTo.value,
+        notes: notes.value,
+        lodgerCount: lodgerCount.value,
+        animals: animals.value
     }
-
-
+    emit('submit', newReservation)
 }
+
+const navigateCreateAnimal = () => {
+    router.push({ path: `/animals/create` })
+}
+
+watch(animals, (newValue) => {
+    reservationFormStore.setAnimals(newValue)
+}, { deep: true })
+
+onMounted(async () => {
+    const userAnimals = await userServices.getUserAnimals(user.value.id)
+    animalOptions.value = userAnimals.map(animal => animal.asOption)
+    animals.value = reservationFormStore.getAnimals
+})
+
+
 </script>
+
+
 <style>
 .reservationForm-addanimals {
     display: flex;
