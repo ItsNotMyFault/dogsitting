@@ -30,6 +30,7 @@ export const useReservationFormStore = defineStore('reservationForm', {
         throw new Error(error)
       } finally {
         this.$state.teamName = null
+        this.clearForm()
       }
     },
     setStep1Data(data) {
@@ -41,6 +42,13 @@ export const useReservationFormStore = defineStore('reservationForm', {
     setTeamName(name) {
       this.$state.teamName = name
       console.log('set team name', this.$state.teamName)
+    },
+    clearForm() {
+      this.$state.dateFrom = null
+      this.$state.dateTo = null
+      this.$state.notes = null
+      this.$state.lodgerCount = 0
+      this.$state.animals = []
     }
   }
 })

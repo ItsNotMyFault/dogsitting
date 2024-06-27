@@ -44,7 +44,7 @@ export default {
   async createReservation(reservation, teamName) {
     console.log('createReservation ... teamName', teamName);
     return axios
-      .post(`${domainUrl}/teams/${teamName}/reservations`, reservation, {})
+      .post(`${domainUrl}/team/${teamName}/reservations`, reservation, {})
       .then((res) => {
         return new Reservation(res.data)
       })

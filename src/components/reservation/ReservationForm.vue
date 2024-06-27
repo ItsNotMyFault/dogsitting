@@ -1,14 +1,14 @@
 <template>
     <div>
         <label>date start</label>
-        <VueDatePicker v-model="dateFrom" format="yyyy-MM-dd HH:mm:ss" auto-apply :min-date="minDate" />
+        <VueDatePicker v-model="dateFrom" format="yyyy-MM-dd HH:mm:ss" auto-apply :min-date="minDate" disabled />
         <label>date end</label>
-        <VueDatePicker v-model="dateTo" format="yyyy-MM-dd HH:mm:ss" auto-apply :min-date="minDate" />
+        <VueDatePicker v-model="dateTo" format="yyyy-MM-dd HH:mm:ss" auto-apply :min-date="minDate" disabled />
         <div>
             Note that hours mentioned are not fixed and might change if necessary.
         </div>
         <label>Lodger count</label>
-        <input type="number" v-model="lodgerCount" min="1" max="10" step="1">
+        <input type="number" v-model="lodgerCount" min="1" max="10" step="1" disabled style="color: white;">
         <label> Notes</label>
         <textarea type="text" v-model="notes" rows="6" placeholder="Médicaments, horaire, info suppl+, etc." />
         <label>
@@ -16,7 +16,8 @@
             I accept <a href="#">conditions</a>.
         </label>
         <div class="reservationForm-addanimals">
-            <AnimalSelect v-model="animals" :options="animalOptions" style="min-width: 600px;"></AnimalSelect>
+            <AnimalSelect v-model="animals" :options="animalOptions" style="min-width: 600px;" :limit="lodgerCount">
+            </AnimalSelect>
             <CardAddButton class="reservationForm-addanimals-button" @click="navigateCreateAnimal()"></CardAddButton>
         </div>
         <button class="form-submit" type="text" @click="submitReservation()">Reserve</button>
@@ -60,12 +61,6 @@ export default {
         }
     },
 
-    computed: {
-        displaySelectedAnimals() {
-            return this.animalOptions.filter(animalOption => this.animals.includes(animalOption.value))
-        }
-    },
-
     methods: {
         submitReservation() {
             const newReservation = {
@@ -82,13 +77,18 @@ export default {
         },
     },
 
+    updated() {
+        console.log('UPDATED this.reservationFormStore', this.reservationFormStore);
+    },
+
     async created() {
         this.reservationFormStore = useReservationFormStore()
         const authStore = useAuthStore();
         this.user = authStore.applicationUser;
         const useranimals = await userServices.getUserAnimals(authStore.applicationUser.id)
         this.animalOptions = useranimals.map(animal => animal.asOption)
-        this.animals = this.reservationFormStore.getAnimals
+        // this.animals = this.reservationFormStore.getAnimals
+        console.log('this.reservationFormStore', this.reservationFormStore);
     }
 
 
