@@ -15,11 +15,12 @@ export default {
       }
       return `${Math.abs(hours)} hours ago`
     }
-    if (days > 1) {
-      return `Coming up in ${Math.abs(days)} days`
-    }
     const weeks = now.diff(date, 'weeks')
-    return days > 14 ? `${Math.abs(weeks)} weeks ago` : `${Math.abs(days)} days ago`
+    if(weeks !== 0 || days > 1){
+      return days > 14 ? `${Math.abs(weeks)} weeks ago` : `${Math.abs(days)} days ago`
+    }
+    return 'error'
+
   },
   SetDateThisMonth() {
     var dateFrom = moment().startOf('month')
@@ -32,7 +33,6 @@ export default {
     return daterange
   },
   SetDateLastMonth() {
-    var dateFrom = moment().subtract(1, 'month').startOf('month')
     var dateTo = moment().subtract(1, 'month').endOf('month')
 
     const formattedDateFrom = FormatMomentjsToNewDate(dateFrom)
