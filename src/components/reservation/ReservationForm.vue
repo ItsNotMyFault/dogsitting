@@ -78,7 +78,7 @@ export default {
     },
 
     updated() {
-        console.log('UPDATED this.reservationFormStore', this.reservationFormStore);
+        this.reservationFormStore.setAnimals(this.animals)
     },
 
     async created() {
@@ -87,7 +87,7 @@ export default {
         this.user = authStore.applicationUser;
         const useranimals = await userServices.getUserAnimals(authStore.applicationUser.id)
         this.animalOptions = useranimals.map(animal => animal.asOption)
-        // this.animals = this.reservationFormStore.getAnimals
+        this.animals = this.reservationFormStore.getAnimals
         console.log('this.reservationFormStore', this.reservationFormStore);
     }
 
