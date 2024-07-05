@@ -24,9 +24,11 @@ const listInit = {
 
       var teams = await crudServices.getAll(this.model.name)
 
-      this.list = teams.map((team) => {
-        return this.createEventInstance(team)
-      })
+      if (teams instanceof Array) {
+        this.list = teams.map((team) => {
+          return this.createEventInstance(team)
+        })
+      }
     }
   },
 
