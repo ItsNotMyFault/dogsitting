@@ -43,6 +43,9 @@ export const useReservationFormStore = defineStore('reservationForm', {
       this.$state.teamName = name
       console.log('set team name', this.$state.teamName)
     },
+    setAnimals(animals) {
+      this.$state.animals = animals
+    },
     clearForm() {
       this.$state.dateFrom = null
       this.$state.dateTo = null

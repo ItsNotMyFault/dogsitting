@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 axios.defaults.withCredentials = true
-let domainUrl = 'https://localhost:5188'
+let domainUrl = 'https://localhost:5188/api'
 import Team from '@model/team.js'
 
 export default {
