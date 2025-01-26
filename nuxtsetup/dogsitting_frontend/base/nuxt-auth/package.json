@@ -1,0 +1,15 @@
+{
+  "name": "@nuclemize/nuxt-auth",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./nuxt.config.ts",
+  "private": true,
+  "dependencies": {
+    "@sidebase/nuxt-auth": "^0.8.1",
+    "@casl/ability": "^6.7.1",
+    "@casl/vue": "^2.2.2"
+  },
+  "devDependencies": {
+    "nuxt": "^3.12.*"
+  }
+}

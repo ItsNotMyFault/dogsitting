@@ -1,0 +1,50 @@
+@import './base.css';
+@import '@style/layout/NavigationHeader.css';
+@import '@style/layout/MyFooter.css';
+@import '@style/layout/Main.css';
+@import '@style/layout/SubMenu.css';
+@import '@style/layout/Bloc.css';
+
+
+@import '@style/components/Modal.css';
+@import '@style/components/ColorPicker.css';
+@import '@style/components/TeamCard.css';
+@import '@style/components/PricingTable.css';
+@import '@style/components/DogCard.css';
+@import '@style/components/Form.css';
+@import '@style/components/LoginControls.css';
+@import '@style/components/buttons/FacebookButton.css';
+@import '@style/components/ReservationCard.css';
+@import '@style/components/inputs/ImageFileInput.css';
+@import '@style/components/inputs/CardAddButton.css';
+
+@import '@style/TeamProfileEdit.css';
+/* calendar */
+@import '@style/components/calendar/Calendar.css';
+@import '@style/components/calendar/CalendarControls.css';
+@import '@style/components/calendar/AvailabilitiesCalendar.css';
+@import '@style/components/calendar/AdminCalendar.css';
+
+/* overrides */
+@import '@style/overrides/vue-select.css';
+
+a,
+.green {
+  text-decoration: none;
+  color: var(--theme-main-color);
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
+
+button {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.section {
+  width: 100%;
+}

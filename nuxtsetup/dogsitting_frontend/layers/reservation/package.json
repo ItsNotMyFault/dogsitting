@@ -1,0 +1,14 @@
+{
+  "name": "nuxt-reservation",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./nuxt.config.ts",
+  "dependencies": {
+    "pinia": "^2.2.2",
+    "@pinia/nuxt": "^0.5.4",
+    "pathe": "^1.1.2",
+    "nuxt": "^3.13.*",
+    "vue": "^3.5.8"
+  }
+}

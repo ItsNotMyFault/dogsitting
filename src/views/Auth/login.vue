@@ -4,6 +4,7 @@
         <hr>
         <div>
             <button @click="loginFacebook()"> Continue with facebook</button>
+            <button @click="test()"> test</button>
         </div>
     </div>
 </template>
@@ -22,9 +23,14 @@ export default defineComponent({
     methods: {
         async loginFacebook() {
             await this.authStore.authenticateUser();
-
-
         },
+        async test() {
+            await this.authStore.fetchLoggedInUser();
+        },
+    },
+    async onMounted() {
+        console.log('on mounted---------------');
+        await this.authStore.fetchLoggedInUser();
     }
 })
 </script>

@@ -1,0 +1,44 @@
+
+
+.loginControls{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: black;
+}
+
+.loginControls .icons{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-left: 5px;
+  max-width: 30px;
+}
+  
+
+.loginControls-modal{
+  position: absolute;
+  background-color: white;
+  border-radius: 25px;
+  width: 150px;
+  top: 45px;
+  left: -90px;
+  padding: 10px;
+  text-align: left;
+  z-index: 2;
+
+}
+
+.loginControls-modalLink {
+  margin: 5px;
+  border: black;
+  border-radius: 25px;
+  padding: 5px;
+  display: flex;
+}
+
+.loginControls-modalLink:hover {
+  background-color: antiquewhite;
+}
+
