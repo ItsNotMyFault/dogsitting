@@ -8,6 +8,11 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+node_modules/*
+.nuxt
+.nuxt/
+.nuxt/*
+/.nuxt/*
 .DS_Store
 dist
 dist-ssr

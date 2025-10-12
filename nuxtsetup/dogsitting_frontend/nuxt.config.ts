@@ -5,7 +5,6 @@ export default defineNuxtConfig({
   ssr: true,
   alias: {
     '#core': resolve('base/core'),
-    '#nuxt-auth': resolve('base/nuxt-auth'),
     '#reservation': resolve('layers/reservation'),
     '#team': resolve('layers/team')
   },
@@ -21,7 +20,5 @@ export default defineNuxtConfig({
 
   experimental: {
     renderJsonPayloads: false
-  },
-
-  compatibilityDate: '2024-07-11'
+  }
 })
