@@ -1,3 +1,5 @@
+@import 'tailwindcss';
+
 @import './base.css';
 @import '@style/layout/NavigationHeader.css';
 @import '@style/layout/MyFooter.css';
@@ -26,8 +28,6 @@
 
 /* overrides */
 @import '@style/overrides/vue-select.css';
-
-@import 'tailwindcss';
 
 a,
 .green {

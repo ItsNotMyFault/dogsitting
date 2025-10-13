@@ -3,12 +3,12 @@
 
     <div class="navbar-left">
       <div>
-        <img alt="Vue logo" class="logo" src="../assets/dog_icon.svg" width="25" height="25" />
+        <img alt="Vue logo" class="logo" src="~/assets/dog_icon.svg" width="25" height="25" />
       </div>
       <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/teams">Notre équipe</RouterLink>
+      <RouterLink to="/team">Notre équipe</RouterLink>
       <RouterLink to="/pricing">Prix</RouterLink>
-      <RouterLink to="/animals">Pensionnaires</RouterLink>
+      <RouterLink to="/animal">Pensionnaires</RouterLink>
     </div>
     <div class="navbar-right">
       <div style="width: 100%;" v-if="teamName">Active team: <span style="color: blue">{{ teamName }}</span></div>

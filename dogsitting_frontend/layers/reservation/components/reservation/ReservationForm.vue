@@ -65,7 +65,7 @@ const submitReservation = () => {
 }
 
 const navigateCreateAnimal = () => {
-    router.push({ path: `/animals/create` })
+    router.push({ path: `/animal/create` })
 }
 
 watch(animals, (newValue) => {

@@ -8,7 +8,7 @@
                 <ImageFileDisplay v-if="animal.media" class="animalPicture" :file="animal.media.FileData">
                 </ImageFileDisplay>
             </div>
-            <RouterLink :to="`/animals/${animal.id}/edit`">Edit Animal</RouterLink>
+            <RouterLink :to="`/animal/${animal.id}/edit`">Edit Animal</RouterLink>
         </div>
     </div>
 </template>
