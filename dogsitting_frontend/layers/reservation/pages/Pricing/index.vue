@@ -41,9 +41,9 @@
     </div>
 </template>
 
-<script>
+<script setup lang="ts">
+definePageMeta({
+    layout: "dashboard"
+});
 
-export default {
-    name: 'PricingIndex'
-}
 </script>

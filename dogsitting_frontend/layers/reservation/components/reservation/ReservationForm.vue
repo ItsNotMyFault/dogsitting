@@ -34,7 +34,7 @@ import moment from 'moment'
 import DateFormat from '../../utils/DateFormat'
 import AnimalSelect from '@/components/animal/AnimalSelect.vue'
 import AnimalList from '@/components/animal/AnimalList.vue'
-import CardAddButton from '@components/buttons/CardAddButton.vue'
+import CardAddButton from '#reservation/components/buttons/CardAddButton.vue'
 import userServices from '@services/userServices'
 
 const router = useRouter()

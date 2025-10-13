@@ -13,12 +13,12 @@
         </div>
         <div class="bloc">
             Chiens: Liste de chiens ici
-        </div>   
+        </div>
         <div class="bloc">
             <button> Cancel</button>
         </div>
         <div>
-            Reservation's pictures ({{imageCount}})
+            Reservation's pictures ({{ imageCount }})
             <button v-if="imageCount > 0" @click="loadPictures()"> Click to load pictures</button>
         </div>
     </div>
@@ -27,7 +27,7 @@
 <script>
 import reservationServices from '@services/reservationServices.js'
 import ImageFileInput from '@components/inputs/ImageFileInput.vue'
-import CardAddButton from '@components/buttons/CardAddButton.vue'
+import CardAddButton from '#reservation/components/buttons/CardAddButton.vue'
 import IsApproved from '@components/IsApproved.vue'
 
 export default {
@@ -46,17 +46,17 @@ export default {
         }
     },
 
-    computed:{
-        dates(){
+    computed: {
+        dates() {
             return this.reservation?.dates
         },
-        contactInfo(){
+        contactInfo() {
             return 'phone: 5345-345-6556'
         }
     },
 
     methods: {
-        loadPictures(){
+        loadPictures() {
             //axios call to fetch resrvation's pictures
         },
         addImage(imageUrl) {

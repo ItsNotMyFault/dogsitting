@@ -1,25 +1,17 @@
 <template>
     <div class="section">
         <div class="sectionTitle">Teams</div>
-        <TeamCardList :model="model"></TeamCardList>
+        <TeamCardList :model="Team"></TeamCardList>
     </div>
 </template>
-<script>
+<script setup lang="ts">
 import TeamCardList from '@/components/team/TeamCardList.vue'
 
 import Team from '@/model/team'
 
-export default {
-    name: 'TeamIndex',
+definePageMeta({
+    layout: "dashboard"
+});
 
-    components: {
-        TeamCardList,
-    },
 
-    data() {
-        return {
-            model: Team,
-        }
-    },
-}
 </script>

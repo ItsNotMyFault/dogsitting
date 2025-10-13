@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-// import AuthService from '@/services/authServices.js'
+import AuthService from '#reservation/services/authServices.js'
 
 export const useAuthStore = defineStore('auth', {
   persist: true,
@@ -25,10 +25,10 @@ export const useAuthStore = defineStore('auth', {
   actions: {
     async authenticateUser() {
       try {
-        // const response = await AuthService.FacebookOauthLogin()
+        const response = await AuthService.FacebookOauthLogin()
         this.$state.isLoggedIn = true
         this.$state.applicationUser = null
-        // this.$state.applicationUser = response
+        this.$state.applicationUser = response
       } catch (error) {
         throw new Error(error)
       }

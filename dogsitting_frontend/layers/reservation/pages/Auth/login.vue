@@ -3,28 +3,17 @@
         <div class="sectionTitle">Login</div>
         <hr>
         <div>
-            <button @click="loginFacebook()"> Continue with facebook</button>
+            <button @click="loginFacebook"> Continue with facebook</button>
         </div>
     </div>
 </template>
-<script>
 
+<script setup lang="ts">
 import { useAuthStore } from '@/stores/authStore'
-import { defineComponent } from 'vue'
-export default defineComponent({
-    name: 'Login',
 
-    setup() {
-        const authStore = useAuthStore()
-        return { authStore }
-    },
+const authStore = useAuthStore()
 
-    methods: {
-        async loginFacebook() {
-            await this.authStore.authenticateUser();
-
-
-        },
-    }
-})
+const loginFacebook = async () => {
+    await authStore.authenticateUser()
+}
 </script>

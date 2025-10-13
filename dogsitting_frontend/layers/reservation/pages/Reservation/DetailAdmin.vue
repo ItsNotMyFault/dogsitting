@@ -38,7 +38,7 @@
 <script>
 import reservationServices from '@services/reservationServices.js'
 import ImageFileInput from '@components/inputs/ImageFileInput.vue'
-import CardAddButton from '@components/buttons/CardAddButton.vue'
+import CardAddButton from '#reservation/components/buttons/CardAddButton.vue'
 import IsApproved from '@components/IsApproved.vue'
 import ImageFileDisplay from '@components/inputs/ImageFileDisplay.vue'
 

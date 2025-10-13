@@ -8,7 +8,7 @@
 <script>
 import TeamCard from '@/components/team/TeamCard.vue'
 import ListInit from '@/model/mixins/ListInit.js'
-import CardAddButton from '@components/buttons/CardAddButton.vue'
+import CardAddButton from '#reservation/components/buttons/CardAddButton.vue'
 
 export default {
     name: 'TeamCardList',

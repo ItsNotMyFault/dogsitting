@@ -8,10 +8,10 @@
         </div>
         <div class="loginControls-modal" ref="modal" v-if="isOpen">
             <span v-if="isLoggedIn() === false">
-                <router-link class="loginControls-modalLink" to="/login">Login</router-link>
+                <router-link class="loginControls-modalLink" to="/auth/login">Login</router-link>
             </span>
             <span v-else>
-                <router-link class="loginControls-modalLink" to="/logout">Logout</router-link>
+                <router-link class="loginControls-modalLink" to="/auth/logout">Logout</router-link>
                 <hr />
                 User:
                 <router-link class="loginControls-modalLink" to="/my-profile">My Profile</router-link>

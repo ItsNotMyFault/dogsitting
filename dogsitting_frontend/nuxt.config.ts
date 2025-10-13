@@ -4,8 +4,8 @@ import type { PluginOption } from 'vite'
 
 export default defineNuxtConfig({
   // in Nuxt 4, the ~ alias resolves to the app/ directory.
-  // extends: ['./base/core', './base/nuxt-auth', './base/theme'],
   ssr: true,
+  extends: ['./base/core', './base/theme', './layers/reservation'],
   devtools: { enabled: process.env.NODE_ENV === 'development' },
   routeRules: {
     '/api/**': { ssr: true }
@@ -18,8 +18,6 @@ export default defineNuxtConfig({
     }
   },
   css: ['~/assets/main.css'],
-  // css: ['@/assets/css/main.css'],
-  // css: ['../dogsitting_frontend/assets/css/main.css'],
 
   alias: {
     '#core': resolve('base/core'),

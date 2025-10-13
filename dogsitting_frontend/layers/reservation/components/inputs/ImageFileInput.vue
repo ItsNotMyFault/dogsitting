@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import CardAddButton from '@components/buttons/CardAddButton.vue'
+import CardAddButton from '#reservation/components/buttons/CardAddButton.vue'
 import ImageFileDisplay from '@components/inputs/ImageFileDisplay.vue'
 export default {
     name: 'ImageFileInput',
