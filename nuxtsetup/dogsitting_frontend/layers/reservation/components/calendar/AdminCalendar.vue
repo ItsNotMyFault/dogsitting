@@ -32,9 +32,9 @@ import listPlugin from '@fullcalendar/list';
 import calendarServices from '@services/calendarServices'
 import reservationServices from '@services/reservationServices'
 import ReservationEvent from '@model/reservationEvent'
-import DateFormat from '@/utils/DateFormat'
+import DateFormat from '../../utils/DateFormat'
 import LabeledEvent from '@/model/calendar/labeledEvent'
-import Calendar from '@/utils/Calendar'
+import Calendar from '../../utils/Calendar'
 
 export default {
   name: 'AdminCalendar',

@@ -2,9 +2,7 @@ import { defineStore } from 'pinia'
 // import AuthService from '@/services/authServices.js'
 
 export const useAuthStore = defineStore('auth', {
-  persist: {
-    storage: persistedState.localStorage
-  },
+  persist: true,
 
   state: () => ({
     applicationUser: null,

@@ -47,12 +47,12 @@ import reservationServices from '@services/reservationServices'
 //models
 import Reservation from '@/model/reservation'
 import LabeledEvent from '@/model/calendar/labeledEvent'
-import DateFormat from '@/utils/DateFormat'
+import DateFormat from '../../utils/DateFormat'
 import { useAuthStore } from '@/stores/authStore'
 import { useReservationFormStore } from '@/stores/reservationFormStore'
 import moment from 'moment'
 import BusyEvent from '@/model/busyEvent'
-import Calendar from '@/utils/Calendar'
+import Calendar from '../../utils/Calendar'
 
 export default {
   name: 'ClientCalendar',

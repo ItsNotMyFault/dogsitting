@@ -2,9 +2,7 @@ import { defineStore } from 'pinia'
 import reservationServices from '@/services/reservationServices.js'
 
 export const useReservationFormStore = defineStore('reservationForm', {
-  persist: {
-    storage: localStorage
-  },
+  persist: true,
 
   state: () => ({
     teamName: null,

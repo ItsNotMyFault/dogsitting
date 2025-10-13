@@ -5,7 +5,6 @@
 @import '@style/layout/SubMenu.css';
 @import '@style/layout/Bloc.css';
 
-
 @import '@style/components/Modal.css';
 @import '@style/components/ColorPicker.css';
 @import '@style/components/TeamCard.css';
@@ -27,6 +26,8 @@
 
 /* overrides */
 @import '@style/overrides/vue-select.css';
+
+@import 'tailwindcss';
 
 a,
 .green {

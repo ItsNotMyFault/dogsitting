@@ -1,6 +1,6 @@
 import BusyEvent from '@/model/busyEvent'
 import moment from 'moment'
-import DateFormat from '../../../layers/reservation/utils/DateFormat'
+import DateFormat from './DateFormat'
 
 export default {
   GetProperEndDate(endDate, startDate) {
