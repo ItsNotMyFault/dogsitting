@@ -1,6 +1,6 @@
 // middleware/auth.global.ts
 
-import { useAuthStore } from '#reservation/stores/authStore'
+import { useAuthStore } from '~/stores/authStore'
 
 export default defineNuxtRouteMiddleware((to, from) => {
   // Don't redirect if already on login page

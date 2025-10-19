@@ -12,7 +12,7 @@ export default defineNuxtConfig({
   },
   ssr: true,
   extends: ['./layers/reservation'],
-  devtools: { enabled: process.env.NODE_ENV === 'development' },
+  devtools: { enabled: import.meta.env.NODE_ENV === 'development' },
   routeRules: {
     '/api/**': { ssr: true }
   },

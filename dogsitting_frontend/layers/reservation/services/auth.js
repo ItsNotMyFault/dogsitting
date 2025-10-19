@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import { router } from '@/_helpers'
 
-const baseUrl = `${process.env.VUE_APP_API_URL}/accounts`
+const baseUrl = `${import.meta.env.VUE_APP_API_URL}/accounts`
 const accountSubject = new BehaviorSubject(null)
 
 export const accountService = {

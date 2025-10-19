@@ -1,8 +1,7 @@
 import axios from 'axios'
 axios.defaults.withCredentials = true
 import User from '#reservation/model/user'
-let domainUrl = 'https://localhost:5188'
-// let domainUrl = process.env.VUE_APP_DOMAIN_API
+let domainUrl = import.meta.env.VUE_APP_DOMAIN_API
 
 export default {
   async FacebookOauthLogin() {
