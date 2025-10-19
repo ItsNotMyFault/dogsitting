@@ -26,6 +26,3 @@ export default {
     },
 }
 </script>
-<style>
-@import '@style/components/ActivityCard.css';
-</style>

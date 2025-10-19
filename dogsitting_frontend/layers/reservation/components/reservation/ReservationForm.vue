@@ -80,17 +80,3 @@ onMounted(async () => {
 
 
 </script>
-
-
-<style>
-.reservationForm-addanimals {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.reservationForm-addanimals-button {
-    width: 5rem !important;
-    height: 5rem !important;
-}
-</style>

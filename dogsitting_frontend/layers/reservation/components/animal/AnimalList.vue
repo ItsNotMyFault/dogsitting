@@ -25,19 +25,3 @@ export default {
 
 }
 </script>
-<style>
-.animalSelect-option {
-    display: flex;
-    align-items: center;
-}
-
-.animalSelect-option img {
-    width: 230px;
-    height: auto;
-    /* Maintain aspect ratio */
-    object-fit: cover;
-    /* Ensures the image covers the set dimensions without distortion */
-    margin-right: 10px;
-    /* Space between image and text */
-}
-</style>

@@ -44,13 +44,3 @@ export default {
 
 }
 </script>
-<style>
-.animalPicture {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    object-fit: cover;
-    width: 50px;
-    height: 50px !important;
-}
-</style>
