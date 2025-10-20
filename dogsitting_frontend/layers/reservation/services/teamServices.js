@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 axios.defaults.withCredentials = true
-let domainUrl = 'https://localhost:5188/api'
+let domainUrl = import.meta.env.VUE_APP_DOMAIN_API
 import Team from '@model/team.js'
 
 export default {

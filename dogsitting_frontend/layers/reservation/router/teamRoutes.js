@@ -8,7 +8,7 @@ export const teamRoutes = [
     }
   },
   {
-    path: '/teams/:name',
+    path: '/team/:name',
     name: 'team-detail',
     component: () => import('@views/Team/detail.vue'),
     meta: {
@@ -17,7 +17,7 @@ export const teamRoutes = [
     props: true
   },
   {
-    path: '/teams/create',
+    path: '/team/create',
     name: 'team-create',
     component: () => import('@views/Team/form.vue'),
     meta: {

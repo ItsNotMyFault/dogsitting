@@ -5,8 +5,8 @@
             name: {{ animal.name }} <br>
             IImage =>
             <div class="imageFileInput-imagePreview">
-                <ImageFileDisplay v-if="animal.media" class="animalPicture" :file="animal.media.FileData">
-                </ImageFileDisplay>
+                <InputsImageFileDisplay v-if="animal.media" class="animalPicture" :file="animal.media.FileData">
+                </InputsImageFileDisplay>
             </div>
             <RouterLink :to="`/animal/${animal.id}/edit`">Edit Animal</RouterLink>
         </div>
@@ -15,7 +15,6 @@
 
 <script>
 import userServices from '@/services/userServices'
-import ImageFileDisplay from '@components/inputs/ImageFileDisplay.vue'
 
 export default {
     name: 'UserAnimals',

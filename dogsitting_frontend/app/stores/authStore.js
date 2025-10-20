@@ -28,6 +28,7 @@ export const useAuthStore = defineStore(
         const response = await AuthService.FacebookOauthLogin()
         isLoggedIn.value = true
         applicationUser.value = response
+        console.log('applicationUser.value', applicationUser.value)
       } catch (error) {
         throw new Error(error)
       }
@@ -36,6 +37,7 @@ export const useAuthStore = defineStore(
     async function fetchLoggedInUser() {
       try {
         const loggedInUser = await AuthService.GetCurrentUser()
+        console.log('loggedInUser', loggedInUser)
         if (loggedInUser) {
           isLoggedIn.value = true
           applicationUser.value = loggedInUser

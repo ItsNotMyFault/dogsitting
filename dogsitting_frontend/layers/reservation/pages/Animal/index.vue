@@ -1,28 +1,23 @@
 <template>
     <div class="section">
-        <div class="sectionTitle">liste animaux</div>
-        test
-        <!-- <AnimalList :model="model"></AnimalList> -->
+        <AnimalList v-if="animals?.length" :animals="animals"></AnimalList>
     </div>
 </template>
 <script setup lang="ts">
 definePageMeta({
     layout: "dashboard"
 });
-// import AnimalList from '@/components/animal/AnimalList.vue';
-// import Animal from '@/model/animal'
+import AnimalList from '~/components/animal/AnimalList.vue';
+import animalServices from '~/services/animalServices'
 
-// export default {
-//     name: 'AnimalListView',
+const animals = ref();
+animals.value = await animalServices.getAnimals();
+console.log("animals.value", animals.value);
 
-//     components: {
-//         AnimalList
-//     },
+// await animalServices.getAnimals().then(response => {
+//     console.log("response.data", response?.data);
 
-//     data() {
-//         return {
-//             model: Animal
-//         }
-//     },
-// }
+//     animals.value = response?.data;
+// });
+
 </script>

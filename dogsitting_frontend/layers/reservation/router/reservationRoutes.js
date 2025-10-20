@@ -20,7 +20,7 @@ export const reservationRoutes = [
     })
   },
   {
-    path: '/teams/:teamName/reservations/create',
+    path: '/team/:teamName/reservations/create',
     name: 'reservation-create',
     component: () => import('@views/Reservation/Create.vue'),
     meta: {

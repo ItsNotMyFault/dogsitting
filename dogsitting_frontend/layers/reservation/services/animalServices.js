@@ -1,7 +1,8 @@
 import axios from 'axios'
 axios.defaults.withCredentials = true
 
-import Animal from '@model/animal'
+import Animal from '~/model/animal'
+
 let domainUrl = 'https://localhost:5188'
 
 export default {

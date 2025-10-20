@@ -8,7 +8,8 @@
             </template>
             <template #option="option">
                 <div class="animalSelect-option">
-                    <ImageFileDisplay v-if="option.data.media" :file="option.data.media.FileData"></ImageFileDisplay>
+                    <InputsImageFileDisplay v-if="option.data.media" :file="option.data.media.FileData">
+                    </InputsImageFileDisplay>
                     {{ option?.label }}
                 </div>
             </template>

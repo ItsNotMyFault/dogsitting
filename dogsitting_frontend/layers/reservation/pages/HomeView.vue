@@ -1,13 +1,12 @@
 <template>
-  <TheWelcome />
+  <div>
+    test
+  </div>
 </template>
 
 <script>
-import TheWelcome from '../components/TheWelcome.vue'
-export default {
-  components: {
-    TheWelcome
-  }
-}
+definePageMeta({
+  layout: "dashboard"
+});
 
 </script>

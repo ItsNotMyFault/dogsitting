@@ -2,21 +2,24 @@
     <div class="TeamCard">
         <div class="TeamCard-title">Title</div>
         <div class="TeamCard-image">
-            <ImageFileDisplay :file="image1"></ImageFileDisplay>
+            <InputsImageFileDisplay :file="image1">
+            </InputsImageFileDisplay>
         </div>
         <div class="TeamCard-image">
-            <ImageFileDisplay :file="image2"></ImageFileDisplay>
+            <InputsImageFileDisplay :file="image2">
+            </InputsImageFileDisplay>
         </div>
         <div class="TeamCard-image">
-            <ImageFileDisplay :file="image3"></ImageFileDisplay>
+            <InputsImageFileDisplay :file="image3">
+            </InputsImageFileDisplay>
         </div>
         <div class="TeamCard-image">
-            <ImageFileDisplay :file="image4"></ImageFileDisplay>
+            <InputsImageFileDisplay :file="image4">
+            </InputsImageFileDisplay>
         </div>
     </div>
 </template>
 <script>
-import ImageFileDisplay from '@components/inputs/ImageFileDisplay.vue'
 export default {
     name: 'TeamCardPreview',
 

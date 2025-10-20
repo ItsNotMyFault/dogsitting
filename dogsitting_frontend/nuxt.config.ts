@@ -12,6 +12,10 @@ export default defineNuxtConfig({
   },
   ssr: true,
   extends: ['./layers/reservation'],
+  components: [
+    '~/components', // default
+    '~/layers/reservation/components' // from layer
+  ],
   devtools: { enabled: import.meta.env.NODE_ENV === 'development' },
   routeRules: {
     '/api/**': { ssr: true }
@@ -35,7 +39,9 @@ export default defineNuxtConfig({
   modules: [
     '@pinia/nuxt', // required
     '@nuxtjs/i18n',
-    "@nuxt/ui"
+    "@nuxt/ui",
+    "@pinia/nuxt",
+    "pinia-plugin-persistedstate/nuxt"
   ],
   typescript: {
     strict: true,

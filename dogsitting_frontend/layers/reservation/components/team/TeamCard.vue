@@ -2,26 +2,29 @@
     <div class="TeamCard TeamCard-dimensions" @click="navigate()">
         <div class="TeamCard-title">{{ teamName }}</div>
         <div class="TeamCard-image">
-            <ImageFileDisplay v-if="image1" :file="image1"></ImageFileDisplay>
+            <InputsImageFileDisplay v-if="image1" :file="image1">
+            </InputsImageFileDisplay>
             <img v-else alt="img" src="@/assets/images/20230814_183252.jpg" />
         </div>
         <div class="TeamCard-image">
-            <ImageFileDisplay v-if="image2" :file="image2"></ImageFileDisplay>
+            <InputsImageFileDisplay v-if="image2" :file="image2">
+            </InputsImageFileDisplay>
             <img v-else alt="img" src="@/assets/images/20230817_191711.jpg" />
         </div>
         <div class="TeamCard-image">
-            <ImageFileDisplay v-if="image3" :file="image3"></ImageFileDisplay>
+            <InputsImageFileDisplay v-if="image3" :file="image3">
+            </InputsImageFileDisplay>
             <img v-else alt="img" src="@/assets/images/20231021_104551.jpg" />
         </div>
         <div class="TeamCard-image">
-            <ImageFileDisplay v-if="image4" :file="image4"></ImageFileDisplay>
+            <InputsImageFileDisplay v-if="image4" :file="image4">
+            </InputsImageFileDisplay>
             <img v-else alt="img" src="@/assets/images/20231021_112758.jpg" />
         </div>
     </div>
 </template>
 <script>
 import Team from '@/model/team'
-import ImageFileDisplay from '@/components/inputs/ImageFileDisplay.vue'
 
 export default {
     name: 'TeamCard',
@@ -56,7 +59,7 @@ export default {
 
     methods: {
         navigate() {
-            this.$router.push({ path: `/teams/${this.team.normalizedIdentifier}` })
+            this.$router.push({ path: `/team/${this.team.normalizedIdentifier}` })
         },
         init() {
             this.files = this.team.teamMediaResponses

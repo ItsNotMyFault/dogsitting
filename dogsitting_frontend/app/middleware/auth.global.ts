@@ -5,15 +5,19 @@ import { useAuthStore } from '~/stores/authStore'
 export default defineNuxtRouteMiddleware((to, from) => {
   // Don't redirect if already on login page
 
-  console.log("to", to);
+  console.log("defineNuxtRouteMiddleware ------------------- to", to);
 
-  if (to.path.toLowerCase() === '/auth/login') {
-    return;
-  }
+  // const { isLoggedIn } = useAuthStore();
+  // console.log("isLoggedIn", isLoggedIn);
 
-  const { isLoggedIn } = useAuthStore()
+  // if (to.path.toLowerCase() === '/auth/login') {
+  //   return;
+  // }
 
-  if (!isLoggedIn) {
-    return navigateTo('/auth/login')
-  }
+
+
+
+  // if (!isLoggedIn) {
+  //   return navigateTo('/auth/login')
+  // }
 })

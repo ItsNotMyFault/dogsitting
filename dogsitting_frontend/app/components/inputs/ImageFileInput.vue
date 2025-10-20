@@ -7,7 +7,8 @@
             <input type="file" id="file" @change="updateFiles">
         </label>
         <div class="imageFileInput-imagePreview">
-            <ImageFileDisplay :file="file"></ImageFileDisplay>
+            <InputsImageFileDisplay :file="file">
+            </InputsImageFileDisplay>
         </div>
         <button v-if="file" class="imageFileInput-delete" @click="clearImage()">DELETE</button>
     </CardAddButton>

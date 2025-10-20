@@ -63,7 +63,7 @@ export default {
             this.images.push(imageUrl)
         },
         navigate() {
-            this.$router.push({ path: `/teams/create` })
+            this.$router.push({ path: `/team/create` })
         }
     },
 

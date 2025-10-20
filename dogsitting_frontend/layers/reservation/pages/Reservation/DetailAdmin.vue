@@ -18,12 +18,12 @@
         <div class="bloc bloc-images">
             <div v-for="(file, index) in files" :key="file" class="bloc-image bloc-image-dimensions">
                 <button class="block-imageButton" @click="removeImage(file, index)">delete</button>
-                <ImageFileDisplay :file="file.FileData"></ImageFileDisplay>
+                <InputsImageFileDisplay :file="file.FileData"></InputsImageFileDisplay>
             </div>
             <div v-for="(file, index) in filesToAdd" :key="file" class="bloc-image bloc-image-dimensions">
                 <button class="block-imageButton" @click="removeNewImage(index)">remove</button>
                 <span class="block-imageNew">New</span>
-                <ImageFileDisplay :file="file"></ImageFileDisplay>
+                <InputsImageFileDisplay :file="file"></InputsImageFileDisplay>
             </div>
             <CardAddButton class="imageFileInput">
                 <label class="imageFileInput-container">
@@ -35,70 +35,48 @@
     </div>
 </template>
 
-<script>
+<script setup>
+import { ref, computed, onMounted } from 'vue'
 import reservationServices from '@services/reservationServices.js'
-import ImageFileInput from '@components/inputs/ImageFileInput.vue'
 import CardAddButton from '#reservation/components/buttons/CardAddButton.vue'
 import IsApproved from '@components/IsApproved.vue'
-import ImageFileDisplay from '@components/inputs/ImageFileDisplay.vue'
+import InputsImageFileDisplay from '@components/inputs/ImageFileDisplay.vue'
 
-export default {
-    name: 'ReservationDetailAdmin',
+const props = defineProps({
+    id: {
+        type: String,
+        required: true
+    }
+})
 
-    components: {
-        ImageFileInput,
-        CardAddButton,
-        IsApproved,
-        ImageFileDisplay
-    },
+const reservation = ref(null)
+const files = ref([])
+const filesToAdd = ref([])
 
-    props: {
-        id: {
-            type: String,
-            required: true
-        }
-    },
+const dates = computed(() => reservation.value?.dates)
 
-    computed: {
-        dates() {
-            return this.reservation?.dates
-        },
-    },
-
-    methods: {
-        removeImage(file, index) {
-            if (confirm("Are you sure you want to delete this picture?")) {
-                reservationServices.deleteReservationFile(this.id, file.Id).then(response => {
-                    this.files.splice(index, 1);
-                })
-            }
-
-        },
-        removeNewImage(index) {
-            this.filesToAdd.splice(index, 1);
-        },
-        async saveReservationFiles() {
-            reservationServices.saveReservationFiles(this.id, this.filesToAdd)
-        },
-        async updateFiles(event) {
-            this.filesToAdd = [...this.filesToAdd, ...event.target.files];
-        },
-        navigate() {
-            this.$router.push({ path: `/teams/create` })
-        }
-    },
-
-    data() {
-        return {
-            reservation: null,
-            files: [],
-            filesToAdd: []
-        }
-    },
-
-    async created() {
-        this.reservation = await reservationServices.findReservationById(this.id)
-        this.files = await reservationServices.getReservationFiles(this.id)
+const removeImage = (file, index) => {
+    if (confirm("Are you sure you want to delete this picture?")) {
+        reservationServices.deleteReservationFile(props.id, file.Id).then(() => {
+            files.value.splice(index, 1)
+        })
     }
 }
+
+const removeNewImage = (index) => {
+    filesToAdd.value.splice(index, 1)
+}
+
+const saveReservationFiles = () => {
+    reservationServices.saveReservationFiles(props.id, filesToAdd.value)
+}
+
+const updateFiles = (event) => {
+    filesToAdd.value = [...filesToAdd.value, ...event.target.files]
+}
+
+onMounted(async () => {
+    reservation.value = await reservationServices.findReservationById(props.id)
+    files.value = await reservationServices.getReservationFiles(props.id)
+})
 </script>
