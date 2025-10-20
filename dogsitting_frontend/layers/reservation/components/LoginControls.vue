@@ -1,76 +1,57 @@
 <template>
-    <button class="loginControls" @click.stop="togglePopup">
-        <div class="icons">
-            <IconHamburger />
-        </div>
-        <div class="icons">
-            <IconUser />
-        </div>
-        <div class="loginControls-modal" ref="modal" v-if="isOpen">
-            <span v-if="isLoggedIn() === false">
-                <router-link class="loginControls-modalLink" to="/auth/login">Login</router-link>
-            </span>
-            <span v-else>
-                <router-link class="loginControls-modalLink" to="/auth/logout">Logout</router-link>
-                <hr />
-                User:
-                <router-link class="loginControls-modalLink" to="/my-profile">My Profile</router-link>
-                <router-link class="loginControls-modalLink" to="/my-reservations">Reservations</router-link>
-                <span v-if="hasUserTeam()">
-                    Team:
-                    <router-link class="loginControls-modalLink" to="/my-team">Settings</router-link>
-                    <router-link class="loginControls-modalLink" to="/team-reservations">Team Reservations</router-link>
-                    <router-link class="loginControls-modalLink" to="/team-calendar">Team Calendar</router-link>
-                </span>
-            </span>
-        </div>
-    </button>
+    <div>
+        <UiUserMenuPopover :items="userMenu" @action="handleUserAction" />
+    </div>
 </template>
+<script setup lang="ts">
+const config = useAppConfig();
 
-<script>
-import { useAuthStore } from '@/stores/authStore';
-import IconUser from '@/components/icons/IconUser.vue';
-import IconHamburger from '@/components/icons/IconHamburger.vue';
-import { defineComponent, ref, onMounted, onBeforeUnmount } from 'vue';
-
-export default defineComponent({
-    name: 'LoginControls',
-    components: {
-        IconUser,
-        IconHamburger,
-    },
-    setup() {
-        const authStore = useAuthStore();
-        const isOpen = ref(false);
-        const modal = ref(null);
-
-        const togglePopup = async () => {
-            authStore.fetchLoggedInUser();
-            isOpen.value = !isOpen.value;
-        };
-
-        const handleClickOutside = (event) => {
-            if (isOpen.value && modal.value && !modal.value.contains(event.target)) {
-                togglePopup();
+const userMenu = computed(() => {
+    // Default user menu items if not configured
+    return (
+        (config as any).userMenu ?? [
+            {
+                id: "profile",
+                label: "Profile",
+                icon: "lucide:user",
+                action: "profile"
+            },
+            {
+                id: "settings",
+                label: "Settings",
+                icon: "lucide:settings",
+                action: "user-settings"
+            },
+            {
+                id: "help",
+                label: "Help",
+                icon: "lucide:help-circle",
+                action: "help"
             }
-        };
-
-        onMounted(() => {
-            document.addEventListener('click', handleClickOutside);
-        });
-
-        onBeforeUnmount(() => {
-            document.removeEventListener('click', handleClickOutside);
-        });
-
-        return {
-            authStore,
-            isOpen,
-            modal,
-            togglePopup,
-            isLoggedIn: () => authStore.getIsLoggedIn,
-            hasUserTeam: () => authStore.getHasUserTeam,
-        };
-    },
+        ]
+    );
 });
+
+// User menu actions
+const handleUserAction = (action: string) => {
+    switch (action) {
+        case "profile":
+            navigateTo("/profile");
+            break;
+        case "user-settings":
+            navigateTo("/settings/user");
+            break;
+        case "admin-settings":
+            navigateTo("/settings/admin");
+            break;
+        case "notifications":
+            navigateTo("/notifications");
+            break;
+        case "help":
+            navigateTo("/help");
+            break;
+        // Note: logout is handled directly in UserMenuPopover
+        default:
+    }
+};
 </script>

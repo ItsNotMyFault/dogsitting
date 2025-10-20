@@ -1,6 +1,6 @@
 <template>
     <span>
-        <img v-if="file" :src="imageUrl" alt="Image Preview">
+        <img v-if="file" :src="imageUrl" alt="Image Preview" class="w-full">
     </span>
 </template>
 

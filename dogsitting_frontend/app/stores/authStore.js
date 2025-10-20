@@ -8,13 +8,12 @@ export const useAuthStore = defineStore(
     // State
     const applicationUser = ref(null)
     const isSuperAdmin = ref(true)
-    const isLoggedIn = ref(false)
+    const isLoggedIn = ref(true)
     const hasUserTeam = ref(false)
     const team = ref(null)
     const userRoles = ref([])
 
     // Getters
-    const getIsLoggedIn = computed(() => isLoggedIn.value)
     const getHasUserTeam = computed(() => team.value !== null && team.value !== undefined)
     const getIsSuperAdmin = computed(() => isSuperAdmin.value)
     const getUserId = computed(() => applicationUser.value?.id)
@@ -73,7 +72,6 @@ export const useAuthStore = defineStore(
       team,
       userRoles,
       // Getters
-      getIsLoggedIn,
       getHasUserTeam,
       getIsSuperAdmin,
       getUserId,
