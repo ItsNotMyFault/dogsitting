@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 axios.defaults.withCredentials = true
-let domainUrl = import.meta.env.VUE_APP_DOMAIN_API
+let domainUrl = import.meta.env.NUXT_API_URL
 import Team from '@model/team.js'
 
 export default {
@@ -108,5 +108,5 @@ export default {
         const errorr = `${error.response.data.message}, ${error.response.data.code}`
         throw new Error(errorr)
       })
-  }
+  },
 }

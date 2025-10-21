@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button class="login-with-facebook btn btn-facebook" @click="loginFacebook">
+        <button class="login-with-facebook btn btn-facebook" @click="loginWithFacebook">
             <i class="fa fa-facebook mr-1"></i>
             Login with Facebook
         </button>
@@ -8,15 +8,8 @@
 </template>
 
 <script setup lang="ts">
-
-import { useAuthStore } from '~/stores/authStore'
-
-const authStore = useAuthStore()
-
-const loginFacebook = async () => {
-    await authStore.authenticateUser()
-}
-
+import { useAuth } from '~/composables/useAuth'
+const { loginWithFacebook } = useAuth()
 
 </script>
 <style lang="css">

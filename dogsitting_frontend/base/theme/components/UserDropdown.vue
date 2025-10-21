@@ -1,19 +1,9 @@
 <template>
-	<UDropdown
-		mode="hover"
-		:items="items"
-		:ui="{ width: 'w-full', item: { disabled: 'cursor-text select-text' } }"
-		:popper="{ strategy: 'absolute', placement: 'top' }"
-		class="w-full"
-	>
+	<UDropdown mode="hover" :items="items" :ui="{ width: 'w-full', item: { disabled: 'cursor-text select-text' } }"
+		:popper="{ strategy: 'absolute', placement: 'top' }" class="w-full">
 		<template #default="{ open }">
-			<UButton
-				color="gray"
-				variant="ghost"
-				class="w-full"
-				:label="userData ? userData.name : 'NO USER'"
-				:class="[open && 'bg-gray-50 dark:bg-gray-800']"
-			>
+			<UButton color="gray" variant="ghost" class="w-full" :label="userData ? userData.name : 'NO USER'"
+				:class="[open && 'bg-gray-50 dark:bg-gray-800']">
 				<template #leading>
 					<UAvatar src="https://avatars.githubusercontent.com/u/739984?v=4" size="2xs" />
 				</template>
@@ -46,11 +36,6 @@
 </template>
 
 <script setup lang="ts">
-const { isHelpSlideoverOpen } = useDashboard();
-const { isDashboardSearchModalOpen } = useUIState();
-const { metaSymbol } = useShortcuts();
-
-const { data, signOut } = useAuth();
 const userData = data.value ? data.value.user : null;
 
 const items = computed(() => [

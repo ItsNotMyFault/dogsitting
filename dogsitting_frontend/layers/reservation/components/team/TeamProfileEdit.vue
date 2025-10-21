@@ -43,7 +43,7 @@
 </template>
 <script>
 import Team from '@model/team'
-import { useAuthStore } from '@/stores/authStore'
+import { useAuthStore } from '~/stores/authStore'
 import teamServices from '@services/teamServices'
 import ImageFileInput from '@components/inputs/ImageFileInput.vue'
 import TeamCardPreview from '@components/team/TeamCardPreview.vue'

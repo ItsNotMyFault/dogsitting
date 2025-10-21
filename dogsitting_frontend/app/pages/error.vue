@@ -3,7 +3,7 @@
     <UMain>
       <UContainer>
         <UPage>
-          <UPageError :error="error" />
+          <UPAgeErr :error="error" />
         </UPage>
       </UContainer>
     </UMain>

@@ -11,39 +11,15 @@
       <RouterLink to="/animal">Pensionnaires</RouterLink>
     </div>
     <div class="p-4">
-      <div style="width: 100%;" v-if="teamName">Active team: <span style="color: blue">{{ teamName }}</span></div>
-      <LoginControls></LoginControls>
+      <UiUserMenuPopover />
     </div>
   </nav>
 </template>
 
-<script>
+<script setup>
+import { useAuthStore } from '~/stores/authStore'
 
-import LoginControls from '@/components/LoginControls.vue'
-import { useAuthStore } from '@/stores/authStore'
+const authStore = useAuthStore()
 
-export default {
-  name: 'NavigationHeader',
-
-  components: {
-    LoginControls
-  },
-
-  data() {
-    return {
-      authStore: null
-    }
-  },
-
-  computed: {
-    teamName() {
-      return this.authStore.getTeamName || "no team found"
-    }
-  },
-
-  created() {
-    this.authStore = useAuthStore();
-
-  }
-}
+const teamName = computed(() => authStore.getTeamName || "no team found")
 </script>

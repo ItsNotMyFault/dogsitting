@@ -1,6 +1,6 @@
 <template>
     <div>
-        <UiUserMenuPopover :items="userMenu" @action="handleUserAction" />
+
     </div>
 </template>
 <script setup lang="ts">
