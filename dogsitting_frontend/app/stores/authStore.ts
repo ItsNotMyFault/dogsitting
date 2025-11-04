@@ -1,73 +1,37 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { useAuthService } from '#reservation/services/authServices'
+import type { UserType } from '~/model/user'
 
 export const useAuthStore = defineStore(
   'auth',
   () => {
-    const authServices = useAuthService()
-    // State
-    const applicationUser = ref<object>()
+    const applicationUser = ref<UserType>()
     const isSuperAdmin = ref(true)
-    const isLoggedIn = ref(true)
     const hasUserTeam = ref(false)
-    const team = ref<string>()
+    const activeTeam = ref<string>()
     const userRoles = ref([])
 
-    // Getters
-    const getHasUserTeam = computed(() => team.value !== null && team.value !== undefined)
+    const getHasUserTeam = computed(() => activeTeam.value !== null && activeTeam.value !== undefined)
     const getIsSuperAdmin = computed(() => isSuperAdmin.value)
-    const getTeam = computed(() => team.value)
-    const getTeamName = computed(() => team.value)
-    const getTeamNormalizedName = computed(() => team.value)
-
-    // Actions
-    async function authenticateUser() {
-      try {
-        const response = await authServices.facebookOauthLogin()
-        isLoggedIn.value = true
-        applicationUser.value = response
-        console.log('applicationUser.value', applicationUser.value)
-      } catch (error: any) {
-        throw new Error(error)
-      }
-    }
-
-    async function fetchLoggedInUser() {
-      try {
-        const loggedInUser = await authServices.getCurrentUser()
-        console.log('loggedInUser', loggedInUser)
-        if (loggedInUser) {
-          isLoggedIn.value = true
-          applicationUser.value = loggedInUser
-        }
-      } catch (error) {
-        clearUser()
-      }
-    }
-
-    function clearUser() {
-      isLoggedIn.value = false
-      isSuperAdmin.value = false
-    }
-
-    async function logoutUser() {
-      await authServices.logoutUser()
-      clearUser();
-      window.open('/', '_self')
-    }
+    const getTeam = computed(() => activeTeam.value)
+    const getTeamName = computed(() => activeTeam.value)
+    const getTeamNormalizedName = computed(() => activeTeam.value)
 
     function setActiveTeam(newTeam: string) {
-      team.value = newTeam
+      activeTeam.value = newTeam
+    }
+
+    function setApplicationUser(newUser: any) {
+      applicationUser.value = newUser
     }
 
     return {
       // State
       applicationUser,
+      setApplicationUser,
       isSuperAdmin,
-      isLoggedIn,
       hasUserTeam,
-      team,
+      team: activeTeam,
       userRoles,
       // Getters
       getHasUserTeam,
@@ -76,14 +40,10 @@ export const useAuthStore = defineStore(
       getTeamName,
       getTeamNormalizedName,
       // Actions
-      authenticateUser,
-      fetchLoggedInUser,
-      clearUser,
-      logoutUser,
       setActiveTeam,
     }
   },
-  {
-    persist: true,
-  }
+  // {
+  //   persist: true,
+  // }
 )

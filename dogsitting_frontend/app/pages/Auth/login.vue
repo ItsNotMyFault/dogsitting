@@ -9,20 +9,13 @@
             <div class="mb-4">
                 <FacebookButton />
             </div>
-            <div style="background-color: aqua; color: black; padding: 10px; margin-top: 20px;" class="font-bold">
-                authStore.applicationUser: {{ authStore.applicationUser }}<br>
-                authStore.isLoggedIn {{ authStore.isLoggedIn }}
-                </br>
-            </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import FacebookButton from "~/components/buttons/FacebookButton.vue";
-import { useAuthStore } from '~/stores/authStore'
 
-const authStore = useAuthStore()
 
 definePageMeta({
     layout: "auth"

@@ -50,11 +50,7 @@
 			</div>
 			<!-- Logout -->
 			<div class="border-t border-gray-100">
-				<button
-					class="text-red-600 cursor-pointer w-full flex items-center px-4 py-2 text-sm hover:bg-red-50 transition-colors">
-					<UIcon name="lucide:log-out" class="mr-3" size="18" />
-					<span>Sign Out</span>
-				</button>
+				<ButtonsLogoutButton></ButtonsLogoutButton>
 			</div>
 
 			<!-- Footer -->

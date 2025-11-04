@@ -4,7 +4,6 @@ export default defineEventHandler(async (event): Promise<any> => {
   try {
     console.log("API URL", useRuntimeConfig().apiUrl);
 
-    // Forward to backend API
     const response = await $fetch("/login", {
       baseURL: useRuntimeConfig().public.apiUrl,
       method: "GET",
@@ -12,7 +11,6 @@ export default defineEventHandler(async (event): Promise<any> => {
         "Content-Type": "application/json"
       }
     });
-    // await setUserSession(event, sessionPayload);
 
     return response;
   } catch (error: any) {

@@ -2,20 +2,18 @@ import { defineStore } from 'pinia'
 import reservationServices from '@/services/reservationServices.js'
 
 export const useReservationFormStore = defineStore('reservationForm', {
-  persist: true,
-
   state: () => ({
     teamName: null,
     dateFrom: null,
     dateTo: true,
     lodgerCount: false,
     notes: false,
-    animals: []
+    animals: [],
   }),
 
   getters: {
     getStateData: (state) => state,
-    getAnimals: (state) => state.animals
+    getAnimals: (state) => state.animals,
   },
   actions: {
     async createReservation(reservation, teamName) {
@@ -50,6 +48,6 @@ export const useReservationFormStore = defineStore('reservationForm', {
       this.$state.notes = null
       this.$state.lodgerCount = 0
       this.$state.animals = []
-    }
-  }
+    },
+  },
 })

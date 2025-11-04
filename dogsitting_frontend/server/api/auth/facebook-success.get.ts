@@ -1,5 +1,8 @@
-export default defineEventHandler(async (event): Promise<any> => {
+import type { UserType } from '~/model/user';
+import { useAuthStore } from '~/stores/authStore'
 
+export default defineEventHandler(async (event): Promise<any> => {
+  const apiUrl = useRuntimeConfig().public.apiUrl;
   console.log("--------------facebook SUCCESS--------------", event);
   const token = getCookie(event, 'ds_auth_token')
 
@@ -8,6 +11,31 @@ export default defineEventHandler(async (event): Promise<any> => {
   }
 
 
+  const setUserSessionData = async (user: UserType) => {
+    const sessionPayload = {
+      user: {
+        id: user?.id ?? 1,
+        initials:
+          `${user?.firstName?.[0] ?? ''}${user?.lastName?.[0] ?? ''}`.toUpperCase(),
+        email: user?.email,
+        emailVerified: false, // you can change this if your backend provides it
+        firstName: user?.firstName,
+        lastName: user?.lastName,
+        fullName: user?.firstName,
+        name: user?.firstName,
+        nickname: user?.firstName,
+        tenants: []
+      },
+      tokenExpiresAt: null,
+      tokenType: "Bearer",
+      lastRefreshTime: Date.now()
+    }
+    try {
+      await setUserSession(event, sessionPayload);
+    } catch (err) {
+      console.error("SET USER SESSION ERROR", err);
+    }
+  }
 
   try {
     const token = getCookie(event, 'ds_auth_token')
@@ -17,14 +45,17 @@ export default defineEventHandler(async (event): Promise<any> => {
       return sendRedirect(event, '/login')
     }
 
-    const apiUrl = useRuntimeConfig().public.apiUrl;
+
+    const cookieHeader = getRequestHeader(event, 'cookie');
     console.log("Full URL being called:", `${apiUrl}/authuser`);
     // Forward to backend API
-    const response = await $fetch("/authuser", {
+    const response: any = await $fetch("/authuser", {
       baseURL: apiUrl,
       method: "GET",
+      credentials: 'include',
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        ...(cookieHeader ? { cookie: cookieHeader } : {})
       },
       // ignoreResponseError: true,
       onRequest({ request, options }) {
@@ -42,19 +73,20 @@ export default defineEventHandler(async (event): Promise<any> => {
         console.log('Response Error:', response.status, response.statusText);
       }
     });
-    console.log("auth user", response);
-    // await setUserSession(event, sessionPayload);
-    return response;
 
+
+    console.log("auth user RESPONSE ----------", response);
+    await setUserSessionData(response as UserType)
+    return sendRedirect(event, '/')
 
   } catch (error: any) {
-    console.log("===== FULL ERROR DETAILS =====");
-    console.log("Error message:", error.message);
-    console.log("Error data:", error.data); // This will show the response body
-    console.log("Error cause:", error.cause);
-    console.log("Error stack:", error.stack);
-    console.log("Full error object:", JSON.stringify(error, null, 2));
-    console.log("===============================");
+    console.error("===== FULL ERROR DETAILS =====");
+    console.error("Error message:", error.message);
+    console.error("Error data:", error.data); // This will show the response body
+    console.error("Error cause:", error.cause);
+    console.error("Error stack:", error.stack);
+    console.error("Full error object:", JSON.stringify(error, null, 2));
+    console.error("===============================");
     // throw error; // Don't redirect, let's see what's happening
     return sendRedirect(event, '/auth/login')
   }

@@ -1,15 +1,16 @@
 <template>
     <div>
-        <button class="login-with-facebook btn btn-facebook" @click="facebookOauthLogin()">
-            <i class="fa fa-facebook mr-1"></i>
-            Login with Facebook
+        <button @click="logoutUser()"
+            class="text-red-600 cursor-pointer w-full flex items-center px-4 py-2 text-sm hover:bg-red-50 transition-colors">
+            <UIcon name="lucide:log-out" class="mr-3" size="18" />
+            <span>Sign Out</span>
         </button>
     </div>
 </template>
 
 <script setup lang="ts">
 import { useAuthService } from '~/composables/useAuthServices'
-const { facebookOauthLogin } = useAuthService()
+const { logoutUser } = useAuthService()
 
 </script>
 <style lang="css">

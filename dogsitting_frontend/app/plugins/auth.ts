@@ -1,19 +1,19 @@
 // plugins/auth.ts
 import { defineNuxtPlugin } from '#app'
-import { useAuthStore } from '~/stores/authStore'
 
 // middleware for BFF to handle redirects
 export default defineNuxtPlugin((nuxtApp: any) => {
 	console.log("middleware for BFF-------------------");
+	const { user, loggedIn } = useUserSession()
+	console.log("loggedIn", loggedIn.value)
+	const authStore = useAuthStore()
 
-	const authStore = useAuthStore(nuxtApp.$pinia)
-	console.log("authStore.isLoggedIn", authStore.isLoggedIn)
-	nuxtApp.hook('page:start', async (to: any) => {
-		console.log("TO-------------", to)
-		if (to?.path?.toLowerCase() === '/auth/login') return
-
-		if (!authStore.isLoggedIn) {
-			return navigateTo('/auth/login')
+	watchEffect(() => {
+		if (loggedIn.value && user.value) {
+			authStore.setApplicationUser(user.value)
+		} else {
+			authStore.setApplicationUser(undefined)
 		}
 	})
+
 })   
