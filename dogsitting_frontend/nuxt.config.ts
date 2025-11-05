@@ -6,7 +6,7 @@ import type { PluginOption } from "vite";
 export default defineNuxtConfig({
   // in Nuxt 4, the ~ alias resolves to the app/ directory.
   compatibilityDate: "2025-07-15",
-  css: ['~/assets/main.css'],
+  css: ['./app/assets/main.css'],
   vite: {
     plugins: [tailwindcssVitePlugin() as PluginOption],
   },
@@ -14,7 +14,8 @@ export default defineNuxtConfig({
     "/api/**": { ssr: true }
   },
   ssr: true,
-  extends: ['./layers/reservation'],
+  extends: ['./layers/reservation', "../core_frontend"],
+  // extends: ['./layers/reservation'],
   components: [
     '~/components', // default
     '~/layers/reservation/components' // from layer
@@ -37,7 +38,8 @@ export default defineNuxtConfig({
   // },
   alias: {
     '#reservation': resolve('layers/reservation'),
-    '@style': resolve('./app/assets/style')
+    '@style': resolve('./app/assets/style'),
+    '#core': resolve('../core_frontend/app') // Access core files
   },
 
   modules: [

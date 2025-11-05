@@ -3,9 +3,8 @@ export default defineEventHandler(async (event): Promise<any> => {
 
   try {
     console.log("API URL", useRuntimeConfig().apiUrl);
-
-    const response = await $fetch("/login", {
-      baseURL: useRuntimeConfig().public.apiUrl,
+    const apiUrl = useRuntimeConfig().public.apiUrl;
+    const response = await $fetch(`${apiUrl}/login`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"

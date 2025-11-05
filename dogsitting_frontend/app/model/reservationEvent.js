@@ -23,7 +23,7 @@ class ReservationEvent extends Event {
       start: this.start,
       end: this.end,
       borderColor: 'green',
-      backgroundColor: 'purple'
+      backgroundColor: 'purple',
     }
   }
 }

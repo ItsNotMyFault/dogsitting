@@ -1,6 +1,6 @@
 // composables/useAuthApi.ts
 import axios from 'axios'
-import type { UserType } from '~/model/user';
+import type { UserType } from '#core/model/user';
 // Ensure axios sends cookies with requests
 axios.defaults.withCredentials = true
 

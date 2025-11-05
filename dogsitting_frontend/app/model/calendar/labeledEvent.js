@@ -49,7 +49,7 @@ class LabeledEvent {
       start: this.start,
       end: this.end,
       title: this.title,
-      borderColor: 'blue'
+      borderColor: 'blue',
     }
   }
 

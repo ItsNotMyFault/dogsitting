@@ -1,5 +1,4 @@
-import type { UserType } from '~/model/user';
-import { useAuthStore } from '~/stores/authStore'
+import type { UserType } from '#core/model/user';
 
 export default defineEventHandler(async (event): Promise<any> => {
   const apiUrl = useRuntimeConfig().public.apiUrl;
@@ -49,8 +48,7 @@ export default defineEventHandler(async (event): Promise<any> => {
     const cookieHeader = getRequestHeader(event, 'cookie');
     console.log("Full URL being called:", `${apiUrl}/authuser`);
     // Forward to backend API
-    const response: any = await $fetch("/authuser", {
-      baseURL: apiUrl,
+    const response: any = await $fetch(`${apiUrl}/authuser`, {
       method: "GET",
       credentials: 'include',
       headers: {

@@ -7,15 +7,13 @@
                 <router-link class="loginControls-modalLink" to="/HomeView">HOME VIEW</router-link>
             </div>
             <div class="mb-4">
-                <FacebookButton />
+                <ButtonsFacebookButton />
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import FacebookButton from "~/components/buttons/FacebookButton.vue";
-
 
 definePageMeta({
     layout: "auth"
