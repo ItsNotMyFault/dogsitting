@@ -3,7 +3,7 @@
         INDEX HOME PAGE
     </div>
 </template>
-<script>
+<script setup lang="ts">
 definePageMeta({
     layout: "dashboard"
 });

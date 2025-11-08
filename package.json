@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "name": "dogsitting-monorepo",
+  "workspaces": [
+    "core_frontend",
+    "dogsitting_frontend"
+  ],
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "pathe": "^1.1.2"
+  }
+}

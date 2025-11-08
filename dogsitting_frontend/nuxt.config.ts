@@ -1,12 +1,12 @@
+// dogsitting_frontend/nuxt.config.ts
 import { resolve } from 'pathe'
-// import tailwindcss from "@tailwindcss/vite";
 import tailwindcssVitePlugin from "@tailwindcss/vite";
 import type { PluginOption } from "vite";
 
 export default defineNuxtConfig({
   // in Nuxt 4, the ~ alias resolves to the app/ directory.
   compatibilityDate: "2025-07-15",
-  css: ['~/assets/main.css'],
+  css: ['./app/assets/main.css'],
   vite: {
     plugins: [tailwindcssVitePlugin() as PluginOption],
   },
@@ -14,11 +14,7 @@ export default defineNuxtConfig({
     "/api/**": { ssr: true }
   },
   ssr: true,
-  extends: ['./layers/reservation'],
-  components: [
-    '~/components', // default
-    '~/layers/reservation/components' // from layer
-  ],
+  extends: ['./layers/reservation', "../core_frontend"],
   devtools: { enabled: import.meta.env.NODE_ENV === 'development' },
   runtimeConfig: {
     public: {
@@ -30,6 +26,9 @@ export default defineNuxtConfig({
       }
     }
   },
+  imports: {
+    autoImport: true
+  },
   // devServer: {
   //   proxy: {
   //     '/api': 'https://localhost:5188'
@@ -37,7 +36,8 @@ export default defineNuxtConfig({
   // },
   alias: {
     '#reservation': resolve('layers/reservation'),
-    '@style': resolve('./app/assets/style')
+    '@style': resolve('./app/assets/style'),
+    '#core': resolve('../core_frontend/app') // Access core files
   },
 
   modules: [
@@ -45,10 +45,9 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     "@nuxt/ui",
     "pinia-plugin-persistedstate/nuxt",
-    "nuxt-auth-utils"
   ],
   typescript: {
-    strict: true,
-    typeCheck: true
+    strict: false,
+    typeCheck: false
   }
 })

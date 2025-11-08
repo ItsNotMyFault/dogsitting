@@ -6,8 +6,6 @@
         </label>
     </div>
 </template>
-<script>
-export default {
-    name: 'CardAddButton',
-}
+<script lang="ts" setup>
+
 </script>
