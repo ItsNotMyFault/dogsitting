@@ -1,5 +1,5 @@
 import axios from 'axios'
-import Reservation from '@model/reservation'
+import Reservation from '@/model/reservation'
 axios.defaults.withCredentials = true
 let domainUrl = 'https://localhost:5188/api'
 
@@ -42,7 +42,7 @@ export default {
     return reservations
   },
   async createReservation(reservation, teamName) {
-    console.log('createReservation ... teamName', teamName);
+    console.log('createReservation ... teamName', teamName)
     return axios
       .post(`${domainUrl}/team/${teamName}/reservations`, reservation, {})
       .then((res) => {
@@ -111,5 +111,5 @@ export default {
         const errorr = `${error.response.data.message}, ${error.response.data.code}`
         throw new Error(errorr)
       })
-  }
+  },
 }

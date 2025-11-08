@@ -35,7 +35,7 @@
     </div>
 </template>
 <script>
-import Reservation from '@model/reservation'
+import Reservation from '@/model/reservation'
 import MomentAgo from '@components/MomentAgo.vue'
 export default {
     name: 'ReservationCard',

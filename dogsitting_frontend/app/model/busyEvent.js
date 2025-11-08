@@ -1,5 +1,5 @@
 // import Event from '@model/event'
-import DateFormat from '@utils/DateFormat'
+import DateFormat from '~/utils/DateFormat'
 
 class BusyEvent {
   constructor(data) {
@@ -39,7 +39,7 @@ class BusyEvent {
       data: this.data,
       start: this.start,
       display: this.display,
-      backgroundColor: this.backgroundColor
+      backgroundColor: this.backgroundColor,
     }
   }
 }

@@ -29,12 +29,16 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import multiMonthPlugin from '@fullcalendar/multimonth'
 import interactionPlugin from '@fullcalendar/interaction'
 import listPlugin from '@fullcalendar/list';
-import calendarServices from '@services/calendarServices'
 import reservationServices from '@services/reservationServices'
-import ReservationEvent from '@model/reservationEvent'
-import DateFormat from '../../utils/DateFormat'
+import ReservationEvent from '@/model/reservationEvent'
+import DateFormat from '~/utils/DateFormat'
 import LabeledEvent from '@/model/calendar/labeledEvent'
 import Calendar from '../../utils/Calendar'
+
+import { CalendarRepositoryHttp } from '@/services/repositories/CalendarRepositoryHttp';
+import { $fetchClient } from "~/libs/http/adapters/NuxtAdapter";
+
+const calendarRepo = new CalendarRepositoryHttp($fetchClient)
 
 export default {
   name: 'AdminCalendar',
@@ -86,7 +90,7 @@ export default {
       }
     },
     async fetchEvents() {
-      var reservationEvents = await calendarServices.getReservationEvents(this.teamName);
+      var reservationEvents = await calendarRepo.getReservationEvents(this.teamName);
       //TODO ya un problème d'affichage. Les dates reçu sont OK, mais les dates sont seulement sur une journée for some reason.
       this.originalReservationEvents = reservationEvents.map(event => event.calendarObjectEvent)
       this.calendarOptions.events = this.originalReservationEvents

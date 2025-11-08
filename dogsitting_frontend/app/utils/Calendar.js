@@ -1,6 +1,6 @@
 import BusyEvent from '@/model/busyEvent'
 import moment from 'moment'
-import DateFormat from './DateFormat'
+import DateFormat from '~/utils/DateFormat'
 
 export default {
   GetProperEndDate(endDate, startDate) {
@@ -36,5 +36,5 @@ export default {
   },
   DoMagic(date) {
     return DateFormat.GetDate(moment(date, 'YYYY-MM-DD').add(-1, 'day'))
-  }
+  },
 }

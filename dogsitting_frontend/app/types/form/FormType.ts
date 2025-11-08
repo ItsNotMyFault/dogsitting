@@ -1,4 +1,4 @@
-import type { SelectOption } from "#core/core/SelectOptionType";
+import type { SelectOption } from "#core/types/core/SelectOptionType";
 import type { Reactive } from "vue";
 
 type SchemaRule<T> = (

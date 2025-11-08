@@ -16,7 +16,7 @@
       </div>
       <form class="form" @submit.prevent="submitForm">
         <button @click="changeMode()" style="cursor: pointer;">current mode is => {{ isEdit ? 'EDIT' : 'ADD'
-          }}</button>
+        }}</button>
         <label>
           <input type="checkbox" v-model="isAvailable" @update:model-value="compute()" v-if="!isEdit"> switch toggle
           here
@@ -51,11 +51,12 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import multiMonthPlugin from '@fullcalendar/multimonth'
 import interactionPlugin from '@fullcalendar/interaction'
 import listPlugin from '@fullcalendar/list'
-import calendarServices from '@services/calendarServices'
-import AvailableEvent from '@model/availableEvent'
 
 import moment from 'moment'
-import { warn } from 'vue'
+import { CalendarRepositoryHttp } from '@/services/repositories/CalendarRepositoryHttp';
+import { $fetchClient } from "~/libs/http/adapters/NuxtAdapter";
+
+const calendarRepo = new CalendarRepositoryHttp($fetchClient)
 
 export default {
   name: 'AvailabilitiesCalendar',
@@ -166,14 +167,14 @@ export default {
         var dates = this.toRemoveDates.map(date => {
           return { date: date.start, isAvailable: date.IsAvailable }
         })
-        await calendarServices.deleteAvailabilities(this.teamName, dates)
+        await calendarRepo.deleteAvailabilities(this.teamName, dates)
         this.toRemoveDates = []
         this.fetchEvents()
       } else {
         var dates = this.toAddDates.map(date => {
           return { date: date, isAvailable: this.isAvailable }
         })
-        await calendarServices.addAvailabilities(this.teamName, dates)
+        await calendarRepo.addAvailabilities(this.teamName, dates)
         this.toAddDates = []
         this.fetchEvents()
       }
@@ -188,7 +189,7 @@ export default {
       this.computeAddAvailabilities()
     },
     async fetchEvents() {
-      var { busyDates, availableDates } = await calendarServices.getAvailableEvents(this.teamName);
+      var { busyDates, availableDates } = await calendarRepo.getAvailableEvents(this.teamName);
       this.originalBusyEvents = busyDates.map(x => x.calendarObjectEvent)
       this.originalAvailableEvents = availableDates.map(x => x.calendarObjectEvent)
       this.calendarOptions.events = [...this.originalBusyEvents, ...this.originalAvailableEvents]

@@ -1,6 +1,5 @@
-import User from '@model/user'
-import Team from '@model/team'
-import DateFormat from '@utils/DateFormat'
+import Team from '@/model/team.ts'
+import DateFormat from '~/utils/DateFormat'
 
 class Reservation {
   constructor(data) {
@@ -13,7 +12,7 @@ class Reservation {
       this.dateFrom = DateFormat.GetDateFormatted(new Date(data?.DateFrom))
       this.dateTo = DateFormat.GetDateFormatted(new Date(data?.DateTo))
       this.lodgerCount = this.data.LodgerCount
-      this.client = new User(data.Client)
+      // this.client = new User(data.Client)
       this.team = new Team(data.Team) //is undefined becuase have to go through calendar.
     }
   }

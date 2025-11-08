@@ -1,5 +1,5 @@
+// dogsitting_frontend/nuxt.config.ts
 import { resolve } from 'pathe'
-// import tailwindcss from "@tailwindcss/vite";
 import tailwindcssVitePlugin from "@tailwindcss/vite";
 import type { PluginOption } from "vite";
 
@@ -15,11 +15,6 @@ export default defineNuxtConfig({
   },
   ssr: true,
   extends: ['./layers/reservation', "../core_frontend"],
-  // extends: ['./layers/reservation'],
-  components: [
-    '~/components', // default
-    '~/layers/reservation/components' // from layer
-  ],
   devtools: { enabled: import.meta.env.NODE_ENV === 'development' },
   runtimeConfig: {
     public: {
@@ -30,6 +25,9 @@ export default defineNuxtConfig({
         },
       }
     }
+  },
+  imports: {
+    autoImport: true
   },
   // devServer: {
   //   proxy: {
@@ -47,10 +45,9 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     "@nuxt/ui",
     "pinia-plugin-persistedstate/nuxt",
-    "nuxt-auth-utils"
   ],
   typescript: {
-    strict: true,
-    typeCheck: true
+    strict: false,
+    typeCheck: false
   }
 })

@@ -22,7 +22,11 @@
 import Team from '@/model/team'
 import { mapStores, mapState, mapActions } from 'pinia'
 import { useCounterStore } from '@/stores/counter'
-import teamServices from '@services/teamServices'
+
+import { TeamRepositoryHttp } from '@/services/repositories/TeamRepositoryHttp';
+import { $fetchClient } from "~/libs/http/adapters/NuxtAdapter";
+
+const teamRepo = new TeamRepositoryHttp($fetchClient)
 
 export default {
     name: 'TeamForm',
@@ -47,7 +51,7 @@ export default {
         },
 
         async submitCreate() {
-            teamServices.create(this.team)
+            teamRepo.create(this.team)
             //axios create team?
         }
     }

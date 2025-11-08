@@ -12,28 +12,22 @@
                 MaxWeekDaysLodgerCount: {{ team.maxWeekDaysLodgerCount }} <br>
                 MaxWeekendDaysLodgerCount: {{ team.maxWeekendDaysLodgerCount }}
             </label>
-            <RouterLink to="/my-team/edit"> <button>edit</button></RouterLink>
         </div>
     </div>
 </template>
-<script>
-import Team from '@model/team'
-import { useAuthStore } from '@/stores/authStore'
-import teamServices from '@services/teamServices'
 
-export default {
-    name: 'TeamProfile',
+<script setup>
+import { ref, onMounted } from 'vue'
+import Team from '@/model/team.ts'
+import { TeamRepositoryHttp } from '@/services/repositories/TeamRepositoryHttp';
+import { $fetchClient } from "~/libs/http/adapters/NuxtAdapter";
 
-    data() {
-        return {
-            team: new Team(),
-        }
-    },
+const teamRepo = new TeamRepositoryHttp($fetchClient)
 
-    async created() {
-        const authStore = useAuthStore();
-        this.team = await teamServices.findById(authStore.getTeam.id);
-    }
+const team = ref(new Team())
+const authStore = useAuthService()
 
-}
+onMounted(async () => {
+    team.value = await teamRepo.findById(authStore.getTeam.id);
+});
 </script>

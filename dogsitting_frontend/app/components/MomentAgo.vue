@@ -2,7 +2,7 @@
     <span>{{ value }}</span>
 </template>
 <script>
-import DateFormat from '@utils/DateFormat'
+import DateFormat from '~/utils/DateFormat'
 export default {
     name: 'MomentAgo',
 

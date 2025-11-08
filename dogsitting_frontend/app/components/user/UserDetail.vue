@@ -13,11 +13,6 @@
             </label>
 
             <label>
-                <span>phone: </span>
-                <span>{{ user.phonenumber }}</span>
-            </label>
-
-            <label>
                 <span>email: </span>
                 <span>{{ user.email }}</span>
             </label>
@@ -27,16 +22,14 @@
     </div>
 </template>
 
-<script>
-import User from '#nuxt-auth/types/user'
-export default {
-    name: 'UserDetail',
+<script setup lang="ts">
+import type { UserType } from '~/model/user'
 
-    props: {
-        user: {
-            type: User,
-            required: true
-        }
+
+defineProps({
+    user: {
+        type: Object as () => UserType,
+        required: true
     }
-}
+});
 </script>

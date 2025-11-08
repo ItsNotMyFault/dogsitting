@@ -3,17 +3,29 @@
         <div class="sectionTitle">
             {{ teamName }}
         </div>
-        <SubMenu :componentList="componentListKeys" v-model="component" />
-        <component :is="componentItem" :teamName="name" />
+        <UTabs :items="items">
+            <template #detail>
+                detail
+            </template>
+            <template #calendar>
+                asdfadsf
+                <CalendarClientCalendar></CalendarClientCalendar>
+            </template>
+        </UTabs>
     </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import TeamCards from '@components/team/TeamCards.vue'
-import ClientCalendar from '@components/calendar/ClientCalendar.vue'
-import SubMenu from '@components/navigation/SubMenu.vue'
-import teamServices from '@services/teamServices.js'
+
+import { TeamRepositoryHttp } from '@/services/repositories/TeamRepositoryHttp';
+import { $fetchClient } from "~/libs/http/adapters/NuxtAdapter";
+
+definePageMeta({
+    layout: "dashboard"
+});
+
+const teamRepo = new TeamRepositoryHttp($fetchClient)
 
 const props = defineProps({
     name: {
@@ -22,21 +34,25 @@ const props = defineProps({
     }
 })
 
-const component = ref('detail')
 const team = ref(null)
+const items = [
+    {
+        label: 'Details',
+        icon: 'i-lucide-user',
+        slot: 'detail'
+    },
+    {
+        label: 'Réserver',
+        icon: 'i-lucide-lock',
+        slot: 'calendar'
+    }
+]
 
-const componentList = {
-    'detail': TeamCards,
-    'reserve': ClientCalendar
-}
-
-const componentListKeys = Object.keys(componentList)
 
 const teamName = computed(() => team.value?.name || null)
-const componentItem = computed(() => componentList[component.value])
 
 onMounted(async () => {
-    const response = await teamServices.getTeamByNormalizedName(props.name)
+    const response = await teamRepo.getTeamByNormalizedName(props.name)
     team.value = response
 })
 </script>

@@ -42,11 +42,16 @@
     </div>
 </template>
 <script>
-import Team from '@model/team'
+import Team from '@/model/team.ts'
 import { useAuthStore } from '~/stores/authStore'
 import teamServices from '@services/teamServices'
 import ImageFileInput from '@components/inputs/ImageFileInput.vue'
 import TeamCardPreview from '@components/team/TeamCardPreview.vue'
+import { TeamRepositoryHttp } from '@/services/repositories/TeamRepositoryHttp';
+import { $fetchClient } from "~/libs/http/adapters/NuxtAdapter";
+
+const teamRepo = new TeamRepositoryHttp($fetchClient)
+
 
 export default {
     name: 'TeamProfileEdit',
@@ -84,13 +89,13 @@ export default {
                 pictures.push({ file: this.image4, position: 4 })
             }
             console.log('pictures', pictures);
-            teamServices.saveTeamFiles(this.team.id, pictures).then(response => {
+            teamRepo.saveTeamFiles(this.team.id, pictures).then(response => {
                 this.saving = false
             });
         },
         async save() {
             this.saving = true
-            teamServices.update(this.team.id, this.team).then(response => {
+            teamRepo.update(this.team.id, this.team).then(response => {
                 this.saving = false
             });
         },
@@ -104,8 +109,8 @@ export default {
     async created() {
 
         const authStore = useAuthStore();
-        this.team = await teamServices.findById(authStore.getTeam.id);
-        this.files = await teamServices.getTeamFiles(authStore.getTeam.id);
+        this.team = await teamRepo.findById(authStore.getTeam.id);
+        this.files = await teamRepo.getTeamFiles(authStore.getTeam.id);
         if (this.files?.length) {
             this.image1 = this.findFileByPosition(1)
             this.image2 = this.findFileByPosition(2)

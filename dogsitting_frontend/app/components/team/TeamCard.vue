@@ -1,81 +1,86 @@
 <template>
-    <div class="TeamCard TeamCard-dimensions" @click="navigate()">
-        <div class="TeamCard-title">{{ teamName }}</div>
-        <div class="TeamCard-image">
-            <ImageFileDisplay v-if="image1" :file="image1">
-            </ImageFileDisplay>
-            <img v-else alt="img" src="@/assets/images/20230814_183252.jpg" />
+    <div class="relative w-80 h-96 bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl group"
+        @click="navigate">
+        <!-- Team Name Overlay -->
+        <div
+            class="absolute inset-0 z-10 flex items-center justify-center bg-black/40 group-hover:bg-black/50 transition-all duration-300">
+            <h3
+                class="text-white text-3xl font-bold tracking-wide text-center px-4 drop-shadow-lg group-hover:scale-110 transition-transform duration-300">
+                {{ teamName }}
+            </h3>
         </div>
-        <div class="TeamCard-image">
-            <ImageFileDisplay v-if="image2" :file="image2">
-            </ImageFileDisplay>
-            <img v-else alt="img" src="@/assets/images/20230817_191711.jpg" />
-        </div>
-        <div class="TeamCard-image">
-            <ImageFileDisplay v-if="image3" :file="image3">
-            </ImageFileDisplay>
-            <img v-else alt="img" src="@/assets/images/20231021_104551.jpg" />
-        </div>
-        <div class="TeamCard-image">
-            <ImageFileDisplay v-if="image4" :file="image4">
-            </ImageFileDisplay>
-            <img v-else alt="img" src="@/assets/images/20231021_112758.jpg" />
+
+        <!-- Four Corner Images Grid -->
+        <div class="relative w-full h-full grid grid-cols-2 grid-rows-2 gap-0.5">
+            <!-- Top Left -->
+            <div class="relative overflow-hidden group-hover:brightness-110 transition-all duration-300">
+                <InputsImageFileDisplay v-if="image1" :file="image1" class="w-full h-full object-cover" />
+                <img v-else alt="img" src="@/assets/images/20230814_183252.jpg" class="w-full h-full object-cover" />
+            </div>
+
+            <!-- Top Right -->
+            <div class="relative overflow-hidden group-hover:brightness-110 transition-all duration-300">
+                <InputsImageFileDisplay v-if="image2" :file="image2" class="w-full h-full object-cover" />
+                <img v-else alt="img" src="@/assets/images/20230817_191711.jpg" class="w-full h-full object-cover" />
+            </div>
+
+            <!-- Bottom Left -->
+            <div class="relative overflow-hidden group-hover:brightness-110 transition-all duration-300">
+                <InputsImageFileDisplay v-if="image3" :file="image3" class="w-full h-full object-cover" />
+                <img v-else alt="img" src="@/assets/images/20231021_104551.jpg" class="w-full h-full object-cover" />
+            </div>
+
+            <!-- Bottom Right -->
+            <div class="relative overflow-hidden group-hover:brightness-110 transition-all duration-300">
+                <InputsImageFileDisplay v-if="image4" :file="image4" class="w-full h-full object-cover" />
+                <img v-else alt="img" src="@/assets/images/20231021_112758.jpg" class="w-full h-full object-cover" />
+            </div>
         </div>
     </div>
 </template>
-<script>
+
+<script lang="ts" setup>
+import { ref, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import Team from '@/model/team'
-import ImageFileDisplay from '~/components/inputs/ImageFileDisplay.vue'
-export default {
-    name: 'TeamCard',
 
-    components: {
-        ImageFileDisplay
-    },
+const props = defineProps<{
+    team: Team
+}>()
 
-    props: {
-        team: {
-            type: Team,
-            required: true
-        }
-    },
+const router = useRouter()
 
-    data() {
-        return {
-            image1: null,
-            image2: null,
-            image3: null,
-            image4: null,
-            files: []
-        }
-    },
+const image1 = ref(null)
+const image2 = ref(null)
+const image3 = ref(null)
+const image4 = ref(null)
+const files = ref([])
 
-    computed: {
-        teamName() {
-            return this.team?.name || 'undefined'
-        }
+const teamName = computed(() => {
+    return props.team?.name || 'undefined'
+})
 
-    },
-
-    methods: {
-        navigate() {
-            this.$router.push({ path: `/team/${this.team.normalizedIdentifier}` })
-        },
-        init() {
-            this.files = this.team.teamMediaResponses
-            this.image1 = this.findFileByPosition(1)
-            this.image2 = this.findFileByPosition(2)
-            this.image3 = this.findFileByPosition(3)
-            this.image4 = this.findFileByPosition(4)
-        },
-        findFileByPosition(position) {
-            const file = this.files.find(file => file.Position === position)
-            return file?.FileData || null
-        }
-    },
-
-    created() {
-        this.init()
-    }
+const navigate = () => {
+    router.push({ path: `/team/${props.team.name}` })
 }
+
+const findFileByPosition = (position: number) => {
+    const file = files.value?.find(file => file.Position === position)
+    return file?.FileData || null
+}
+
+const init = () => {
+    files.value = props.team?.teamMediaResponses
+    if (files.value?.length === 0) {
+        return
+    }
+    image1.value = findFileByPosition(1)
+    image2.value = findFileByPosition(2)
+    image3.value = findFileByPosition(3)
+    image4.value = findFileByPosition(4)
+}
+
+onMounted(() => {
+    init()
+})
 </script>

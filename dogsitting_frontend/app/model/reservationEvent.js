@@ -1,5 +1,5 @@
-import Event from '@model/event'
-import DateFormat from '../utils/DateFormat'
+import Event from '@/model/event'
+import DateFormat from '~/utils/DateFormat'
 import Calendar from '../utils/Calendar'
 
 class ReservationEvent extends Event {

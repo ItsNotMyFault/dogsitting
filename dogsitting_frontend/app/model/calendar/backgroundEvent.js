@@ -1,4 +1,4 @@
-import DateFormat from '@utils/DateFormat'
+import DateFormat from '~/utils/DateFormat'
 
 class BackgroundEvent {
   constructor(data) {
@@ -28,7 +28,7 @@ class BackgroundEvent {
       data: this.data,
       start: this.start,
       display: this.display,
-      backgroundColor: this.backgroundColor
+      backgroundColor: this.backgroundColor,
     }
   }
 }

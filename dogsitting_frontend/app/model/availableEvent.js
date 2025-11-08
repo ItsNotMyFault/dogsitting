@@ -1,5 +1,5 @@
-import Event from '@model/event'
-import DateFormat from '@utils/DateFormat'
+import Event from '@/model/event'
+import DateFormat from '~/utils/DateFormat'
 
 class AvailableEvent extends Event {
   constructor(data) {
@@ -29,7 +29,7 @@ class AvailableEvent extends Event {
       start: this.start,
       display: this.display,
       backgroundColor: this.backgroundColor,
-      isAvailable: this.data.IsAvailable
+      isAvailable: this.data.IsAvailable,
     }
   }
 }
