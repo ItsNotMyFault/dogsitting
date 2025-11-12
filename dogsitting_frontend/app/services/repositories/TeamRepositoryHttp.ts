@@ -1,11 +1,9 @@
 import { RestCrudRepositoryBase } from "~/libs/repositories/RestCrudRepository";
-import type { TeamRepository } from "./TeamRepository";
 import Team from "@/model/team";
 import type { CreateTeamDto, TeamType, UpdateTeamDto } from "@/model/TeamType";
 
 export class TeamRepositoryHttp
-  extends RestCrudRepositoryBase<TeamType, number, CreateTeamDto, UpdateTeamDto>
-  implements TeamRepository {
+  extends RestCrudRepositoryBase<TeamType, number, CreateTeamDto, UpdateTeamDto> {
   protected readonly resource = "/api/team";
 
   getTeams = async () => {
@@ -13,7 +11,7 @@ export class TeamRepositoryHttp
   }
 
   getUserTeams = async (userId: string | number) => {
-    return await this.client(`${this.resource}/user/${userId}`)
+    return await this.client(`${this.resource}/user/${userId}`, { method: "GET" })
       .then((res: any) => {
         return res.data.map((team: any) => new Team(team))
       })

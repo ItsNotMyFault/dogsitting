@@ -15,7 +15,7 @@ namespace dogsitting_backend.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class AnimalController : ControllerBase
     {
         private AnimalService AnimalService;
@@ -43,15 +43,10 @@ namespace dogsitting_backend.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult GetAnimals()
+        public List<AnimalResponse> GetAnimals()
         {
-            List<Animal> animals = this.AnimalService.GetAnimals().Result.ToList();
-            var settings = new JsonSerializerSettings
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            };
-            string json = JsonConvert.SerializeObject(animals, settings);
-            return Ok(json);
+            List<AnimalResponse> animals = this.AnimalService.GetAnimals().Result.ToList();
+            return animals;
         }
 
         [HttpPost("create")]

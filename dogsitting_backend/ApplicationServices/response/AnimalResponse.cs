@@ -10,7 +10,7 @@ namespace dogsitting_backend.ApplicationServices.response
         public string Name { get; set; }
         public string Species { get; set; }
         public string Breed { get; set; }
-        public Gender Gender { get; set; }
+        public string Gender { get; set; }
         public double WeightKg { get; set; }
         public string? Notes { get; set; }
         public DateTime? Birthdate { get; set; }
@@ -24,7 +24,7 @@ namespace dogsitting_backend.ApplicationServices.response
             this.Name = animal.Name;
             this.Species = animal.Species;
             this.Breed = animal.Breed;
-            this.Gender = animal.Gender;
+            this.Gender = animal.Gender.GetDescription();
             this.WeightKg = animal.WeightKg;
             this.Notes = animal.Notes;
             this.Birthdate = animal.Birthdate;
@@ -32,5 +32,5 @@ namespace dogsitting_backend.ApplicationServices.response
         }
     }
 
-    
+
 }

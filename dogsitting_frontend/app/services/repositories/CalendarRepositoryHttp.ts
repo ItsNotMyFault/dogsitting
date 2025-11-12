@@ -1,13 +1,11 @@
 import { RestCrudRepositoryBase } from "~/libs/repositories/RestCrudRepository";
-import type { CalendarRepository } from "./CalendarRepository";
 import type { CreateCalendarDto, CalendarType, UpdateCalendarDto } from "@/model/CalendarType";
 import BusyEvent from '@/model/busyEvent'
 import AvailableEvent from '@/model/availableEvent'
 import ReservationEvent from '@/model/reservationEvent'
 
 export class CalendarRepositoryHttp
-  extends RestCrudRepositoryBase<CalendarType, number, CreateCalendarDto, UpdateCalendarDto>
-  implements CalendarRepository {
+  extends RestCrudRepositoryBase<CalendarType, number, CreateCalendarDto, UpdateCalendarDto> {
   protected readonly resource = "/api/calendar";
 
   getCalendar = async (team: string | number) => {

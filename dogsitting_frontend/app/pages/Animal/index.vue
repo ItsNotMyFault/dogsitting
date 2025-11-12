@@ -7,17 +7,21 @@
 definePageMeta({
     layout: "dashboard"
 });
-import AnimalList from '~/components/animal/AnimalList.vue';
-import animalServices from '~/services/animalServices'
 
-const animals = ref();
-animals.value = await animalServices.getAnimals();
-console.log("animals.value", animals.value);
+import { AnimalRepositoryHttp } from '@/services/repositories/AnimalRepositoryHttp';
+import { $fetchClient } from "~/libs/http/adapters/NuxtAdapter";
 
-// await animalServices.getAnimals().then(response => {
-//     console.log("response.data", response?.data);
+const animalRepo = new AnimalRepositoryHttp($fetchClient)
 
-//     animals.value = response?.data;
-// });
+
+const animals = ref([]);
+const init = async () => {
+    animalRepo.getAnimals
+    animals.value = await animalRepo.getAnimals();
+    console.log("animals.value", animals.value);
+
+}
+
+init();
 
 </script>

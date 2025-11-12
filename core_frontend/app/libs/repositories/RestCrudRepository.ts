@@ -27,38 +27,6 @@ export abstract class RestCrudRepositoryBase<
     };
   };
 
-  fetchAll() {
-    const params: FetchParams = {
-      page: 0,
-      limit: 0,
-      searchParam: [],
-      sortBy: {}
-    };
-    return this.search(params);
-  }
-
-  search(params?: FetchParams) {
-    const defaultParams: FetchParams = {
-      page: 0,
-      limit: 100,
-      searchParam: [],
-      sortBy: { id: true },
-      activeProperty: ""
-    };
-
-    const searchParams = {
-      ...defaultParams,
-      ...params,
-      //IMPORTANT so the datatable is always filtered by id, otherwise postgres's sorting breaks everything
-      sortBy: isEmpty(params?.sortBy) ? { id: true } : params?.sortBy
-    };
-
-    return this.client<PaginatedResult<TEntity>>(`${this.resource}/search`, {
-      method: "POST",
-      body: searchParams
-    } as HttpRequestOptions);
-  }
-
   get(id: TKey) {
     return this.client<TDetailedEntity>(`${this.resource}/${id}`);
   }

@@ -56,9 +56,10 @@ namespace dogsitting_backend.ApplicationServices
             await AnimalRepository.Update(foundAnimal);
         }
 
-        public async Task<List<Animal>> GetAnimals()
+        public async Task<List<AnimalResponse>> GetAnimals()
         {
-            return await AnimalRepository.GetAnimalsAsync();
+            List<Animal> animals = await AnimalRepository.GetAnimalsAsync();
+            return animals.Select(animal => new AnimalResponse(animal)).ToList();
         }
 
         public async Task UpdateAnimalMedia(Guid animalId, IFormFile file)
