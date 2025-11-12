@@ -33,10 +33,10 @@
             Profile picture combination
         </label>
         <div class="teamProfileEdit-pictureList">
-            <ImageFileInput v-model="image1"></ImageFileInput>
-            <ImageFileInput v-model="image2"></ImageFileInput>
-            <ImageFileInput v-model="image3"></ImageFileInput>
-            <ImageFileInput v-model="image4"></ImageFileInput>
+            <InputsImageFileDisplay v-model="image1"></InputsImageFileDisplay>
+            <InputsImageFileDisplay v-model="image2"></InputsImageFileDisplay>
+            <InputsImageFileDisplay v-model="image3"></InputsImageFileDisplay>
+            <InputsImageFileDisplay v-model="image4"></InputsImageFileDisplay>
             <button @click="saveImages()">Save</button>
         </div>
     </div>
@@ -44,9 +44,6 @@
 <script>
 import Team from '@/model/team.ts'
 import { useAuthStore } from '~/stores/authStore'
-import teamServices from '@services/teamServices'
-import ImageFileInput from '@components/inputs/ImageFileInput.vue'
-import TeamCardPreview from '@components/team/TeamCardPreview.vue'
 import { TeamRepositoryHttp } from '@/services/repositories/TeamRepositoryHttp';
 import { $fetchClient } from "~/libs/http/adapters/NuxtAdapter";
 
@@ -57,7 +54,6 @@ export default {
     name: 'TeamProfileEdit',
 
     components: {
-        ImageFileInput,
         TeamCardPreview,
     },
 
