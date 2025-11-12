@@ -32,7 +32,8 @@ export function useDateFormat() {
     if (date === null) {
       return fallback;
     }
-    return new Intl.DateTimeFormat(fullLocale.value, { timeZone: "UTC", dateStyle: style }).format(
+    // TODO: replace locale.value with fullLocale.value when calendar supports it
+    return new Intl.DateTimeFormat(locale.value, { timeZone: "UTC", dateStyle: style }).format(
       date
     );
   }

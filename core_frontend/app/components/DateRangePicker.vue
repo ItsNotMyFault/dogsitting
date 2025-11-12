@@ -7,9 +7,9 @@
       <UButton v-if="hasDatesSelected" color="error" variant="subtle" icon="lucide:x" @click="clearInput($event)" />
     </UFieldGroup>
     <template #content>
-      <div class="flex items-center sm:divide-x divide-gray-200 dark:divide-gray-800 z-max w-auto"
+      <div class="flex items-center sm:divide-x divide-gray-200 dark:divide-gray-800 z-max w-auto bg-white"
         style="width: max-content">
-        <div class="hidden sm:flex flex-col py-4">
+        <div class="flex flex-col py-4 date-buttons-ranges">
           <UButton v-for="(range, index) in ranges" :key="index" :label="range.label" color="secondary" variant="ghost"
             class="rounded-none px-6" :class="[
               isRangeSelected(range.duration)
@@ -19,8 +19,9 @@
         </div>
         <!-- this HIDDEN input is used to create a fake focus input when scrolling to error -->
         <UInput :id="id" class="hidden" :name="id" />
-        <DatePicker :id="id" v-model.range="jsDateRange" :name="id" :mode="dateTime ? 'dateTime' : 'date'"
-          :min-date="minDate" :columns="2" @update:model-value="handleDateSelection($event)" />
+        <DatePicker :id="id" v-model.range="jsDateRange" v-model="jsDateRange" :name="id"
+          :mode="dateTime ? 'dateTime' : 'date'" :min-date="minDate" :columns="2"
+          @update:model-value="handleDateSelection($event)" />
       </div>
     </template>
   </UPopover>
@@ -29,6 +30,7 @@
 <script setup lang="ts">
 import { DateTime, Duration } from "luxon";
 import { DatePicker } from "v-calendar";
+import 'v-calendar/dist/style.css'
 import { useDateFormat } from "@/composables/useDateFormat";
 import { isDateTimeValid } from "@/utils/dateAndTime";
 import { convertToDateTime } from "@/utils/dateAndTime.js";
@@ -89,12 +91,12 @@ watch(
   { deep: true }
 );
 const ranges = [
-  { label: "Last 7 days", duration: Duration.fromObject({ days: 7 }) },
-  { label: "Last 14 days", duration: Duration.fromObject({ days: 14 }) },
-  { label: "Last 30 days", duration: Duration.fromObject({ days: 30 }) },
-  { label: "Last 3 months", duration: Duration.fromObject({ months: 3 }) },
-  { label: "Last 6 months", duration: Duration.fromObject({ months: 6 }) },
-  { label: "Last year", duration: Duration.fromObject({ years: 1 }) }
+  { label: "Next 7 days", duration: Duration.fromObject({ days: 7 }) },
+  { label: "Next 14 days", duration: Duration.fromObject({ days: 14 }) },
+  { label: "Next 30 days", duration: Duration.fromObject({ days: 30 }) },
+  { label: "Next 3 months", duration: Duration.fromObject({ months: 3 }) },
+  { label: "Next 6 months", duration: Duration.fromObject({ months: 6 }) },
+  { label: "Next year", duration: Duration.fromObject({ years: 1 }) }
 ];
 
 const emit = defineEmits<{
@@ -120,6 +122,17 @@ const jsDateRange = ref({
   start: new Date(),
   end: new Date()
 });
+
+function syncCalendarSelection() {
+  const { start, end } = localSelected.value;
+
+  if (isDateTimeValid(start) && isDateTimeValid(end)) {
+    jsDateRange.value = {
+      start: start.toJSDate(),
+      end: end.toJSDate()
+    };
+  }
+}
 
 const handleDateSelection = (value: { start: Date; end: Date }) => {
   if (!isEmpty(props.modelFormat)) {
@@ -173,6 +186,7 @@ const clearInput = (event: Event) => {
     start: undefined,
     end: undefined
   };
+  syncCalendarSelection();
   emitChange();
 };
 
@@ -183,10 +197,11 @@ const hasDatesSelected = computed(() => {
 function selectRange(duration: Duration) {
   const now = DateTime.now();
   localSelected.value = {
-    start: now.minus(duration),
-    end: now
+    start: now,
+    end: now.plus(duration)
   };
 
+  syncCalendarSelection();
   isPopoverOpen.value = false;
   emitChange();
   open.value = false;
@@ -198,6 +213,7 @@ const init = () => {
       start: convertToDateTime(props.modelValue?.start),
       end: convertToDateTime(props.modelValue?.end)
     };
+    syncCalendarSelection();
   } else {
     localSelected.value = {
       start: undefined,

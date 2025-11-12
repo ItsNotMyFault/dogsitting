@@ -1,6 +1,6 @@
 <template>
   <div class="flex">
-    <div class="demo-app-main calendar w-4/5">
+    <div class="demo-app-main pr-4 calendar w-2/3">
       <h1>CLIENT CALENDAR</h1>
       <FullCalendar ref="fullcalendar" :options="calendarOptions">
       </FullCalendar>
@@ -9,34 +9,35 @@
     <!-- //TODO split controls in another component. Client Calendar should only emit a date.  -->
     <!-- // Séparer ClientCalendar pour emit des dates.
     // => Recevoir ces dates dans une View TeamPresentationView. -->
-    <UCard class="calendarControls w-1/5 bg-white p-6 m-4 text-black">
-      <form class="form pt-20" @submit.prevent="submitForm">
-        <label>date start</label>
-        <DateRangePicker v-model="labeledEvent.dateFrom"></DateRangePicker>
-        <VueDatePicker :model-value="labeledEvent.dateFrom" format="yyyy-MM-dd HH:mm:ss"
-          @update:model-value="handleDateFrom" auto-apply :min-date="minDate" />
-        <label>date end</label>
-        <VueDatePicker :model-value="labeledEvent.dateTo" format="yyyy-MM-dd HH:mm:ss"
-          @update:model-value="handleDateTo" auto-apply :min-date="minDate" />
-        <label>Lodger count</label>
-        <UInput type="number" v-model="lodgerCount" min="1" max="10" step="1" />
-        <label> Notes</label>
-        <textarea type="text" v-model="notes" rows="6" placeholder="Médicaments, horaire, info suppl+, etc." />
+    <UCard class="calendarControls w-1/3 bg-white p-6 text-black">
+      <form class="form ">
+        <label>Sélectionner une période</label>
+        <DateRangePicker v-model="labeledEvent.dateFrom" model-format="yyyy-MM-dd HH:mm:ss"
+          :min-date="formattedMinDate">
+        </DateRangePicker>
+
+        labeledEvent.dateFrom: {{ labeledEvent.dateFrom }} <br><br>
+        <label>Nombre d'animaux</label>
+        <UInput type=" number" v-model="lodgerCount" min="1" max="10" step="1" />
+        <div class="w-full">
+          <label> Notes</label>
+          <UTextarea type="text" v-model="notes" placeholder="Médicaments, horaire, info suppl+, etc." />
+        </div>
         <label>
           <UCheckbox v-model="checked" />
           I accept <a href="#">conditions</a>.
         </label>
-        <button class="form-submit" type="text" @click="submitReservation()">Reserve</button>
+        <UButton class="btn btn-success" @click="submitReservation()">Reserve</UButton>
       </form>
 
     </UCard>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-
+import { DatePicker as VCalendarDatePicker } from 'v-calendar'
 //plugins
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
