@@ -1,6 +1,6 @@
 <template>
-  <div class="demo-app">
-    <div class="demo-app-main calendar">
+  <div class="flex">
+    <div class="demo-app-main calendar w-4/5">
       <h1>CLIENT CALENDAR</h1>
       <FullCalendar ref="fullcalendar" :options="calendarOptions">
       </FullCalendar>
@@ -9,26 +9,27 @@
     <!-- //TODO split controls in another component. Client Calendar should only emit a date.  -->
     <!-- // Séparer ClientCalendar pour emit des dates.
     // => Recevoir ces dates dans une View TeamPresentationView. -->
-    <div class="calendarControls">
-      <form class="form" @submit.prevent="submitForm">
+    <UCard class="calendarControls w-1/5 bg-white p-6 m-4 text-black">
+      <form class="form pt-20" @submit.prevent="submitForm">
         <label>date start</label>
+        <DateRangePicker v-model="labeledEvent.dateFrom"></DateRangePicker>
         <VueDatePicker :model-value="labeledEvent.dateFrom" format="yyyy-MM-dd HH:mm:ss"
           @update:model-value="handleDateFrom" auto-apply :min-date="minDate" />
         <label>date end</label>
         <VueDatePicker :model-value="labeledEvent.dateTo" format="yyyy-MM-dd HH:mm:ss"
           @update:model-value="handleDateTo" auto-apply :min-date="minDate" />
         <label>Lodger count</label>
-        <input type="number" v-model="lodgerCount" min="1" max="10" step="1">
+        <UInput type="number" v-model="lodgerCount" min="1" max="10" step="1" />
         <label> Notes</label>
         <textarea type="text" v-model="notes" rows="6" placeholder="Médicaments, horaire, info suppl+, etc." />
         <label>
-          <input type="checkbox" v-model="checked">
+          <UCheckbox v-model="checked" />
           I accept <a href="#">conditions</a>.
         </label>
         <button class="form-submit" type="text" @click="submitReservation()">Reserve</button>
       </form>
 
-    </div>
+    </UCard>
   </div>
 </template>
 

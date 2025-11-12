@@ -1,10 +1,13 @@
 
 export interface TeamType {
-  id?: number;
+  id?: number | string;
   name?: string;
   normalizedName?: string;
   createdAt?: Date;
   approvedAt?: Date;
+  admins?: string;
+  teamMedias?: string;
+  calendar?: string;
 }
 
 export interface CreateTeamDto {

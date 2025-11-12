@@ -44,11 +44,10 @@ namespace dogsitting_backend.Controllers
 
         [HttpGet("{teamNormalizedName}")]
         [AllowAnonymous]
-        public async Task<ActionResult> GetTeamByNormalizedName([FromRoute] string teamNormalizedName)
+        public async Task<Team> GetTeamByNormalizedName([FromRoute] string teamNormalizedName)
         {
             Team team = await this.teamService.GetTeamByNormalizedName(teamNormalizedName);
-            string json = JsonConvert.SerializeObject(team);
-            return Ok(json);
+            return team;
         }
 
 

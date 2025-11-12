@@ -1,29 +1,19 @@
 <template>
-    <div>
-        <div class="sectionTitle">
-            {{ teamName }}
-        </div>
+    <UCard class="m-4 h-full">
         <UTabs :items="items">
             <template #detail>
-                detail
+                <TeamProfile v-if="team?.id" :teamId="team?.id" />
             </template>
             <template #calendar>
-                asdfadsf
                 <CalendarClientCalendar></CalendarClientCalendar>
             </template>
         </UTabs>
-    </div>
+    </UCard>
 </template>
 
-<script setup>
-import { ref, computed, onMounted } from 'vue'
-
+<script setup lang="ts">
 import { TeamRepositoryHttp } from '@/services/repositories/TeamRepositoryHttp';
 import { $fetchClient } from "~/libs/http/adapters/NuxtAdapter";
-
-definePageMeta({
-    layout: "dashboard"
-});
 
 const teamRepo = new TeamRepositoryHttp($fetchClient)
 
@@ -51,8 +41,12 @@ const items = [
 
 const teamName = computed(() => team.value?.name || null)
 
-onMounted(async () => {
+const init = async () => {
+
     const response = await teamRepo.getTeamByNormalizedName(props.name)
+    console.log("team response", response);
+
     team.value = response
-})
+}
+init();
 </script>

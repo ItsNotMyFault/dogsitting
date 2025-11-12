@@ -43,7 +43,7 @@ export class AnimalRepositoryHttp
       }
     }
 
-    return this.client(`${this.resource}/animal/create`, { method: "POST", body: formData })
+    return this.client(`${this.resource}/create`, { method: "POST", body: formData })
       .then((res: any) => {
         return new Animal(res.data)
       })
@@ -88,7 +88,7 @@ export class AnimalRepositoryHttp
       formData.append('positions', file.position) // Positions are 1-based
     })
 
-    return this.client(`${this.resource}/Animal/${id}/media`, formData, {})
+    return this.client(`${this.resource}/${id}/media`, formData, {})
       .then((res: any) => {
         return res.data
       })
@@ -100,12 +100,13 @@ export class AnimalRepositoryHttp
 
 
   getAnimalByNormalizedName = (AnimalNormalizedName: string) => {
-    return this.client(`${this.resource}/Animal/${AnimalNormalizedName}`)
+    return this.client(`${this.resource}/${AnimalNormalizedName}`)
       .then((res: any) => {
         return new Animal(res.data)
       })
       .catch((error) => {
-        const errorr = `${error.response.data.message}, ${error.response.data.code}`
+        console.error(error);
+        const errorr = `${error.response?.data?.message}, ${error.response?.data?.code}`
         throw new Error(errorr)
       });
   }

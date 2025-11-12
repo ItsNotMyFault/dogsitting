@@ -3,7 +3,7 @@ import Team from "@/model/team";
 import type { CreateTeamDto, TeamType, UpdateTeamDto } from "@/model/TeamType";
 
 export class TeamRepositoryHttp
-  extends RestCrudRepositoryBase<TeamType, number, CreateTeamDto, UpdateTeamDto> {
+  extends RestCrudRepositoryBase<TeamType, number | string, CreateTeamDto, UpdateTeamDto> {
   protected readonly resource = "/api/team";
 
   getTeams = async () => {
@@ -21,7 +21,7 @@ export class TeamRepositoryHttp
   }
 
   getTeamFiles = (id: string | number) => {
-    return this.client(`${this.resource}/team/${id}/media`)
+    return this.client(`${this.resource}/${id}/media`)
       .then((res: any) => {
         return res.data
       })
@@ -39,7 +39,7 @@ export class TeamRepositoryHttp
       formData.append('positions', file.position) // Positions are 1-based
     })
 
-    return this.client(`${this.resource}/team/${id}/media`, formData, {})
+    return this.client(`${this.resource}/${id}/media`, { method: "POST", body: formData })
       .then((res: any) => {
         return res.data
       })
@@ -49,12 +49,13 @@ export class TeamRepositoryHttp
   }
 
   getTeamByNormalizedName = (teamNormalizedName: string) => {
-    return this.client(`${this.resource}/team/${teamNormalizedName}`)
+    return this.client(`${this.resource}/${teamNormalizedName}`)
       .then((res: any) => {
-        return new Team(res.data)
+        return new Team(res)
       })
       .catch((error) => {
-        const errorr = `${error.response.data.message}, ${error.response.data.code}`
+        console.error(error);
+        const errorr = `${error.response?.data?.message}, ${error.response?.data?.code}`
         throw new Error(errorr)
       });
   }

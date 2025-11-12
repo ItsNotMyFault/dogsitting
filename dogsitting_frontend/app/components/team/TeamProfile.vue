@@ -1,33 +1,43 @@
 <template>
     <div class="bloc">
         <div class="form">
-
+            TEAM PROFILE
             <label>
                 <span>name: </span>
-                <span>{{ team.name }}</span>
+                <span>{{ team?.name }}</span>
             </label>
             <label>
-                UseAvailabilities: {{ team.useAvailabilities }} <br>
+                Calendar details here
+                <!-- UseAvailabilities: {{ team.useAvailabilities }} <br>
                 UseUnavailabilities: {{ team.useUnavailabilities }} <br>
                 MaxWeekDaysLodgerCount: {{ team.maxWeekDaysLodgerCount }} <br>
-                MaxWeekendDaysLodgerCount: {{ team.maxWeekendDaysLodgerCount }}
+                MaxWeekendDaysLodgerCount: {{ team.maxWeekendDaysLodgerCount }} -->
             </label>
         </div>
     </div>
 </template>
 
-<script setup>
-import { ref, onMounted } from 'vue'
-import Team from '@/model/team.ts'
+<script setup lang="ts">
+import { type TeamType } from '@/model/TeamType';
 import { TeamRepositoryHttp } from '@/services/repositories/TeamRepositoryHttp';
 import { $fetchClient } from "~/libs/http/adapters/NuxtAdapter";
 
 const teamRepo = new TeamRepositoryHttp($fetchClient)
 
-const team = ref(new Team())
-const authStore = useAuthService()
+const props = defineProps({
+    teamId: {
+        type: String,
+        required: true
+    }
+})
 
-onMounted(async () => {
-    team.value = await teamRepo.findById(authStore.getTeam.id);
-});
+const team = ref<TeamType>();
+
+const init = async () => {
+    if (props?.teamId) {
+        team.value = await teamRepo.get(props.teamId);
+    }
+}
+
+init();
 </script>
