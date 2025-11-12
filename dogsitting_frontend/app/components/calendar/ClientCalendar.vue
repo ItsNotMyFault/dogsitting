@@ -18,6 +18,7 @@
             <FullCalendar ref="fullcalendar" :options="calendarOptions" />
           </div>
         </div>
+        <!-- TODO: ajouter une sélection animal type. Certaines teams peuvent ne garder que certains types d'animaux. -->
 
         <!-- Controls Section -->
         <div class="w-full lg:w-96">
