@@ -1,39 +1,105 @@
 <template>
-  <div class="flex">
-    <div class="demo-app-main pr-4 calendar w-2/3">
-      <h1>CLIENT CALENDAR</h1>
-      <FullCalendar ref="fullcalendar" :options="calendarOptions">
-      </FullCalendar>
+  <div class="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 p-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex gap-6 flex-col lg:flex-row">
+        <!-- Calendar Section -->
+        <div class="flex-1 bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-8 border-2 border-purple-100">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="bg-gradient-to-br from-purple-400 to-pink-400 p-3 rounded-2xl">
+              <UIcon name="i-lucide-calendar" class="w-8 h-8 text-white" />
+            </div>
+            <h1 class="text-4xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+              Client Calendar
+            </h1>
+            <UIcon name="i-lucide-sparkles" class="w-6 h-6 text-yellow-400 animate-pulse" />
+          </div>
 
-    </div>
-    <!-- //TODO split controls in another component. Client Calendar should only emit a date.  -->
-    <!-- // Séparer ClientCalendar pour emit des dates.
-    // => Recevoir ces dates dans une View TeamPresentationView. -->
-    <UCard class="calendarControls w-1/3 bg-white p-6 text-black">
-      <form class="form ">
-        <label>Sélectionner une période</label>
-        <DateRangePicker v-model="labeledEvent.dateFrom" model-format="yyyy-MM-dd HH:mm:ss"
-          :min-date="formattedMinDate">
-        </DateRangePicker>
-
-        labeledEvent.dateFrom: {{ labeledEvent.dateFrom }} <br><br>
-        <label>Nombre d'animaux</label>
-        <UInput type=" number" v-model="lodgerCount" min="1" max="10" step="1" />
-        <div class="w-full">
-          <label> Notes</label>
-          <UTextarea type="text" v-model="notes" placeholder="Médicaments, horaire, info suppl+, etc." />
+          <div class="demo-app-main calendar">
+            <FullCalendar ref="fullcalendar" :options="calendarOptions" />
+          </div>
         </div>
-        <label>
-          <UCheckbox v-model="checked" />
-          I accept <a href="#">conditions</a>.
-        </label>
-        <UButton class="btn btn-success" @click="submitReservation()">Reserve</UButton>
-      </form>
 
-    </UCard>
+        <!-- Controls Section -->
+        <div class="w-full lg:w-96">
+          <div class="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl p-6 border-2 border-pink-100">
+            <div class="flex items-center gap-2 mb-6">
+              <span class="text-2xl">🐾</span>
+              <h2 class="text-2xl font-bold text-gray-800">Reservation</h2>
+              <UIcon name="i-lucide-heart" class="w-5 h-5 text-pink-400 fill-pink-400 animate-pulse" />
+            </div>
+
+            <div class="space-y-6">
+              <!-- Date Range Picker -->
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                  Sélectionner une période ✨
+                </label>
+
+                <DateRangePicker v-model="labeledEvent.dateFrom" model-format="yyyy-MM-dd HH:mm:ss"
+                  :min-date="formattedMinDate" class="w-full" />
+              </div>
+
+              <!-- Animal Count -->
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                  Nombre d'animaux 🐾
+                </label>
+                <div class="flex items-center gap-3">
+                  <button type="button" @click="lodgerCount = Math.max(1, lodgerCount - 1)"
+                    class="w-10 h-10 rounded-full bg-purple-100 hover:bg-purple-200 text-purple-600 font-bold transition-colors">
+                    -
+                  </button>
+                  <UInput v-model="lodgerCount" type="number" min="1" max="10"
+                    class="flex-1 px-4 py-3 bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 rounded-xl text-center font-bold text-gray-700 focus:outline-none focus:border-purple-400" />
+                  <button type="button" @click="lodgerCount = Math.min(10, lodgerCount + 1)"
+                    class="w-10 h-10 rounded-full bg-purple-100 hover:bg-purple-200 text-purple-600 font-bold transition-colors">
+                    +
+                  </button>
+                </div>
+              </div>
+
+              <!-- Notes -->
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                  Notes 📝
+                </label>
+                <UTextarea v-model="notes" placeholder="Médicaments, horaire, info suppl., etc." :rows="4"
+                  class="w-full px-4 py-3 bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200 rounded-xl resize-none focus:outline-none focus:border-purple-400 transition-colors" />
+              </div>
+
+              <!-- Checkbox -->
+              <label class="flex items-center gap-3 cursor-pointer group">
+                <UCheckbox v-model="checked" />
+                <span class="text-sm text-gray-600 group-hover:text-gray-800">
+                  I accept <a href="#" class="text-purple-600 hover:text-purple-700 font-semibold">conditions</a>
+                </span>
+              </label>
+
+              <!-- Submit Button -->
+              <UButton @click="submitReservation"
+                :disabled="!checked || !labeledEvent.dateFrom?.start || !labeledEvent.dateFrom?.end"
+                class="w-full py-4 rounded-xl justify-center font-bold text-lg transition-all duration-300 transform hover:scale-105"
+                :class="{
+                  'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 shadow-lg hover:shadow-xl': checked && labeledEvent.dateFrom?.start && labeledEvent.dateFrom?.end,
+                  'bg-gray-200 text-white-400 cursor-not-allowed': !checked || !labeledEvent.dateFrom?.start || !labeledEvent.dateFrom?.end
+                }">
+                Reserve ✨
+              </UButton>
+            </div>
+
+            <!-- Decorative elements -->
+            <div class="mt-6 flex justify-center gap-2">
+              <span class="text-2xl animate-bounce" style="animation-delay: 0s">🐶</span>
+              <span class="text-2xl animate-bounce" style="animation-delay: 0.1s">🐱</span>
+              <span class="text-2xl animate-bounce" style="animation-delay: 0.2s">🐰</span>
+              <span class="text-2xl animate-bounce" style="animation-delay: 0.3s">🐹</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
-
 <script setup lang="ts">
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
@@ -119,6 +185,7 @@ const calendarOptions = reactive({
 // Methods
 const handleDateClick = (arg) => {
   try {
+    // TODO fix update of selected period with calendar click.
     if (labeledEvent.value && labeledEvent.value.isDefined()) {
       throw 'labeledEvent dateFrom already defined'
     } else {
