@@ -33,7 +33,7 @@ import reservationServices from '@services/reservationServices'
 import ReservationEvent from '@/model/reservationEvent'
 import DateFormat from '~/utils/DateFormat'
 import LabeledEvent from '@/model/calendar/labeledEvent'
-import Calendar from '../../utils/Calendar'
+import Calendar from '@/utils/Calendar'
 
 import { CalendarRepositoryHttp } from '@/services/repositories/CalendarRepositoryHttp';
 import { $fetchClient } from "~/libs/http/adapters/NuxtAdapter";

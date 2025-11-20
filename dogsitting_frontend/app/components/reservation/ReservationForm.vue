@@ -64,19 +64,5 @@ const submitReservation = () => {
     emit('submit', newReservation)
 }
 
-const navigateCreateAnimal = () => {
-    router.push({ path: `/animal/create` })
-}
-
-watch(animals, (newValue) => {
-    reservationFormStore.setAnimals(newValue)
-}, { deep: true })
-
-onMounted(async () => {
-    const userAnimals = await userServices.getUserAnimals(user.value.id)
-    animalOptions.value = userAnimals.map(animal => animal.asOption)
-    animals.value = reservationFormStore.getAnimals
-})
-
 
 </script>

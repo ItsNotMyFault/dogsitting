@@ -5,7 +5,8 @@
                 <TeamProfile v-if="team?.id" :teamId="team?.id" />
             </template>
             <template #calendar>
-                <CalendarClientCalendar></CalendarClientCalendar>
+                <ReservationCreateFormCalendarForm :teamName="name"></ReservationCreateFormCalendarForm>
+
             </template>
         </UTabs>
     </UCard>
@@ -38,8 +39,6 @@ const items = [
     }
 ]
 
-
-const teamName = computed(() => team.value?.name || null)
 
 const init = async () => {
 

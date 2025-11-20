@@ -179,7 +179,7 @@ const fetchEvents = async () => {
 
 // Lifecycle hooks
 onMounted(() => {
-  reservationFormStore.setTeamName(props.teamName)
+  reservationFormStore.setTeamName(props.teamName);
   fetchEvents()
   fullCalendarApi.value = fullcalendar.value.getApi()
 })

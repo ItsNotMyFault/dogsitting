@@ -1,5 +1,6 @@
 <template>
 	<div>
+		TEA MDETAIL PAGE HERE <br></br>
 		<TeamDetail :name="teamName" />
 	</div>
 </template>
