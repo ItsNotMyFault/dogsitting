@@ -5,7 +5,8 @@
                 <TeamProfile v-if="team?.id" :teamId="team?.id" />
             </template>
             <template #calendar>
-                <ReservationCreateFormCalendarForm :teamName="name"></ReservationCreateFormCalendarForm>
+                <!-- <ReservationCreateFormCalendarForm :teamName="name"></ReservationCreateFormCalendarForm> -->
+                <ReservationCreateForm :teamName="name" />
 
             </template>
         </UTabs>

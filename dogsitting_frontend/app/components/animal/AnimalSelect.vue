@@ -1,32 +1,25 @@
 <template>
-    <div v-if="options && options.length">
-        <VSelect v-model="selected" multiple :options="filteredOptions" placeholder="Select an option"
-            @option:selected="optionSelected" @option:deselected="optionDeselected">
-            <template #selected-option="option">
-                {{ option?.label }} - TEST
-                <!-- TODO add image display here in mini -->
-            </template>
-            <template #option="option">
-                <div class="animalSelect-option">
-                    <InputsImageFileDisplay v-if="option.data.media" :file="option.data.media.FileData">
-                    </InputsImageFileDisplay>
-                    {{ option?.label }}
-                </div>
-            </template>
-            <template #no-options>
-                No options found.
-            </template>
-        </VSelect>
-    </div>
-    <div v-else>
+    <USelectMenu v-model="selected" multiple :items="filteredOptions" placeholder="Select an option"
+        @option:selected="optionSelected" @option:deselected="optionDeselected">
+        <template #selected-option="option">
+            {{ option?.label }} - TEST
+            <!-- TODO add image display here in mini -->
+        </template>
+        <template #option="option">
+            <div class="animalSelect-option">
+                <InputsImageFileDisplay v-if="option.data.media" :file="option.data.media.FileData">
+                </InputsImageFileDisplay>
+                {{ option?.label }}
+            </div>
+        </template>
+        <template #empty>
+            No options found.
+        </template>
+    </USelectMenu>
 
-        <h1 style="color: yellow; font-size: large;">Loading options...</h1>
-    </div>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
-import ImageFileDisplay from '@components/inputs/ImageFileDisplay.vue'
 
 const props = defineProps({
     modelValue: {

@@ -68,7 +68,7 @@ const router = useRouter()
 
 // Stores
 const reservationFormStore = useReservationFormStore();
-const { checked, labeledEvent, lodgerCount, teamName, notes } = storeToRefs(reservationFormStore);
+const { checked, labeledEvent, lodgerCount, teamName, notes, step } = storeToRefs(reservationFormStore);
 
 // Refs
 // Computed values
@@ -92,7 +92,7 @@ const submitReservation = () => {
     console.error('warning not checked')
     return
   }
-  router.push({ path: `/team/${teamName.value}/reservation/create` })
+  step.value = 2;
 }
 
 

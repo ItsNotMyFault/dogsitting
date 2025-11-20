@@ -20,6 +20,7 @@ export const useReservationFormStore = defineStore('reservationForm', () => {
   const notes = ref(null)
   const animals = ref([])
   const checked = ref(false)
+  const step = ref<1 | 2 | 3>(1);
   const labeledEvent = ref<LabeledEvent>(new LabeledEvent())
 
   // --- GETTERS ---
@@ -81,7 +82,7 @@ export const useReservationFormStore = defineStore('reservationForm', () => {
     animals,
     checked,
     labeledEvent,
-
+    step,
     // getters
     getStateData,
     getAnimals,
