@@ -1,7 +1,15 @@
 import DateFormat from '~/utils/DateFormat'
 import moment from 'moment'
+import type { DateTime } from 'luxon'
 
 class LabeledEvent {
+
+  dateFrom: DateTime | null
+  dateTo: DateTime | null
+  start: string | null
+  end: string | null
+  title: string
+
   constructor(dateFromStr = null, dateToStr = null, title = 'new reservation') {
     //input dates
     this.dateFrom = null
@@ -16,7 +24,7 @@ class LabeledEvent {
       DateFormat.ValidateDatePastToday(dateFromStr)
     } else {
       console.warn("Can't initialize null date")
-      return
+      return this
     }
     if (!this.isDateDefined(dateToStr)) {
       dateToStr = dateFromStr
@@ -27,6 +35,19 @@ class LabeledEvent {
     this.end = DateFormat.GetDateFormatted(new Date(this.dateTo))
     //-1hour is important because 1 seconds doesn't work when saving to SQL
     this.toString()
+    return this
+  }
+
+  initializeDatesNew(dateFrom: DateTime, dateTo: DateTime) {
+    if (isDateTimeValid(dateFrom) && isDateTimeValid(dateTo)) {
+      this.dateFrom = dateFrom;
+      this.dateTo = dateTo;
+      this.start = dateFrom.toFormat('YYYY-MM-DD HH:mm:ss');
+      this.end = dateTo.toFormat('YYYY-MM-DD HH:mm:ss');
+      console.log("date initialized", this);
+
+    }
+    return this
   }
 
   isDateDefined(date) {

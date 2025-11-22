@@ -91,20 +91,14 @@ namespace dogsitting_backend.Controllers
 
 
         [HttpGet("{Id}/media")]
-        public async Task<ActionResult> GetTeamMedias([FromRoute] Guid Id)
+        public async Task<List<TeamMediaResponse>> GetTeamMedias([FromRoute] Guid Id)
         {
             List<TeamMediaResponse> mediaresponses = await this.teamService.GetTeamMedias(Id);
             if (mediaresponses.Count > 4)
             {
                 throw new Exception("Too Many pictures shouldn't happen.");
             }
-
-            var settings = new JsonSerializerSettings
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            };
-            string json = JsonConvert.SerializeObject(mediaresponses, settings);
-            return Ok(json);
+            return mediaresponses;
         }
 
         [HttpPost("{Id}/media", Name = "AddTeamMedia")]

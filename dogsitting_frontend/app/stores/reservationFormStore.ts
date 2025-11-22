@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import reservationServices from '@/services/reservationServices.js'
 import LabeledEvent from '@/model/calendar/labeledEvent'
 import type { AnimalType } from '@/model/AnimalType'
+import type { DateTime } from 'luxon'
 
 interface CreateReservationType {
   dateFrom: string,
@@ -19,7 +20,7 @@ export const useReservationFormStore = defineStore('reservationForm', () => {
   const dateTo = ref(null)
   const lodgerCount = ref(0)
   const notes = ref(null)
-  const selectedAnimals = ref<string[]>([])//identifier list
+  const selectedAnimals = ref<AnimalType[]>([])//identifier list
   const checked = ref(false)
   const step = ref<1 | 2 | 3>(1);
   const labeledEvent = ref<LabeledEvent>(new LabeledEvent())
@@ -48,6 +49,17 @@ export const useReservationFormStore = defineStore('reservationForm', () => {
     }
   }
 
+  const setLabeledEvent = (pdateFrom: DateTime, pdateTo: DateTime) => {
+    console.log("setLabeledEvent---------------");
+    console.log("dateFrom", dateFrom);
+    console.log("dateTo", pdateTo);
+    labeledEvent.value = (new LabeledEvent()).initializeDatesNew(pdateFrom, pdateTo);
+    console.log("setLabeledEvent", labeledEvent.value);
+
+    dateFrom.value = labeledEvent.value.dateFrom
+    dateTo.value = labeledEvent.value.dateTo
+  }
+
   const setStep1Data = (data) => {
     dateFrom.value = data.dateFrom
     dateTo.value = data.dateTo
@@ -60,7 +72,7 @@ export const useReservationFormStore = defineStore('reservationForm', () => {
     console.log('set team name', teamName.value)
   }
 
-  const setAnimals = (list: string[]) => {
+  const setAnimals = (list: AnimalType[]) => {
     selectedAnimals.value = list
   }
 
@@ -80,7 +92,7 @@ export const useReservationFormStore = defineStore('reservationForm', () => {
     dateTo,
     lodgerCount,
     notes,
-    animals: selectedAnimals,
+    selectedAnimals,
     checked,
     labeledEvent,
     step,
@@ -89,6 +101,7 @@ export const useReservationFormStore = defineStore('reservationForm', () => {
     getAnimals,
 
     // actions
+    setLabeledEvent,
     createReservation,
     setStep1Data,
     setTeamName,

@@ -31,6 +31,7 @@
 
             <CalendarCreateReservationFormStep1>
             </CalendarCreateReservationFormStep1>
+            <UButton @click="autofill">Autofill</UButton>
 
             <!-- Decorative elements -->
             <div class="mt-6 flex justify-center gap-2">
@@ -78,6 +79,18 @@ const router = useRouter()
 // Stores
 const reservationFormStore = useReservationFormStore()
 
+const autofill = () => {
+  const today = new Date();
+  const start = convertToDateTime(today).plus({ days: 5 });
+  const end = convertToDateTime(today).plus({ days: 50 });
+
+  reservationFormStore.setLabeledEvent(start, end);
+  reservationFormStore.lodgerCount = 2;
+  reservationFormStore.checked = true;
+  reservationFormStore.notes = "demo note for autofill";
+
+};
+
 // Refs
 const fullcalendar = ref(null)
 const fullCalendarApi = ref(null)
@@ -120,7 +133,7 @@ const calendarOptions = reactive({
 const handleDateClick = (arg) => {
   try {
     // TODO fix update of selected period with calendar click.
-    if (labeledEvent.value && labeledEvent.value.isDefined()) {
+    if (labeledEvent.value && labeledEvent.value?.isDefined()) {
       throw 'labeledEvent dateFrom already defined'
     } else {
       apiEvents.value = fullCalendarApi.value.getEvents()

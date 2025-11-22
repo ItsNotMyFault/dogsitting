@@ -51,6 +51,8 @@ watch(() => props.file, (newVal) => {
     if (newVal instanceof File) {
         updateFile(newVal)
     } else if (typeof newVal === "string") {
+        console.log("file is stirng");
+
         imageUrl.value = `data:image/jpeg;base64,${newVal}`
     }
 }, { immediate: true })

@@ -1,120 +1,151 @@
 <template>
     <div class="teamProfileEdit">
         <div class="teamProfileEdit-form">
-            <TeamCardPreview :image1="image1" :image2="image2" :image3="image3" :image4="image4"></TeamCardPreview>
+            team card preview below here
+            <TeamCardPreview :image1="image1" :image2="image2" :image3="image3" :image4="image4" />
+
             <div class="form">
-                <RouterLink to="/my-team"> <button>go back <= </button>
+                <RouterLink to="/my-team">
+                    go back
                 </RouterLink>
+
                 <label>
                     <span>name: </span>
                     <span>{{ team.name }}</span>
-                    <input type="text" v-model="team.name">
+                    <input type="text" v-model="team.name" />
                 </label>
+
+                <!-- <label>
+                    <input type="checkbox" v-model="team.useAvailabilities" />
+                    UseAvailabilities
+                </label>
+
                 <label>
-                    <input type="checkbox" v-model="team.useAvailabilities"> UseAvailabilities
+                    <input type="checkbox" v-model="team.useUnavailabilities" />
+                    UseUnavailabilities
                 </label>
-                <label>
-                    <input type="checkbox" v-model="team.useUnavailabilities"> UseUnavailabilities
-                </label>
+
                 <label>
                     MaxWeekDaysLodgerCount
-                    <input type="number" v-model="team.maxWeekDaysLodgerCount" min="1" max="10" step="1">
+                    <input type="number" v-model="team.maxWeekDaysLodgerCount" min="1" max="10" step="1" />
                 </label>
+
                 <label>
                     MaxWeekendDaysLodgerCount
-                    <input type="number" v-model="team.maxWeekendDaysLodgerCount" min="1" max="10" step="1">
-                </label>
+                    <input type="number" v-model="team.maxWeekendDaysLodgerCount" min="1" max="10" step="1" />
+                </label> -->
+
                 <button @click="save">Save</button>
                 saving => {{ saving }}
             </div>
         </div>
 
-        <label>
-            Profile picture combination
-        </label>
-        <div class="teamProfileEdit-pictureList">
-            <InputsImageFileDisplay v-model="image1"></InputsImageFileDisplay>
-            <InputsImageFileDisplay v-model="image2"></InputsImageFileDisplay>
-            <InputsImageFileDisplay v-model="image3"></InputsImageFileDisplay>
-            <InputsImageFileDisplay v-model="image4"></InputsImageFileDisplay>
-            <button @click="saveImages()">Save</button>
+        <label>Profile picture combination</label>
+
+        <div>
+            <ImageFileDisplay :file="image1?.fileData" />
+            <ImageFileDisplay :file="image2?.fileData" />
+            <ImageFileDisplay :file="image3?.fileData" />
+            <ImageFileDisplay :file="image4?.fileData" />
+            <button @click="saveImages">Save</button>
         </div>
     </div>
 </template>
-<script>
-import Team from '@/model/team.ts'
-import { useAuthStore } from '~/stores/authStore'
-import { TeamRepositoryHttp } from '@/services/repositories/TeamRepositoryHttp';
+
+<script setup lang="ts">
+import { ref, reactive, onMounted } from "vue";
+import Team from "@/model/team";
+import { useAuthStore } from "~/stores/authStore";
+import { TeamRepositoryHttp } from "@/services/repositories/TeamRepositoryHttp";
 import { $fetchClient } from "~/libs/http/adapters/NuxtAdapter";
+import ImageFileDisplay from "../inputs/ImageFileDisplay.vue";
 
-const teamRepo = new TeamRepositoryHttp($fetchClient)
+const teamRepo = new TeamRepositoryHttp($fetchClient);
 
+/* -------------------------------------------------------------------------- */
+/*   STATE                                                                    */
+/* -------------------------------------------------------------------------- */
 
-export default {
-    name: 'TeamProfileEdit',
+const team = reactive(new Team(null));
+const saving = ref(false);
 
-    components: {
-        TeamCardPreview,
-    },
+const files = ref<any[]>([]); // backend returned team files
 
-    data() {
-        return {
-            team: new Team(),
-            saving: false,
-            files: [],
-            image1: null,
-            image2: null,
-            image3: null,
-            image4: null,
-        }
-    },
+// images (File OR base64)
+const image1 = ref<any>(null);
+const image2 = ref<any>(null);
+const image3 = ref<any>(null);
+const image4 = ref<any>(null);
 
-    methods: {
-        saveImages() {
-            const pictures = []
-            if (this.image1 instanceof File) {
-                pictures.push({ file: this.image1, position: 1 })
-            }
-            if (this.image2 instanceof File) {
-                pictures.push({ file: this.image2, position: 2 })
-            }
-            if (this.image3 instanceof File) {
-                pictures.push({ file: this.image3, position: 3 })
-            }
-            if (this.image4 instanceof File) {
-                pictures.push({ file: this.image4, position: 4 })
-            }
-            console.log('pictures', pictures);
-            teamRepo.saveTeamFiles(this.team.id, pictures).then(response => {
-                this.saving = false
-            });
-        },
-        async save() {
-            this.saving = true
-            teamRepo.update(this.team.id, this.team).then(response => {
-                this.saving = false
-            });
-        },
-        findFileByPosition(position) {
-            const file = this.files.find(file => file.Position === position)
-            return file?.FileData || null
-        }
+/* -------------------------------------------------------------------------- */
+/*   HELPERS                                                                   */
+/* -------------------------------------------------------------------------- */
 
-    },
-
-    async created() {
-
-        const authStore = useAuthStore();
-        this.team = await teamRepo.findById(authStore.getTeam.id);
-        this.files = await teamRepo.getTeamFiles(authStore.getTeam.id);
-        if (this.files?.length) {
-            this.image1 = this.findFileByPosition(1)
-            this.image2 = this.findFileByPosition(2)
-            this.image3 = this.findFileByPosition(3)
-            this.image4 = this.findFileByPosition(4)
-        }
-
-    }
-
+function findFileByPosition(position: number) {
+    const file = files.value.find((f) => f.position === position);
+    console.log("file found", file);
+    return file?.fileData ?? null;
 }
+
+/* -------------------------------------------------------------------------- */
+/*   METHODS                                                                   */
+/* -------------------------------------------------------------------------- */
+
+function saveImages() {
+    const pictures: any[] = [];
+
+    if (image1.value instanceof File)
+        pictures.push({ file: image1.value, position: 1 });
+
+    if (image2.value instanceof File)
+        pictures.push({ file: image2.value, position: 2 });
+
+    if (image3.value instanceof File)
+        pictures.push({ file: image3.value, position: 3 });
+
+    if (image4.value instanceof File)
+        pictures.push({ file: image4.value, position: 4 });
+
+    console.log("pictures", pictures);
+
+    saving.value = true;
+    teamRepo.saveTeamFiles(team.id, pictures).finally(() => {
+        saving.value = false;
+    });
+}
+
+function save() {
+    saving.value = true;
+    teamRepo.update(team.id, team).finally(() => {
+        saving.value = false;
+    });
+}
+
+/* -------------------------------------------------------------------------- */
+/*   LIFECYCLE                                                                 */
+/* -------------------------------------------------------------------------- */
+
+onMounted(async () => {
+    const authStore = useAuthStore();
+
+    const teamId = "08dd90bd-f37f-48d8-81c3-b68aaabcf4da";
+
+    const teamData = await teamRepo.get(teamId);
+    Object.assign(team, teamData);
+
+    files.value = await teamRepo.getTeamFiles(teamId);
+
+    console.log("files.value", files.value);
+
+    console.log("files.value?.length", files.value?.length);
+
+    if (files.value?.length > 0) {
+        image1.value = findFileByPosition(1);
+        image2.value = findFileByPosition(2);
+        image3.value = findFileByPosition(3);
+        image4.value = findFileByPosition(4);
+    }
+});
 </script>
+
+<style scoped></style>

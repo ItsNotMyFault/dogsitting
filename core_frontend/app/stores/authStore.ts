@@ -25,10 +25,15 @@ export const useAuthStore = defineStore(
       applicationUser.value = newUser
     }
 
+    const getUserId = computed(() => {
+      return applicationUser.value ? applicationUser.value.id : null
+    });
+
     return {
       // State
       applicationUser,
       setApplicationUser,
+      getUserId,
       isSuperAdmin,
       hasUserTeam,
       team: activeTeam,

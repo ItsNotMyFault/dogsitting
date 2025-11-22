@@ -23,7 +23,24 @@
 			<AnimalList v-model:selected="selectedAnimalIds" @update:selected="handleSelectedAnimals" :animals="animals">
 			</AnimalList>
 		</div>
-		<CardAddButton class="reservationForm-addanimals-button" @click="navigateCreateAnimal()"></CardAddButton>
+		<div class="mx-auto w-full mb-4">
+			<div class="max-w-[700px] text-center mx-auto">
+				La sélection de vos animaux permet un meilleur suivi de leur pension et de leurs besoins spécifiques.
+				Si vous n'avez pas encore ajouté vos animaux, vous pouvez le faire maintenant : cliquer sur la carte "+".
+			</div>
+		</div>
+		<div class="space-y-4 max-w-[500px] text-center mx-auto">
+			<UButton @click="reservationFormStore.step = 3"
+				class="w-full py-4 text-lg font-semibold rounded-xl justify-center bg-gradient-to-r from-purple-500 to-pink-500 hover:scale-[1.02] shadow-md hover:shadow-lg transition-all">
+				Consulter la réservation ✨
+			</UButton>
+
+			<UButton variant="soft" class="w-full py-3 rounded-xl" icon="i-lucide-arrow-left"
+				@click="reservationFormStore.step = 1">
+				Retour
+			</UButton>
+		</div>
+
 	</div>
 </template>
 <script setup lang="ts">
@@ -43,8 +60,7 @@ const { applicationUser } = useAuthStore()
 console.log("applicationUser", applicationUser);
 
 
-const { lodgerCount, step } = storeToRefs(reservationFormStore)
-const animalOptions = ref([]);
+const { lodgerCount, step, selectedAnimals } = storeToRefs(reservationFormStore)
 const animals = ref<AnimalType[]>([]);
 const selectedAnimalIds = ref<string[]>([]);
 const emit = defineEmits(['submit'])
@@ -53,9 +69,20 @@ const selectionLeft = computed(() => {
 	return lodgerCount.value - selectedAnimalIds.value.length;
 });
 
+const goBack = () => {
+	reservationFormStore.step = 1;
+};
+
 const handleSelectedAnimals = (selectedIds: string[]) => {
-	reservationFormStore.setAnimals(selectedIds);
+
+	reservationFormStore.setAnimals(animals.value.filter(animal => selectedIds.includes(animal.id)));
 }
+
+watch(() => selectedAnimals.value, () => {
+	console.log("WATCHER SELECTED ANIMALS");
+
+	selectedAnimalIds.value = selectedAnimals.value.map(animal => animal.id);
+}, { immediate: true })
 
 const navigateCreateAnimal = () => {
 	router.push({ path: `/animal/create` })
@@ -65,7 +92,6 @@ onMounted(async () => {
 	const userAnimals = await animlaRepo.getUserAnimals(applicationUser.id)
 	console.log("response userAnimals", userAnimals);
 	animals.value = userAnimals;
-	animalOptions.value = userAnimals?.map(animal => animal.asOption)
 });
 
 

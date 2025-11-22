@@ -1,10 +1,5 @@
 <template>
 	<div>
-		<div class="flex justify-between">
-
-			<UButton @click="step -= 1">go back step</UButton>
-			<UButton @click="step += 1">go next step</UButton>
-		</div>
 		<div v-if="step === 1">
 			<ReservationCreateFormCalendarForm :teamName="teamName" />
 		</div>
@@ -14,7 +9,6 @@
 		<div v-if="step === 3">
 			<ReservationCreateFormPreview />
 		</div>
-
 	</div>
 </template>
 <script setup lang="ts">
@@ -28,9 +22,6 @@ const props = defineProps({
 		required: true
 	}
 })
-
-// Router
-const router = useRouter()
 
 // Stores
 const reservationFormStore = useReservationFormStore()

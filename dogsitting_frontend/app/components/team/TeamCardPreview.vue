@@ -2,48 +2,43 @@
     <div class="TeamCard">
         <div class="TeamCard-title">Title</div>
         <div class="TeamCard-image">
-            <InputsImageFileDisplay :file="image1">
-            </InputsImageFileDisplay>
+            <ImageFileDisplay :file="image1">
+            </ImageFileDisplay>
         </div>
         <div class="TeamCard-image">
-            <InputsImageFileDisplay :file="image2">
-            </InputsImageFileDisplay>
+            <ImageFileDisplay :file="image2">
+            </ImageFileDisplay>
         </div>
         <div class="TeamCard-image">
-            <InputsImageFileDisplay :file="image3">
-            </InputsImageFileDisplay>
+            <ImageFileDisplay :file="image3">
+            </ImageFileDisplay>
         </div>
         <div class="TeamCard-image">
-            <InputsImageFileDisplay :file="image4">
-            </InputsImageFileDisplay>
+            <ImageFileDisplay :file="image4">
+            </ImageFileDisplay>
         </div>
     </div>
 </template>
-<script>
-export default {
-    name: 'TeamCardPreview',
+<script setup lang="ts">
+import ImageFileDisplay from '../inputs/ImageFileDisplay.vue';
 
-    components: {
-        ImageFileDisplay
-    },
 
-    props: {
-        image1: {
-            type: [String, null, File],
-            required: true
-        },
-        image2: {
-            type: [String, null, File],
-            required: true
-        },
-        image3: {
-            type: [String, null, File],
-            required: true
-        },
-        image4: {
-            type: [String, null, File],
-            required: true
-        }
+const props = defineProps({
+    image1: {
+        type: [String, null, File],
+        required: true
     },
-}
+    image2: {
+        type: [String, null, File],
+        required: true
+    },
+    image3: {
+        type: [String, null, File],
+        required: true
+    },
+    image4: {
+        type: [String, null, File],
+        required: true
+    }
+});
 </script>

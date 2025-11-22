@@ -2,7 +2,7 @@
     <div class="section">
         <div class="sectionTitle">Teams</div>
         CREATE PAGE
-        <TeamProfileEdit></TeamProfileEdit>
+        <TeamFormCreateUpdate></TeamFormCreateUpdate>
     </div>
 </template>
 <script setup lang="ts">

@@ -4,8 +4,8 @@
       <label class="block text-sm font-semibold text-gray-700 mb-2">
         Sélectionner une période ✨
       </label>
-      <DateRangePicker v-model="labeledEvent.dateFrom" model-format="yyyy-MM-dd HH:mm:ss" :min-date="formattedMinDate"
-        class="w-full" />
+      <DateRangePicker :model-value="labeledEvent.dateFrom" @update:model-value="handleDateRangeChange"
+        model-format="yyyy-MM-dd HH:mm:ss" :min-date="formattedMinDate" class="w-full" />
     </div>
     <div>
       <label class="block text-sm font-semibold text-gray-700 mb-2">
@@ -79,10 +79,14 @@ const isFormValid = computed(() => {
   return labeledEvent.value.dateFrom && checked.value && !isEmpty(labeledEvent.value.dateFrom);
 });
 
-const submitReservation = () => {
-  console.log('submitReservation --------- labeledEvent.value', labeledEvent.value);
+const handleDateRangeChange = (newDateRange: { start: string; end: string }) => {
+  const dateFrom = convertToDateTime(newDateRange.start);
+  const dateTo = convertToDateTime(newDateRange.end);
+  reservationFormStore.setLabeledEvent(dateFrom, dateTo);
+};
 
-  if (!labeledEvent.value.dateFrom || !labeledEvent.value.dateFrom.start || !labeledEvent.value.dateFrom.end || isEmpty(labeledEvent.value)) {
+const submitReservation = () => {
+  if (!labeledEvent.value.dateFrom || !labeledEvent.value.dateTo || isEmpty(labeledEvent.value)) {
     //TODO add warning missing datefrom & dateto
     console.error('warning missing datefrom & dateto')
     return

@@ -23,7 +23,7 @@ export class TeamRepositoryHttp
   getTeamFiles = (id: string | number) => {
     return this.client(`${this.resource}/${id}/media`)
       .then((res: any) => {
-        return res.data
+        return res
       })
       .catch((error) => {
         throw new Error(error)
