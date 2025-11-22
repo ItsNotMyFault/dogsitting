@@ -9,7 +9,11 @@
 		<div v-if="step === 3">
 			<ReservationCreateFormPreview />
 		</div>
-		<UButton @click="step -= 1">go back step</UButton>
+		<div class="flex justify-between">
+
+			<UButton @click="step -= 1">go back step</UButton>
+			<UButton @click="step += 1">go next step</UButton>
+		</div>
 	</div>
 </template>
 <script setup lang="ts">

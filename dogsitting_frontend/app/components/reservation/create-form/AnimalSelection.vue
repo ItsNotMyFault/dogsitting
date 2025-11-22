@@ -1,7 +1,10 @@
 <template>
 	<div class="reservationForm-addanimals">
-		<AnimalList v-model:selected="selectedAnimalIds" @update:selected="handleSelectedAnimals" :animals="animals">
-		</AnimalList>
+		<div class="p-6 max-w-5xl mx-auto text-black">
+			<h1 class="text-3xl font-bold text-center text-green-400 mb-6">Mes Animaux</h1>
+			<AnimalList v-model:selected="selectedAnimalIds" @update:selected="handleSelectedAnimals" :animals="animals">
+			</AnimalList>
+		</div>
 		<CardAddButton class="reservationForm-addanimals-button" @click="navigateCreateAnimal()"></CardAddButton>
 	</div>
 </template>
