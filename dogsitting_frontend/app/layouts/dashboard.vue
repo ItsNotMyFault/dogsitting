@@ -8,7 +8,9 @@
       <main>
         <div>
           DASHBOARD LAYOUT NICE
-          <NuxtPage />
+          <UApp>
+            <NuxtPage />
+          </UApp>
         </div>
         <UPageBody />
       </main>

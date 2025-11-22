@@ -2,6 +2,24 @@
 	<div class="reservationForm-addanimals">
 		<div class="p-6 max-w-5xl mx-auto text-black">
 			<h1 class="text-3xl font-bold text-center text-green-400 mb-6">Mes Animaux</h1>
+			<div class="text-center w-full mb-4">Sélectionnez les animaux
+				<UIcon name="i-lucide-paw-print"
+					class="w-5 h-5 inline-block ml-1 text-purple-400 fill-purple-400 animate-bounce" /> à mettre en pension pour
+				cette réservation :
+			</div>
+			<div class="text-center w-full mb-4">Vous avez {{ selectionLeft }} choix d'animal restant
+
+				<UTooltip :delay-duration="0" placement="top" :text="''">
+					<template #content>
+						<span>
+							Le nombre d'animaux que vous pouvez sélectionner dépend du nombre de pensionnaires que vous avez indiqué
+							dans l'étape précédente.
+						</span>
+					</template>
+					<UIcon name="i-lucide-circle-question-mark"
+						class="w-5 h-5 inline-block ml-1 text-purple-400 fill-purple-400" />
+				</UTooltip>
+			</div>
 			<AnimalList v-model:selected="selectedAnimalIds" @update:selected="handleSelectedAnimals" :animals="animals">
 			</AnimalList>
 		</div>
@@ -30,6 +48,10 @@ const animalOptions = ref([]);
 const animals = ref<AnimalType[]>([]);
 const selectedAnimalIds = ref<string[]>([]);
 const emit = defineEmits(['submit'])
+
+const selectionLeft = computed(() => {
+	return lodgerCount.value - selectedAnimalIds.value.length;
+});
 
 const handleSelectedAnimals = (selectedIds: string[]) => {
 	reservationFormStore.setAnimals(selectedIds);

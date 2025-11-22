@@ -4,7 +4,6 @@
             <h2 class="text-2xl font-semibold mb-4 text-primary text-center">Login</h2>
             <hr class="mb-4">
             <div class="mb-4">
-                login fb:
                 <ButtonsFacebookButton />
             </div>
         </div>

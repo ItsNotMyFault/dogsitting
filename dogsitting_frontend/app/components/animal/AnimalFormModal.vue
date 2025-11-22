@@ -18,9 +18,11 @@
             <AnimalForm :animal="emptyValue"></AnimalForm>
         </template>
         <template #footer>
-            <div class="flex justify-end gap-3 pt-4">
-                <UButton color="info" variant="soft" @click="closeModal">Cancel</UButton>
-                <UButton type="submit" form="animal-form" color="primary" @click="submitForm">Save</UButton>
+            <div class="flex justify-end w-full gap-3 pt-4">
+                <UButton color="neutral" variant="soft" @click="closeModal">Cancel</UButton>
+                <UButton class="bg-gradient-to-br from-purple-400 to-pink-400 p-3 rounded-2xl" type="submit"
+                    form="animal-form">Save</UButton>
+
             </div>
         </template>
     </UModal>

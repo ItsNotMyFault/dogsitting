@@ -1,6 +1,5 @@
 <template>
     <div>
-        Login with Facebook
         <button class="login-with-facebook btn btn-facebook" @click="facebookOauthLogin()">
             <i class="fa fa-facebook mr-1"></i>
             Login with Facebook

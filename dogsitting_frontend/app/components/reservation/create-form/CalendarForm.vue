@@ -21,7 +21,7 @@
         <!-- TODO: ajouter une sélection animal type. Certaines teams peuvent ne garder que certains types d'animaux. -->
 
         <!-- Controls Section -->
-        <div class="w-full lg:w-96">
+        <div class="w-full lg:w-142">
           <div class="bg-white/90 backdrop-blur-sm rounded-3xl shadow-xl p-6 border-2 border-pink-100">
             <div class="flex items-center gap-2 mb-6">
               <span class="text-2xl">🐾</span>
