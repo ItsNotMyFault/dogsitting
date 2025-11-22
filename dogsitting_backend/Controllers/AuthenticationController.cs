@@ -42,7 +42,7 @@ namespace dogsitting_backend.Controllers
 
         [HttpGet("authuser")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetLoggedInUser()
+        public async Task<ApplicationUser> GetLoggedInUser()
         {
             ClaimsPrincipal claimsPrincipal = httpContextAccessor.HttpContext.User;
             this._authUser = await _userManager.GetUserAsync(claimsPrincipal);
@@ -55,8 +55,7 @@ namespace dogsitting_backend.Controllers
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             };
 
-            string json = JsonConvert.SerializeObject(this._authUser.ApplicationUser, settings);
-            return Ok(json);
+            return this._authUser.ApplicationUser;
         }
 
 

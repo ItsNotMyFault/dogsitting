@@ -26,6 +26,13 @@ export default defineNuxtConfig({
       }
     }
   },
+  colorMode: {
+    preference: 'light', // Force light mode
+    fallback: 'light',   // Fallback to light mode
+  },
+  ui: {
+    colorMode: false // Disable color mode toggle completely
+  },
   imports: {
     autoImport: true
   },

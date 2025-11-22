@@ -1,8 +1,7 @@
 <template>
 	<div class="reservationForm-addanimals">
-		STEP: {{ step }} - Select Animals
-		<AnimalSelect v-model="animals" :options="animalOptions" style="min-width: 600px;" :limit="lodgerCount">
-		</AnimalSelect>
+		<AnimalList v-model:selected="selectedAnimalIds" @update:selected="handleSelectedAnimals" :animals="animals">
+		</AnimalList>
 		<CardAddButton class="reservationForm-addanimals-button" @click="navigateCreateAnimal()"></CardAddButton>
 	</div>
 </template>
@@ -11,29 +10,38 @@ import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useReservationFormStore } from '@/stores/reservationFormStore'
 import { useAuthStore } from '~/stores/authStore'
-import AnimalSelect from '@/components/animal/AnimalSelect.vue'
+import { AnimalRepositoryHttp } from '@/services/repositories/AnimalRepositoryHttp';
+import { $fetchClient } from "~/libs/http/adapters/NuxtAdapter";
+import type { AnimalType } from '@/model/AnimalType'
+
+const animlaRepo = new AnimalRepositoryHttp($fetchClient)
 
 const router = useRouter()
 const reservationFormStore = useReservationFormStore()
+const { applicationUser } = useAuthStore()
+console.log("applicationUser", applicationUser);
 
-const { animals, lodgerCount, step } = storeToRefs(reservationFormStore)
-const animalOptions = ref([])
+
+const { lodgerCount, step } = storeToRefs(reservationFormStore)
+const animalOptions = ref([]);
+const animals = ref<AnimalType[]>([]);
+const selectedAnimalIds = ref<string[]>([]);
 const emit = defineEmits(['submit'])
+
+const handleSelectedAnimals = (selectedIds: string[]) => {
+	reservationFormStore.setAnimals(selectedIds);
+}
 
 const navigateCreateAnimal = () => {
 	router.push({ path: `/animal/create` })
 }
 
-watch(animals, (newValue) => {
-	reservationFormStore.setAnimals(newValue)
-}, { deep: true })
-
 onMounted(async () => {
-	const userAnimals = [];
-	// const userAnimals = await userServices.getUserAnimals(user.value.id)
-	animalOptions.value = userAnimals.map(animal => animal.asOption)
-	animals.value = reservationFormStore.getAnimals();
-})
+	const userAnimals = await animlaRepo.getUserAnimals(applicationUser.id)
+	console.log("response userAnimals", userAnimals);
+	animals.value = userAnimals;
+	animalOptions.value = userAnimals?.map(animal => animal.asOption)
+});
 
 
 </script>

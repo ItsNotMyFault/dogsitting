@@ -18,6 +18,13 @@ export default defineNuxtConfig({
       global: true  // Make components available to extending projects
     },
   ],
+  colorMode: {
+    preference: 'light', // Force light mode
+    fallback: 'light',   // Fallback to light mode
+  },
+  ui: {
+    colorMode: false // Disable color mode toggle completely
+  },
   modules: [
     '@pinia/nuxt', // required
     '@nuxtjs/i18n',

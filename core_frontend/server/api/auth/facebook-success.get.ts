@@ -2,7 +2,7 @@ import type { UserType } from '#core/model/user';
 
 export default defineEventHandler(async (event): Promise<any> => {
   const apiUrl = useRuntimeConfig().public.apiUrl;
-  console.log("--------------facebook SUCCESS--------------", event);
+  console.log("--------------facebook SUCCESS--------------");
   const token = getCookie(event, 'ds_auth_token')
   console.log("token ************* =>", !!token);
 
@@ -13,6 +13,8 @@ export default defineEventHandler(async (event): Promise<any> => {
 
 
   const setUserSessionData = async (user: UserType) => {
+    console.log("setUserSessionData", user);
+
     const sessionPayload = {
       user: {
         id: user?.id ?? 1,

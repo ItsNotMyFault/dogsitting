@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import reservationServices from '@/services/reservationServices.js'
 import LabeledEvent from '@/model/calendar/labeledEvent'
+import type { AnimalType } from '@/model/AnimalType'
 
 interface CreateReservationType {
   dateFrom: string,
@@ -18,7 +19,7 @@ export const useReservationFormStore = defineStore('reservationForm', () => {
   const dateTo = ref(null)
   const lodgerCount = ref(0)
   const notes = ref(null)
-  const animals = ref([])
+  const selectedAnimals = ref<string[]>([])//identifier list
   const checked = ref(false)
   const step = ref<1 | 2 | 3>(1);
   const labeledEvent = ref<LabeledEvent>(new LabeledEvent())
@@ -30,10 +31,10 @@ export const useReservationFormStore = defineStore('reservationForm', () => {
     dateTo: dateTo.value,
     lodgerCount: lodgerCount.value,
     notes: notes.value,
-    animals: animals.value,
+    animals: selectedAnimals.value,
   })
 
-  const getAnimals = () => animals.value
+  const getAnimals = () => selectedAnimals.value
 
   // --- ACTIONS ---
   const createReservation = async (reservation: CreateReservationType, providedTeamName: string) => {
@@ -59,8 +60,8 @@ export const useReservationFormStore = defineStore('reservationForm', () => {
     console.log('set team name', teamName.value)
   }
 
-  const setAnimals = (list) => {
-    animals.value = list
+  const setAnimals = (list: string[]) => {
+    selectedAnimals.value = list
   }
 
   const clearForm = () => {
@@ -68,7 +69,7 @@ export const useReservationFormStore = defineStore('reservationForm', () => {
     dateTo.value = null
     notes.value = null
     lodgerCount.value = 0
-    animals.value = []
+    selectedAnimals.value = []
   }
 
   // what the store exposes:
@@ -79,7 +80,7 @@ export const useReservationFormStore = defineStore('reservationForm', () => {
     dateTo,
     lodgerCount,
     notes,
-    animals,
+    animals: selectedAnimals,
     checked,
     labeledEvent,
     step,

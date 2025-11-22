@@ -35,19 +35,6 @@ namespace dogsitting_backend.Controllers
             return Ok(json);
         }
 
-        [HttpGet("{id}/animals")]
-        public ActionResult Animals([FromRoute] Guid id)
-        {
-            List<AnimalResponse> animals = this._animalService.GetAnimalsByUserId(id).Result;
-            var settings = new JsonSerializerSettings
-            {
-                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-            };
-            string json = JsonConvert.SerializeObject(animals, settings);
-            return Ok(json);
-        }
-
-
         [HttpPut("edit/{id}")]
         public async Task<IActionResult> Edit([FromRoute] Guid id, [FromBody] UpdateUserDto applicationUser)
         {

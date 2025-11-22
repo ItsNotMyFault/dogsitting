@@ -41,6 +41,13 @@ namespace dogsitting_backend.Controllers
             return Ok(json);
         }
 
+        [HttpGet("user/{id}")]
+        public List<AnimalResponse> GetAnimalsByUserId([FromRoute] Guid id)
+        {
+            List<AnimalResponse> animals = this.AnimalService.GetAnimalsByUserId(id).Result;
+            return animals;
+        }
+
         [HttpGet]
         [AllowAnonymous]
         public List<AnimalResponse> GetAnimals()

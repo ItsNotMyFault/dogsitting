@@ -1,70 +1,66 @@
 <template>
-    <CardAddButton class="imageFileInput">
+    <ButtonsCardAddButton class="imageFileInput text-black">
         <div class="imageFileInput-imageName" v-if="file">
-            <span class="fileName"> {{ fileName }}</span>
+            <span class="fileName ">{{ fileName }}</span>
         </div>
+
         <label class="imageFileInput-container">
-            <input type="file" id="file" @change="updateFiles">
+            <input type="file" id="file" @change="updateFiles" />
         </label>
+
         <div class="imageFileInput-imagePreview">
-            <InputsImageFileDisplay :file="file">
-            </InputsImageFileDisplay>
+            <InputsImageFileDisplay :file="file" />
         </div>
-        <button v-if="file" class="imageFileInput-delete" @click="clearImage()">DELETE</button>
-    </CardAddButton>
+
+        <UButton v-if="file" class="imageFileInput-delete" @click.prevent="clearImage">
+            <Icon name="lucide:trash-2" class="w-4 h-4 " />
+        </UButton>
+    </ButtonsCardAddButton>
 </template>
 
-<script>
-import CardAddButton from '~/components/buttons/CardAddButton.vue'
-import ImageFileDisplay from '@components/inputs/ImageFileDisplay.vue'
-export default {
-    name: 'ImageFileInput',
+<script setup>
 
-    components: {
-        CardAddButton,
-        ImageFileDisplay
-    },
+const props = defineProps({
+    modelValue: {
+        type: [File, String, null],
+        default: null
+    }
+})
 
+const emit = defineEmits(['update:modelValue'])
 
-    props: {
-        modelValue: {
-            type: [File, String, null],
-            default: null
-        }
-    },
+const file = ref(null)
+const fileName = ref('No file chosen')
 
-    watch: {
-        modelValue: {
-            immediate: true,
-            handler(newVal) {
-                this.file = newVal;
-            }
-        },
+// Sync incoming v-model → internal state
+watch(
+    () => props.modelValue,
+    (newVal) => {
+        file.value = newVal
+        fileName.value = newVal ? newVal.name ?? 'File' : 'No file chosen'
     },
+    { immediate: true }
+)
 
-    data() {
-        return {
-            fileName: 'No file chosen',
-            file: null,
-            imageUrl: null
-        };
-    },
-    methods: {
-        clearImage() {
-            this.fileName = "No file chosen"
-            this.file = null
-            this.$emit('update:modelValue', null)
-        },
-        async updateFiles(event) {
-            const file = event.target.files[0];
-            this.updateFile(file)
-        },
-        async updateFile(file) {
-            this.file = file
-            this.fileName = file ? file.name : 'No file chosen';
-            this.$emit('update:modelValue', file)
-        },
-    },
+// Clears the file
+function clearImage() {
+    file.value = null
+    fileName.value = 'No file chosen'
+    emit('update:modelValue', null)
 }
 
+// Handles file input change
+function updateFiles(event) {
+    const picked = event.target.files?.[0] || null
+    if (picked) {
+        updateFile(picked)
+    }
+}
+
+// Internal update function
+function updateFile(newFile) {
+    file.value = newFile
+    fileName.value = newFile ? newFile.name : 'No file chosen'
+    emit('update:modelValue', newFile)
+}
 </script>

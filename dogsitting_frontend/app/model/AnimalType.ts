@@ -1,6 +1,6 @@
 
 export interface AnimalType {
-  id?: number;
+  id?: string;
   name?: string;
   birthdate?: Date;
   species?: string;

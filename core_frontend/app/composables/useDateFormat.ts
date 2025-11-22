@@ -47,7 +47,8 @@ export function useDateFormat() {
     if (date === null) {
       return fallback;
     }
-    return new Intl.DateTimeFormat(fullLocale.value, { timeZone, dateStyle: style }).format(date);
+    // TODO: replace locale.value with fullLocale.value when calendar supports it
+    return new Intl.DateTimeFormat(locale.value, { timeZone, dateStyle: style }).format(date);
   }
 
   function formatDateTimeWithTimezone(
@@ -59,7 +60,8 @@ export function useDateFormat() {
     if (date === null) {
       return fallback;
     }
-    return new Intl.DateTimeFormat(fullLocale.value, {
+    // TODO: replace locale.value with fullLocale.value when calendar supports it
+    return new Intl.DateTimeFormat(locale.value, {
       timeZone,
       dateStyle: style,
       timeStyle: style

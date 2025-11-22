@@ -19,7 +19,7 @@ export class AnimalRepositoryHttp
   getUserAnimals = async (userId: string | number) => {
     return await this.client(`${this.resource}/user/${userId}`)
       .then((res: any) => {
-        return res.data.map((Animal: any) => new Animal(Animal))
+        return res.map((animal: AnimalType) => new Animal(animal))
       })
       .catch((error) => {
         return error.response
