@@ -12,7 +12,8 @@ interface MediaType {
 
 interface MediaUploadRequest {
   file: File;
-  displayFileName: string;
+  displayFileName?: string;
+  position: Number;
   id?: number;
 }
 

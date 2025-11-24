@@ -1,6 +1,7 @@
 import { RestCrudRepositoryBase } from "~/libs/repositories/RestCrudRepository";
 import Team from "@/model/team";
 import type { CreateTeamDto, TeamType, UpdateTeamDto } from "@/model/TeamType";
+import type { MediaType, MediaUploadRequest } from "~/types/media/MediaType";
 
 export class TeamRepositoryHttp
   extends RestCrudRepositoryBase<TeamType, number | string, CreateTeamDto, UpdateTeamDto> {
@@ -30,7 +31,7 @@ export class TeamRepositoryHttp
       })
   }
 
-  saveTeamFiles = (id: string | number, files: any) => {
+  saveTeamFiles = (id: string | number, files: MediaUploadRequest[]) => {
     const formData = new FormData()
     const fileList = Array.from(files)
     console.log('fileList', fileList)
@@ -39,7 +40,7 @@ export class TeamRepositoryHttp
       formData.append('positions', file.position) // Positions are 1-based
     })
 
-    return this.client(`${this.resource}/${id}/media`, { method: "POST", body: formData })
+    return this.client(`${this.resource}/${id}/media`, { method: "PUT", body: formData })
       .then((res: any) => {
         return res.data
       })

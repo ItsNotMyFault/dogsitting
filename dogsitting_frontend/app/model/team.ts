@@ -10,6 +10,10 @@ class Team implements TeamType {
   admins?: string;
   teamMedias?: string;
   calendar?: string;
+  useAvailabilities?: boolean;
+  useUnavailabilities?: boolean;
+  maxWeekDaysLodgerCount?: number;
+  maxWeekendDaysLodgerCount?: number;
 
   constructor(data: TeamType) {
     this.id = data?.id;

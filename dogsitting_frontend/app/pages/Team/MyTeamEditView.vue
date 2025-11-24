@@ -2,19 +2,10 @@
     <div class="sectionTitle">
         Modification TEAM Profile
     </div>
-    <TeamProfileEdit></TeamProfileEdit>
+    <TeamFormCreateUpdate></TeamFormCreateUpdate>
 </template>
 
-<script>
-import TeamProfileEdit from '@components/team/TeamProfileEdit.vue';
-
-export default {
-    name: 'MyTeamEditView',
-
-    components: {
-        TeamProfileEdit
-    },
+<script lang="ts" setup>
 
 
-}
 </script>

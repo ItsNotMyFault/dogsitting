@@ -114,10 +114,13 @@ namespace dogsitting_backend.ApplicationServices
             foundTeam.Name = team.Name;
             foundTeam.NormalizeTeamName();
 
-            foundTeam.Calendar.UseUnavailabilities = team.UseUnavailabilities;
-            foundTeam.Calendar.UseAvailabilities = team.UseAvailabilities;
-            foundTeam.Calendar.MaxWeekendDaysLodgerCount = team.MaxWeekendDaysLodgerCount;
-            foundTeam.Calendar.MaxWeekDaysLodgerCount = team.MaxWeekDaysLodgerCount;
+            if (foundTeam.Calendar != null)
+            {
+                foundTeam.Calendar.UseUnavailabilities = team.UseUnavailabilities;
+                foundTeam.Calendar.UseAvailabilities = team.UseAvailabilities;
+                foundTeam.Calendar.MaxWeekendDaysLodgerCount = team.MaxWeekendDaysLodgerCount;
+                foundTeam.Calendar.MaxWeekDaysLodgerCount = team.MaxWeekDaysLodgerCount;
+            }
 
 
             await this._teamGenericRepository.UpdateAsync(foundTeam);
@@ -136,29 +139,29 @@ namespace dogsitting_backend.ApplicationServices
             Team team = await this._teamSQLRepository.GetByIdAsync(teamId);
             if (team == null)
             {
-                throw new Exception("Reservation not found.");
+                throw new Exception("Team not found.");
             }
-            List<TeamMedia> exisitngMedias = await this._mediaSQLRepository.GetTeamMedias(teamId);
 
-
-            Dictionary<int, TeamMedia> existingImagesDict = exisitngMedias.ToDictionary(img => img.Position);
+            List<TeamMedia> existingMedias = await this._mediaSQLRepository.GetTeamMedias(teamId);
+            Dictionary<int, TeamMedia> existingImagesDict = existingMedias.ToDictionary(img => img.Position);
 
             foreach (var filePositionPair in filePositionPairs)
             {
                 Media newMedia = new(filePositionPair.file);
                 int position = filePositionPair.position;
 
-                // Replace existing image if there's one at this position, or add new one
                 if (existingImagesDict.TryGetValue(position, out TeamMedia existingImage))
                 {
-                    await this._mediaSQLRepository.DeleteTeamMediaAsync(teamId, existingImage.MediaId);
-                    await this._mediaSQLRepository.AddTeamMedia(teamId, newMedia, position);
+                    // Update the existing TeamMedia to point to the new Media
+                    await this._mediaSQLRepository.UpdateTeamMedia(teamId, position, newMedia);
                 }
                 else
                 {
+                    // Add new media
                     await this._mediaSQLRepository.AddTeamMedia(teamId, newMedia, position);
                 }
             }
+
             return [];
         }
     }

@@ -45,42 +45,24 @@ import { useRouter } from 'vue-router'
 import Team from '@/model/team'
 
 const props = defineProps<{
-    team: Team
+    teamName: string,
+    image1: string | File | undefined,
+    image2: string | File | undefined,
+    image3: string | File | undefined,
+    image4: string | File | undefined,
 }>()
 
 const router = useRouter()
 
-const image1 = ref(null)
-const image2 = ref(null)
-const image3 = ref(null)
-const image4 = ref(null)
-const files = ref([])
-
 const teamName = computed(() => {
-    return props.team?.name || 'undefined'
+    return props.teamName || 'undefined'
 })
 
 const navigate = () => {
-    router.push({ path: `/team/${props.team.name}` })
-}
-
-const findFileByPosition = (position: number) => {
-    const file = files.value?.find(file => file.Position === position)
-    return file?.FileData || null
-}
-
-const init = () => {
-    files.value = props.team?.teamMediaResponses
-    if (files.value?.length === 0) {
-        return
+    if (props.teamName) {
+        router.push({ path: `/team/${props.teamName}` })
     }
-    image1.value = findFileByPosition(1)
-    image2.value = findFileByPosition(2)
-    image3.value = findFileByPosition(3)
-    image4.value = findFileByPosition(4)
 }
 
-onMounted(() => {
-    init()
-})
+
 </script>

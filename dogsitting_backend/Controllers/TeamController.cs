@@ -61,8 +61,8 @@ namespace dogsitting_backend.Controllers
         }
 
 
-        [HttpPut("edit/{id}")]
-        public async Task<IActionResult> Edit([FromRoute] Guid id, [FromBody] UpdateTeamDto teamDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateTeamDto teamDto)
         {
             await this.teamService.UpdateTeamAsync(id, teamDto);
             return Ok();
@@ -101,17 +101,38 @@ namespace dogsitting_backend.Controllers
             return mediaresponses;
         }
 
-        [HttpPost("{Id}/media", Name = "AddTeamMedia")]
-        public async Task<ActionResult> AddMedia([FromRoute] Guid Id)
+        /// <summary>
+        /// Update media
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        [HttpPut("{Id}/media")]
+        public async Task<ActionResult> UpdateTeamMedia([FromRoute] Guid Id)
         {
             List<IFormFile> files = Request.Form.Files.ToList();
-            var positions = Request.Form["positions"].Select(p => int.Parse(p)).ToList();
+
+            // Better: Get all position values from the form
+            List<int> positions = new List<int>();
+            foreach (var positionStr in Request.Form["positions"])
+            {
+                if (int.TryParse(positionStr, out int position))
+                {
+                    positions.Add(position);
+                }
+            }
+
             if (files.Count > 4)
             {
-                throw new Exception("Too many files.");
+                return BadRequest("Too many files. Maximum 4 files allowed.");
             }
-            var filePositionPairs = files.Zip(positions, (file, position) => (file, position)).ToList();
 
+            if (files.Count != positions.Count)
+            {
+                return BadRequest("Number of files must match number of positions.");
+            }
+
+            var filePositionPairs = files.Zip(positions, (file, position) => (file, position)).ToList();
             await this.teamService.UpdateTeamMedia(Id, filePositionPairs);
             return Ok();
         }

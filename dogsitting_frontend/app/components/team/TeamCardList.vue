@@ -16,7 +16,10 @@
 
     <!-- Team Cards Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      <TeamCard v-for="team in list" :key="team.id" :team="team" />
+      <template v-for="team in list" :key="team.id">
+        <TeamCard :image1="null" :image2="null" :image3="null" :image4="null" :team-name="team.name"
+          @click="navigateToTeam(team.name)" />
+      </template>
     </div>
   </div>
 </template>
@@ -30,6 +33,7 @@ const teamRepo = new TeamRepositoryHttp($fetchClient)
 
 const list = ref<TeamType[]>([]);
 
+// TODO: add an endpoint that returns images of team from 1 to 4 directly in the payload.
 teamRepo.getTeams().then((data: TeamType[]) => {
   console.log("data", data);
   list.value = data ?? []
@@ -42,4 +46,9 @@ const router = useRouter()
 const navigate = () => {
   router.push({ path: '/team/create' })
 }
+
+const navigateToTeam = (teamName: string) => {
+  router.push({ path: `/team/${teamName}` })
+}
+
 </script>

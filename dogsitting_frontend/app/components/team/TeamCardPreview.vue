@@ -24,6 +24,7 @@ import ImageFileDisplay from '../inputs/ImageFileDisplay.vue';
 
 
 const props = defineProps({
+
     image1: {
         type: [String, null, File],
         required: true

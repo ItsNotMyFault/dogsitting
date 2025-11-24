@@ -102,6 +102,37 @@ namespace dogsitting_backend.Infrastructure
             await this.AddTeamMediaAsync(teamMedia);
         }
 
+        public async Task UpdateTeamMedia(Guid teamId, int position, Media media)
+        {
+            // Find the existing TeamMedia at this position
+            var existingTeamMedia = await Context.TeamMedia
+                .FirstOrDefaultAsync(tm => tm.TeamId == teamId && tm.Position == position);
+
+            Guid? oldMediaId = existingTeamMedia?.MediaId;
+
+            // Add the new media
+            await this.AddMediaAsync(media);
+
+            if (existingTeamMedia != null)
+            {
+                // Delete the old TeamMedia record
+                Context.TeamMedia.Remove(existingTeamMedia);
+                await Context.SaveChangesAsync();
+
+                // Create new TeamMedia with the new MediaId
+                TeamMedia newTeamMedia = new()
+                {
+                    TeamId = teamId,
+                    MediaId = media.Id,
+                    Position = position
+                };
+                await this.AddTeamMediaAsync(newTeamMedia);
+                await Context.SaveChangesAsync();
+
+            }
+        }
+
+
         public async Task DeleteTeamMediaAsync(Guid teamId, Guid mediaId)
         {
             TeamMedia teamMedia = await Context.TeamMedia.Where(media => media.MediaId == mediaId && media.TeamId == teamId).Include(teamMedia => teamMedia.Media).FirstAsync();
