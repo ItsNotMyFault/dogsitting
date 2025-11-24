@@ -1,13 +1,12 @@
 <template>
-  <div class="flex h-full w-full min-h-0">
-    <div class="flex min-w-0 grow flex-col">
+  <div class="flex h-screen w-full bg-default">
+    <div class="flex min-w-0 grow flex-col h-full">
       <UPageHeader>
         <NavigationHeader>
         </NavigationHeader>
       </UPageHeader>
-      <main>
-        <div>
-          DASHBOARD LAYOUT NICE
+      <main class="flex-1 overflow-auto">
+        <div class="h-full">
           <UApp>
             <NuxtPage />
           </UApp>
@@ -17,7 +16,3 @@
     </div>
   </div>
 </template>
-<script setup lang="ts">
-
-
-</script>

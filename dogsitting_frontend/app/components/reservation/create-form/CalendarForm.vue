@@ -1,9 +1,9 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 p-8">
+  <div class="min-h-screen bg-default p-8">
     <div class="mx-auto">
       <div class="flex gap-6 flex-col lg:flex-row">
         <!-- Calendar Section -->
-        <div class="flex-1 bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-8 border-2 border-purple-100">
+        <div class="flex-1  backdrop-blur-sm rounded-3xl shadow-xl p-8 border-2 border-purple-100">
           <div class="flex items-center gap-3 mb-6">
             <div class="bg-gradient-to-br from-purple-400 to-pink-400 p-3 rounded-2xl">
               <UIcon name="i-lucide-calendar" class="w-8 h-8 text-white" />

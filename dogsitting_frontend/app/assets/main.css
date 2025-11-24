@@ -22,3 +22,7 @@ button {
 .section {
   width: 100%;
 }
+
+.bg-default {
+  @apply bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50;
+}

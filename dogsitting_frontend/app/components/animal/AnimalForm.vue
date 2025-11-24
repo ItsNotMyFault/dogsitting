@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 p-6 md:p-10">
+    <div class="min-h-screen bg-default p-6 md:p-10">
         <div class="max-w-5xl mx-auto">
 
             <!-- FORM CARD -->
